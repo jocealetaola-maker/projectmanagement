@@ -602,7 +602,8 @@ pre.ed.code { font-family: var(--font-mono); font-size: 13.5px; background: var(
   .cover-grid { grid-template-columns: repeat(2, 120px); }
 }
 </style>
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script></head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
 <body>
 
 <div id="app">
@@ -2278,21 +2279,38 @@ function authScreen(content) {
   el.replaceChildren(h('div', { class: 'auth-card' }, h('div', { class: 'egg', 'aria-hidden': 'true' }), content));
 }
 function closeAuth() { $('#auth')?.remove(); $('#app').hidden = false; }
-function loginScreen() {
-  const email = h('input', { class: 'field', type: 'email', placeholder: 'you@example.com', 'aria-label': 'Email address', id: 'loginEmail', autocomplete: 'email' });
-  const btn = h('button', { class: 'btn' }, 'Email me a sign-in link');
-  const note = h('p', { class: 'w-sub', text: "We'll email you a link. No password needed." });
+function loginScreen(msg) {
+  const email = h('input', { class: 'field', type: 'email', placeholder: 'you@example.com', 'aria-label': 'Email address', id: 'loginEmail', autocomplete: 'email', value: lsGet('buhat.email') || '' });
+  const btn = h('button', { class: 'btn' }, 'Email me a sign-in code');
+  const note = h('p', { class: 'w-sub', text: msg || "We'll email you a code. No password needed." });
   const send = async () => {
     const v = email.value.trim();
     if (!/^\S+@\S+\.\S+$/.test(v)) { note.textContent = 'Enter a valid email address.'; return; }
     btn.disabled = true; btn.textContent = 'Sending…';
     const { error } = await SB.auth.signInWithOtp({ email: v, options: { emailRedirectTo: location.origin + location.pathname } });
-    if (error) { btn.disabled = false; btn.textContent = 'Email me a sign-in link'; note.textContent = "Couldn't send the link: " + error.message; return; }
-    authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Check your inbox' }), h('p', { text: `We sent a sign-in link to ${v}. Open it on this device to continue.` }), h('button', { class: 'linkish', onclick: loginScreen }, 'Use a different email')));
+    if (error) { btn.disabled = false; btn.textContent = 'Email me a sign-in code'; note.textContent = "Couldn't send the code: " + error.message; return; }
+    lsSet('buhat.email', v); codeScreen(v);
   };
   btn.onclick = send; email.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
   authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Sign in to Buhat Workspace' }), email, btn, note));
   setTimeout(() => email.focus(), 50);
+}
+function codeScreen(addr) {
+  const code = h('input', { class: 'field', inputmode: 'numeric', autocomplete: 'one-time-code', placeholder: '123456', 'aria-label': 'Sign-in code', id: 'loginCode', maxlength: '10', style: 'text-align:center;font-size:22px;letter-spacing:.3em' });
+  const btn = h('button', { class: 'btn' }, 'Sign in');
+  const note = h('p', { class: 'w-sub', text: 'Use the newest email only. Asking for a new code cancels the old one.' });
+  const go = async () => {
+    const t = code.value.replace(/\D/g, '');
+    if (t.length < 6) { note.textContent = 'Enter the code from the email.'; return; }
+    btn.disabled = true; btn.textContent = 'Checking…';
+    const { error } = await SB.auth.verifyOtp({ email: addr, token: t, type: 'email' });
+    if (error) { btn.disabled = false; btn.textContent = 'Sign in'; note.textContent = /expired|invalid/i.test(error.message) ? 'That code is wrong or has expired. Check the newest email, or send a new code.' : "Couldn't sign in: " + error.message; return; }
+    history.replaceState(null, '', location.pathname); location.reload();
+  };
+  btn.onclick = go; code.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Enter your code' }), h('p', { text: `We emailed a code to ${addr}. You can also tap the link in that email on this device.` }), code, btn, note,
+    h('div', { style: 'display:flex;gap:14px;justify-content:center' }, h('button', { class: 'linkish', onclick: () => loginScreen() }, 'Use a different email'))));
+  setTimeout(() => code.focus(), 50);
 }
 function onboardScreen() {
   const name = h('input', { class: 'field', placeholder: 'e.g. Sunrise Café', 'aria-label': 'Workspace name', id: 'wsCreateName', maxlength: '40' });
@@ -2300,6 +2318,8 @@ function onboardScreen() {
   const note = h('p', { class: 'w-sub', text: `Joining a team instead? Ask its owner to invite ${S.email}, then reload this page.` });
   const go = async () => {
     btn.disabled = true; btn.textContent = 'Creating…';
+    const { data: who } = await SB.auth.getUser();
+    if (!who || !who.user) { await SB.auth.signOut().catch(() => {}); loginScreen('Your sign-in expired. Send yourself a new code to continue.'); return; }
     const { data, error } = await SB.rpc('create_workspace', { p_name: name.value.trim() });
     if (error) { btn.disabled = false; btn.textContent = 'Create workspace'; note.textContent = "Couldn't create it: " + error.message; return; }
     lsSet('buhat.ws', data); location.reload();
@@ -2439,9 +2459,20 @@ async function boot() {
     return;
   }
   SB = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+  const hashErr = new URLSearchParams(location.hash.slice(1));
+  if (hashErr.get('error')) history.replaceState(null, '', location.pathname);
   const { data: sd } = await SB.auth.getSession();
-  const session = sd && sd.session;
-  if (!session) { loginScreen(); SB.auth.onAuthStateChange((ev, s) => { if (s) location.reload(); }); return; }
+  let session = sd && sd.session;
+  if (session) {
+    // Make sure the server still accepts this sign-in before using it.
+    const { data: who, error: whoErr } = await SB.auth.getUser();
+    if (whoErr || !who || !who.user) { await SB.auth.signOut().catch(() => {}); session = null; }
+  }
+  if (!session) {
+    loginScreen(hashErr.get('error_code') === 'otp_expired' ? 'That sign-in link expired or was already used. Send yourself a new code.' : '');
+    SB.auth.onAuthStateChange((ev, s) => { if (s && ev === 'SIGNED_IN') location.reload(); });
+    return;
+  }
   SB.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_OUT') location.reload(); });
   const u = session.user; S.uid = u.id; S.email = u.email || '';
   await SB.rpc('accept_invites');
