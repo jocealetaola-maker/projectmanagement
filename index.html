@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Buhat Workspace</title>
+<title>Pugad by Buhat</title>
 <style>
 :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
 html, body { margin: 0; } body { -webkit-font-smoothing: antialiased; } img { max-width: 100%; } [hidden] { display: none !important; }
@@ -563,6 +563,7 @@ pre.ed.code { font-family: var(--font-mono); font-size: 13.5px; background: var(
 .auth-body { display: grid; gap: 12px; width: 100%; }
 .auth-body h2 { margin: 0; font-family: var(--font-display); font-size: 24px; font-weight: 650; text-wrap: balance; }
 .auth-body p { margin: 0; color: var(--muted); }
+.auth-body .by-buhat { margin-top: -8px; font-size: 13px; font-weight: 700; letter-spacing: .04em; color: var(--accent-ink); }
 .team-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .team-row .who { flex: 1; min-width: 0; display: grid; }
 .team-row small { color: var(--faint); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; }
@@ -651,7 +652,7 @@ pre.ed.code { font-family: var(--font-mono); font-size: 13.5px; background: var(
 const CONFIG = {
   SUPABASE_URL: 'https://nasrqwnucqejliezjlxa.supabase.co',   // Supabase → Project Settings → API → Project URL
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hc3Jxd251Y3FlamxpZXpqbHhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3OTg3NDIsImV4cCI6MjEwNzM3NDc0Mn0.5eEjpWr20DMZjor5hr-_b5z_ih3dg8Lil2_npNIL414',             // Supabase → Project Settings → API → anon public key
-  BILLING_URL: 'billing.html',                           // where your billing portal lives
+  BILLING_URL: 'https://billing.buhat.co/',              // your shared billing portal
 };
 /* ================= helpers ================= */
 const $ = (s, r = document) => r.querySelector(s);
@@ -2292,7 +2293,7 @@ function loginScreen(msg) {
     lsSet('buhat.email', v); codeScreen(v);
   };
   btn.onclick = send; email.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-  authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Sign in to Buhat Workspace' }), email, btn, note));
+  authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Sign in to Pugad' }), h('p', { class: 'by-buhat', text: 'by Buhat · your team’s nest, where plans hatch' }), email, btn, note));
   setTimeout(() => email.focus(), 50);
 }
 function codeScreen(addr) {
@@ -2325,7 +2326,7 @@ function onboardScreen() {
     lsSet('buhat.ws', data); location.reload();
   };
   btn.onclick = go; name.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
-  authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Name your workspace' }), h('p', { text: 'This is where you and your team keep pages, plans and tasks.' }), name, btn, note,
+  authScreen(h('div', { class: 'auth-body' }, h('h2', { text: 'Name your nest' }), h('p', { text: 'Your Pugad is where you and your team keep pages, plans and tasks. Name it after your business.' }), name, btn, note,
     h('button', { class: 'linkish', onclick: signOut }, 'Sign out')));
   setTimeout(() => name.focus(), 50);
 }
