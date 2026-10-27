@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buhat Billing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Nunito:wght@400..800&display=swap">
+<style>
+/* Layout: one calm column — account → status → plans → pay → history. Same soft palette as the workspace. */
+:root {
+  --h: 342; --s: 72;
+  --bg: hsl(var(--h) 29% 98.6%);
+  --card: hsl(var(--h) 36% 99.7%);
+  --fg: hsl(var(--h) 22% 17%);
+  --muted: hsl(var(--h) 10% 45%);
+  --faint: hsl(var(--h) 12% 60%);
+  --line: hsl(var(--h) 25% 89%);
+  --hover: hsl(var(--h) 43% 94%);
+  --accent: hsl(var(--h) 72% 72%);
+  --accent-strong: hsl(var(--h) 65% 52%);
+  --accent-soft: hsl(var(--h) 72% 94.5%);
+  --accent-ink: hsl(var(--h) 50% 33%);
+  --on-accent: hsl(var(--h) 40% 14%);
+  --ok: hsl(150 55% 90%); --ok-ink: hsl(152 45% 26%);
+  --wait: hsl(46 95% 88%); --wait-ink: hsl(38 65% 28%);
+  --no: hsl(355 85% 93%); --no-ink: hsl(355 55% 38%);
+  --shadow: 0 1px 2px hsl(var(--h) 30% 30% / .06), 0 10px 28px hsl(var(--h) 40% 40% / .10);
+  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-display: 'Fredoka', 'Nunito', system-ui, sans-serif;
+  --r: 16px;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: hsl(var(--h) 13% 10.5%); --card: hsl(var(--h) 13% 14.5%); --fg: hsl(var(--h) 25% 91%);
+    --muted: hsl(var(--h) 10% 66%); --faint: hsl(var(--h) 8% 50%); --line: hsl(var(--h) 11% 23%); --hover: hsl(var(--h) 14% 19%);
+    --accent: hsl(var(--h) 65% 74%); --accent-strong: hsl(var(--h) 61% 68%); --accent-soft: hsl(var(--h) 22% 21%); --accent-ink: hsl(var(--h) 65% 82%);
+    --ok: hsl(150 22% 19%); --ok-ink: hsl(150 55% 76%); --wait: hsl(46 30% 20%); --wait-ink: hsl(46 85% 76%); --no: hsl(355 28% 21%); --no-ink: hsl(355 80% 82%);
+    --shadow: 0 1px 2px hsl(0 0% 0% / .3), 0 10px 28px hsl(0 0% 0% / .35);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 15.5px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 2px; border-radius: 6px; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+header { display: flex; align-items: center; gap: 12px; padding: 18px 0; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 21px; font-weight: 650; flex: 1; }
+.egg { width: 30px; height: 36px; border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%; background: radial-gradient(circle at 35% 30%, var(--card) 0 18%, transparent 19%), var(--accent); flex: none; }
+.who { font-size: 13px; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.link { background: none; border: 0; padding: 0; color: var(--accent-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; font-size: 13px; }
+a.link { display: inline; }
+h1 { font-family: var(--font-display); font-weight: 650; font-size: clamp(28px, 5vw, 38px); line-height: 1.15; margin: 10px 0 6px; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0 0 22px; }
+section { margin-top: 26px; }
+h2 { font-family: var(--font-display); font-weight: 650; font-size: 19px; margin: 0 0 10px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: calc(var(--r) * 1.1); padding: 18px; box-shadow: var(--shadow); }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.field, select.field { border: 1px solid var(--line); background: var(--bg); border-radius: calc(var(--r) * .55); padding: 10px 12px; min-width: 0; outline: none; }
+.field:focus { border-color: var(--accent-strong); }
+label.lbl { display: grid; gap: 5px; font-size: 13px; font-weight: 700; color: var(--muted); }
+.btn { border: 0; border-radius: 99px; padding: 10px 20px; font-weight: 800; background: var(--accent); color: var(--on-accent); box-shadow: 0 1px 2px hsl(var(--h) 30% 30% / .1); transition: transform .15s; }
+.btn:hover { transform: translateY(-1px); }
+.btn:disabled { opacity: .55; cursor: default; transform: none; }
+.btn.ghost { background: var(--hover); color: var(--fg); }
+.seg { display: inline-flex; background: var(--hover); border-radius: 99px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; padding: 6px 14px; border-radius: 99px; font-weight: 700; font-size: 13.5px; color: var(--muted); }
+.seg button.on { background: var(--card); color: var(--fg); box-shadow: 0 1px 3px hsl(0 0% 0% / .12); }
+.status { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.status .big { font-family: var(--font-display); font-size: 22px; font-weight: 650; }
+.chip { display: inline-block; font-size: 12px; font-weight: 800; padding: 2px 10px; border-radius: 99px; white-space: nowrap; }
+.chip.ok { background: var(--ok); color: var(--ok-ink); } .chip.wait { background: var(--wait); color: var(--wait-ink); } .chip.no { background: var(--no); color: var(--no-ink); }
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.plan { text-align: left; border: 2px solid var(--line); background: var(--card); border-radius: calc(var(--r) * 1.1); padding: 18px; display: grid; gap: 6px; transition: transform .15s, border-color .15s; }
+.plan:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--accent); }
+.plan.on { border-color: var(--accent-strong); box-shadow: 0 0 0 3px var(--accent-soft); }
+.plan:disabled { opacity: .6; cursor: default; }
+.plan .nm { font-weight: 800; }
+.plan .price { font-family: var(--font-display); font-size: 30px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.plan .price small { font-size: 14px; color: var(--muted); font-family: var(--font-body); font-weight: 600; }
+.plan .note { font-size: 13px; color: var(--muted); }
+.methods { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.method { border: 2px solid var(--line); background: var(--bg); border-radius: 99px; padding: 7px 16px; font-weight: 800; font-size: 14px; }
+.method.on { border-color: var(--accent-strong); background: var(--accent-soft); color: var(--accent-ink); }
+.paybox { display: grid; gap: 12px; }
+.amount { font-family: var(--font-display); font-size: 34px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.kv { display: grid; grid-template-columns: max-content 1fr auto; gap: 8px 14px; align-items: center; }
+.kv dt { color: var(--muted); font-size: 13px; font-weight: 700; }
+.kv dd { margin: 0; font-weight: 700; word-break: break-word; font-variant-numeric: tabular-nums; }
+.copy { border: 0; background: var(--hover); border-radius: 8px; padding: 3px 10px; font-size: 12px; font-weight: 800; color: var(--accent-ink); }
+.qr { width: 200px; max-width: 100%; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+.instr { background: var(--accent-soft); border-radius: calc(var(--r) * .7); padding: 12px 14px; font-size: 14px; white-space: pre-wrap; }
+form.confirm { display: grid; gap: 12px; margin-top: 6px; border-top: 1px dashed var(--line); padding-top: 16px; }
+.msg { font-size: 14px; padding: 10px 14px; border-radius: 12px; }
+.msg.err { background: var(--no); color: var(--no-ink); } .msg.good { background: var(--ok); color: var(--ok-ink); } .msg.info { background: var(--wait); color: var(--wait-ink); }
+.hist { width: 100%; border-collapse: collapse; font-size: 14px; }
+.hist-wrap { overflow-x: auto; }
+.hist th { text-align: left; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); padding: 6px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.hist td { padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; font-variant-numeric: tabular-nums; }
+.empty { color: var(--faint); font-size: 14px; padding: 8px 0; }
+.faq { display: grid; gap: 8px; font-size: 14px; color: var(--muted); }
+.faq b { color: var(--fg); }
+.center { min-height: 70vh; display: grid; place-items: center; }
+.login { width: min(420px, 100%); display: grid; gap: 14px; text-align: center; justify-items: center; }
+.login .field { width: 100%; }
+.modal-back { position: fixed; inset: 0; z-index: 50; background: hsl(var(--h) 30% 10% / .4); display: grid; place-items: start center; padding: max(6vh, 16px) 16px 16px; overflow-y: auto; }
+.receipt { width: min(520px, 100%); background: #fff; color: #222; border-radius: 16px; padding: 28px; display: grid; gap: 14px; box-shadow: var(--shadow); }
+.receipt h3 { margin: 0; font-family: var(--font-display); font-size: 24px; }
+.receipt .kv dt { color: #777; } .receipt .kv { grid-template-columns: max-content 1fr; }
+.receipt .tot { display: flex; justify-content: space-between; border-top: 2px solid #eee; padding-top: 12px; font-weight: 800; font-size: 18px; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 99px; font-weight: 700; font-size: 14px; z-index: 60; max-width: calc(100vw - 32px); }
+@media (max-width: 520px) { .kv { grid-template-columns: 1fr auto; } .kv dt { grid-column: 1 / -1; margin-bottom: -6px; } }
+@media print {
+  body * { visibility: hidden; }
+  .receipt, .receipt * { visibility: visible; }
+  .receipt { position: absolute; inset: 0 auto auto 0; box-shadow: none; width: 100%; }
+  .no-print { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div class="wrap" id="root"><div class="center"><p class="empty">Loading…</p></div></div>
+<script>
+(() => {
+'use strict';
+/* ================= CONFIG: same values as index.html (README step 3) ================= */
+const CONFIG = {
+  SUPABASE_URL: 'https://YOUR-PROJECT-REF.supabase.co',
+  SUPABASE_ANON_KEY: 'YOUR-ANON-PUBLIC-KEY',
+  WORKSPACE_URL: 'index.html',   // "Back to workspace" link
+  CAFE_URL: '',                  // optional: your café app's address, for its "Back" link
+};
+
+const $ = (s, r = document) => r.querySelector(s);
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v; else if (k === 'text') el.textContent = v;
+    else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2), v);
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (const kid of kids.flat()) { if (kid == null || kid === false || kid === '') continue; el.append(kid.nodeType ? kid : document.createTextNode(String(kid))); }
+  return el;
+}
+const root = $('#root');
+let SB = null;
+const S = { user: null, cfg: { business: {}, plans: {}, methods: [] }, accounts: [], sel: null, currency: 'PHP', interval: null, method: null, bill: null, claims: [], msg: null, busy: false };
+const SYMBOL = { PHP: '₱', USD: '$' };
+const fmtMoney = (c, n) => `${SYMBOL[c] || ''}${Number(n).toLocaleString('en-US', { minimumFractionDigits: Number(n) % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
+const fmtDate = d => new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+function toast(m) { document.querySelector('.toast')?.remove(); const t = h('div', { class: 'toast', role: 'status', text: m }); document.body.append(t); setTimeout(() => t.remove(), 3200); }
+async function copy(text, btn) { try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = 'Copy'; }, 1500); } catch (e) { toast('Copy is blocked here. Select the text instead.'); } }
+const safeUrl = u => (typeof u === 'string' && /^https:\/\//.test(u) ? u : '');
+
+function plan() { return (S.cfg.plans || {})[S.sel.product] || {}; }
+function price(interval, cur = S.currency) { const v = Number((plan()[interval] || {})[cur]); return Number.isFinite(v) && v > 0 ? v : null; }
+function methodsFor(cur) { return (Array.isArray(S.cfg.methods) ? S.cfg.methods : []).filter(m => m && m.id && Array.isArray(m.currencies) && m.currencies.includes(cur)); }
+const paid = () => !!(S.bill && S.bill.paid_until && new Date(S.bill.paid_until) > new Date());
+
+/* ---------- sign in ---------- */
+function loginView(note) {
+  const email = h('input', { class: 'field', type: 'email', placeholder: 'you@example.com', 'aria-label': 'Email address', id: 'email', autocomplete: 'email' });
+  const btn = h('button', { class: 'btn' }, 'Email me a sign-in link');
+  const p = h('p', { class: 'empty', text: note || 'Use the email you sign in to Buhat with.' });
+  const go = async () => {
+    const v = email.value.trim(); if (!/^\S+@\S+\.\S+$/.test(v)) { p.textContent = 'Enter a valid email address.'; return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    const { error } = await SB.auth.signInWithOtp({ email: v, options: { emailRedirectTo: location.href.split('#')[0] } });
+    if (error) { btn.disabled = false; btn.textContent = 'Email me a sign-in link'; p.textContent = "Couldn't send the link: " + error.message; return; }
+    root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('div', { class: 'egg' }), h('h1', { text: 'Check your inbox' }), h('p', { class: 'lede', text: `We sent a sign-in link to ${v}. Open it on this device to continue.` }))));
+  };
+  btn.onclick = go; email.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('div', { class: 'egg' }), h('h1', { text: 'Buhat Billing' }), h('p', { class: 'lede', text: 'Sign in to pay for your plan or download receipts.' }), email, btn, p)));
+  setTimeout(() => email.focus(), 50);
+}
+
+/* ---------- data ---------- */
+async function loadAccount() {
+  const { product, id } = S.sel;
+  const [{ data: bill }, { data: claims }] = await Promise.all([
+    SB.from('billing_accounts').select('paid_until, plan_interval').eq('product', product).eq('account_id', id).maybeSingle(),
+    SB.from('payment_claims').select('*').eq('product', product).eq('account_id', id).order('created_at', { ascending: false }).limit(50),
+  ]);
+  S.bill = bill || null; S.claims = claims || [];
+}
+async function selectAccount(acc) {
+  S.sel = acc; S.interval = null; S.method = null; S.msg = null;
+  const u = new URL(location.href); u.searchParams.set('product', acc.product); u.searchParams.set('account', acc.id); history.replaceState(null, '', u);
+  await loadAccount(); render();
+}
+
+/* ---------- views ---------- */
+function render() {
+  const pending = S.claims.filter(c => c.status === 'pending');
+  const back = S.sel.product === 'workspace' ? CONFIG.WORKSPACE_URL : safeUrl(CONFIG.CAFE_URL);
+  const kids = [
+    h('header', { class: 'no-print' }, h('div', { class: 'brand' }, h('span', { class: 'egg', 'aria-hidden': 'true' }), (S.cfg.business.name || 'Buhat') + ' Billing'),
+      h('div', { class: 'who' }, back ? h('a', { class: 'link', href: back }, '← Back to app') : '', h('span', { text: S.user.email }), h('button', { class: 'link', onclick: async () => { await SB.auth.signOut(); location.reload(); } }, 'Sign out'))),
+    h('h1', { text: plan().name || 'Your plan' }),
+    h('p', { class: 'lede', text: 'Pay by transfer, confirm it here, and your plan unlocks as soon as we approve it.' }),
+  ];
+  if (S.accounts.length > 1) {
+    const sel = h('select', { class: 'field', 'aria-label': 'Account', id: 'acct' }, S.accounts.map((a, i) => h('option', { value: String(i), selected: a.product === S.sel.product && a.id === S.sel.id ? true : null }, a.label)));
+    sel.onchange = () => selectAccount(S.accounts[Number(sel.value)]);
+    kids.push(h('section', {}, h('label', { class: 'lbl' }, 'Paying for', sel)));
+  }
+  // Status
+  kids.push(h('section', {}, h('div', { class: 'card status' },
+    h('div', { style: 'flex:1;min-width:200px;display:grid;gap:2px' },
+      h('span', { class: 'big', text: paid() ? `Active until ${fmtDate(S.bill.paid_until)}` : S.bill && S.bill.paid_until ? `Ended ${fmtDate(S.bill.paid_until)}` : 'Not active yet' }),
+      h('span', { class: 'empty', style: 'padding:0', text: `${S.sel.label}${paid() ? ` · ${S.bill.plan_interval === 'year' ? 'Yearly' : 'Monthly'}` : ''}` })),
+    pending.length ? h('span', { class: 'chip wait', text: `${pending.length} payment${pending.length > 1 ? 's' : ''} waiting for approval` }) : paid() ? h('span', { class: 'chip ok', text: 'Paid' }) : '')));
+  // Plans
+  const cur = h('div', { class: 'seg', role: 'group', 'aria-label': 'Currency' }, ['PHP', 'USD'].map(c => h('button', { class: S.currency === c ? 'on' : '', onclick: () => { S.currency = c; S.method = null; render(); } }, c === 'PHP' ? '₱ PHP' : '$ USD')));
+  const m = price('month'), y = price('year');
+  const save = m && y ? Math.round((1 - y / (m * 12)) * 100) : 0;
+  const card = (iv, label, p, note) => h('button', { class: 'plan' + (S.interval === iv ? ' on' : ''), disabled: p ? null : true, 'aria-pressed': String(S.interval === iv), onclick: () => { S.interval = iv; S.msg = null; render(); $('#pay')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } },
+    h('span', { class: 'nm', text: label }), h('span', { class: 'price' }, p ? fmtMoney(S.currency, p) : '—', p ? h('small', { text: iv === 'year' ? ' / year' : ' / month' }) : ''), h('span', { class: 'note', text: p ? note : 'Price coming soon' }));
+  kids.push(h('section', {}, h('div', { class: 'row', style: 'justify-content:space-between;margin-bottom:10px' }, h('h2', { text: paid() ? 'Renew or switch' : 'Choose a plan', style: 'margin:0' }), cur),
+    h('div', { class: 'plans' }, card('month', 'Monthly', m, 'Pay month by month.'), card('year', 'Yearly', y, save > 0 ? `Save ${save}% compared with monthly.` : 'One payment for the whole year.'))));
+  // Pay
+  if (S.interval) kids.push(payView());
+  // History
+  kids.push(historyView());
+  kids.push(h('section', { class: 'no-print' }, h('h2', { text: 'Good to know' }), h('div', { class: 'faq' },
+    h('div', {}, h('b', { text: 'Renewals. ' }), "Plans don't renew automatically. Pay again here before your end date and the new period is added on top, so you never lose days."),
+    h('div', {}, h('b', { text: 'Switching. ' }), 'Moving from monthly to yearly? Pay for yearly and a full year is added from your current end date.'),
+    h('div', {}, h('b', { text: 'Cancelling. ' }), "Just don't renew. You keep access until your end date."),
+    S.cfg.business.support_email ? h('div', {}, h('b', { text: 'Questions? ' }), 'Email ', h('span', { text: S.cfg.business.support_email, style: 'font-weight:700;color:var(--fg)' }), '.') : '')));
+  root.replaceChildren(...kids);
+}
+function payView() {
+  const amount = price(S.interval);
+  const ms = methodsFor(S.currency);
+  if (!S.method || !ms.some(x => x.id === S.method)) S.method = ms[0] ? ms[0].id : null;
+  const mth = ms.find(x => x.id === S.method);
+  const sec = h('section', { id: 'pay' }, h('h2', { text: `Pay ${fmtMoney(S.currency, amount)} for ${S.interval === 'year' ? 'a year' : 'a month'}` }));
+  if (!ms.length) { sec.append(h('div', { class: 'card' }, h('p', { class: 'empty', text: `There's no way to pay in ${S.currency} yet. Try the other currency, or contact us.` }))); return sec; }
+  const box = h('div', { class: 'card paybox' });
+  box.append(h('div', { class: 'methods', role: 'group', 'aria-label': 'Payment method' }, ms.map(x => h('button', { class: 'method' + (x.id === S.method ? ' on' : ''), 'aria-pressed': String(x.id === S.method), onclick: () => { S.method = x.id; render(); $('#pay')?.scrollIntoView({ block: 'start' }); } }, x.label || x.id))));
+  const amt = fmtMoney(S.currency, amount);
+  const kv = h('dl', { class: 'kv' });
+  const line = (k, v, copyable) => { if (!v) return; kv.append(h('dt', { text: k }), h('dd', { text: v })); kv.append(copyable ? h('button', { class: 'copy', type: 'button', onclick: e => copy(String(v), e.currentTarget) }, 'Copy') : h('span')); };
+  line('Amount', amt, true);
+  line('Account name', mth.account_name, true);
+  line(mth.number_label || 'Account number', mth.account_number, true);
+  line('Bank', mth.bank, false);
+  if (safeUrl(mth.link)) { kv.append(h('dt', { text: 'Pay online' }), h('dd', {}, h('a', { class: 'link', href: safeUrl(mth.link), target: '_blank', rel: 'noopener noreferrer', text: 'Open payment link ↗' })), h('span')); }
+  box.append(h('div', { class: 'amount', text: amt }), kv);
+  if (safeUrl(mth.qr_url)) box.append(h('img', { class: 'qr', src: safeUrl(mth.qr_url), alt: `${mth.label || 'Payment'} QR code` }));
+  if (mth.instructions) box.append(h('div', { class: 'instr', text: String(mth.instructions) }));
+  // Confirm form
+  const ref = h('input', { class: 'field', required: true, maxlength: '120', placeholder: 'e.g. 1234 567 890', id: 'ref', autocomplete: 'off' });
+  const file = h('input', { type: 'file', accept: 'image/png,image/jpeg,image/webp,application/pdf', id: 'proof' });
+  const note = h('textarea', { class: 'field', rows: '2', maxlength: '500', placeholder: 'Anything we should know (optional)', id: 'note' });
+  const btn = h('button', { class: 'btn', type: 'submit' }, "I've paid. Confirm my payment");
+  const msg = S.msg ? h('div', { class: 'msg ' + S.msg.kind, role: 'status', text: S.msg.text }) : '';
+  const form = h('form', { class: 'confirm' },
+    h('b', { text: 'Already paid? Tell us so we can confirm it.' }),
+    h('label', { class: 'lbl' }, 'Reference or transaction number', ref),
+    h('label', { class: 'lbl' }, 'Screenshot of your payment (optional, up to 5 MB)', file),
+    h('label', { class: 'lbl' }, 'Note', note), msg, h('div', { class: 'row' }, btn));
+  form.addEventListener('submit', async e => {
+    e.preventDefault(); if (S.busy) return;
+    const reference = ref.value.trim();
+    if (reference.length < 3) { S.msg = { kind: 'err', text: 'Add the reference number from your payment.' }; render(); return; }
+    const f = file.files && file.files[0];
+    if (f && f.size > 5 * 1024 * 1024) { S.msg = { kind: 'err', text: 'That file is over 5 MB. Try a smaller screenshot.' }; render(); return; }
+    S.busy = true; btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      let proofPath = null;
+      if (f) {
+        const ext = (f.name.split('.').pop() || 'png').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 5) || 'png';
+        proofPath = `${S.user.id}/${crypto.randomUUID()}.${ext}`;
+        const { error: upErr } = await SB.storage.from('payment-proofs').upload(proofPath, f, { contentType: f.type || undefined, upsert: false });
+        if (upErr) throw { message: "Couldn't upload the screenshot: " + upErr.message };
+      }
+      const { error } = await SB.functions.invoke('billing', { body: { action: 'claim', product: S.sel.product, accountId: S.sel.id, interval: S.interval, currency: S.currency, method: S.method, reference, note: note.value.trim(), proofPath } });
+      if (error) { let info = {}; try { info = await error.context.json(); } catch (er) {} throw { message: info.message || "Couldn't send your confirmation. Check your connection and try again." }; }
+      S.msg = { kind: 'good', text: "Thanks! We've got your confirmation. Your plan unlocks as soon as we approve it, usually the same day. This page updates by itself." };
+      S.interval = null; await loadAccount(); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); toast('Payment confirmation sent');
+    } catch (err) {
+      S.msg = { kind: 'err', text: err.message || 'Something went wrong. Try again.' }; render();
+    } finally { S.busy = false; }
+  });
+  box.append(form);
+  sec.append(box);
+  return sec;
+}
+function historyView() {
+  const sec = h('section', {}, h('h2', { text: 'Payments & receipts' }));
+  if (!S.claims.length) { sec.append(h('p', { class: 'empty', text: 'No payments yet.' })); return sec; }
+  const chip = s => h('span', { class: 'chip ' + (s === 'approved' ? 'ok' : s === 'pending' ? 'wait' : 'no'), text: s === 'approved' ? 'Confirmed' : s === 'pending' ? 'Waiting' : 'Not confirmed' });
+  sec.append(h('div', { class: 'card hist-wrap', style: 'padding:6px 12px' }, h('table', { class: 'hist' },
+    h('thead', {}, h('tr', {}, ['Date', 'Plan', 'Amount', 'Method', 'Status', ''].map(t => h('th', { text: t })))),
+    h('tbody', {}, S.claims.map(c => h('tr', {},
+      h('td', { text: new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) }),
+      h('td', { text: c.interval === 'year' ? 'Yearly' : 'Monthly' }),
+      h('td', { text: fmtMoney(c.currency, c.amount) }),
+      h('td', { text: c.method }),
+      h('td', {}, chip(c.status)),
+      h('td', {}, c.status === 'approved' ? h('button', { class: 'copy', onclick: () => receipt(c) }, 'Receipt') : c.status === 'rejected' ? h('span', { class: 'empty', text: S.cfg.business.support_email ? 'Contact us' : '' }) : '')))))));
+  return sec;
+}
+function receipt(c) {
+  const biz = S.cfg.business || {};
+  const kv = h('dl', { class: 'kv' });
+  const line = (k, v) => { if (v) kv.append(h('dt', { text: k }), h('dd', { text: v })); };
+  line('Receipt no.', c.id.slice(0, 8).toUpperCase());
+  line('Date paid', fmtDate(c.decided_at || c.created_at));
+  line('Billed to', `${c.account_name || S.sel.label} (${S.user.email})`);
+  line('Plan', `${plan().name || 'Buhat plan'}, ${c.interval === 'year' ? 'yearly' : 'monthly'}`);
+  line('Covers until', c.period_end ? fmtDate(c.period_end) : '');
+  line('Paid with', c.method);
+  line('Reference', c.reference);
+  const back = h('div', { class: 'modal-back', onclick: e => { if (e.target === back) back.remove(); } },
+    h('div', { class: 'receipt', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Receipt' },
+      h('div', { class: 'row', style: 'justify-content:space-between' }, h('h3', { text: `${biz.name || 'Buhat'} receipt` }), h('span', { class: 'chip ok', text: 'Paid' })),
+      kv, h('div', { class: 'tot' }, h('span', { text: 'Total paid' }), h('span', { text: fmtMoney(c.currency, c.amount) })),
+      biz.support_email ? h('div', { style: 'font-size:13px;color:#777', text: `Questions about this receipt? ${biz.support_email}` }) : '',
+      h('div', { class: 'row no-print' }, h('button', { class: 'btn', onclick: () => window.print() }, 'Print or save as PDF'), h('button', { class: 'btn ghost', onclick: () => back.remove() }, 'Close'))));
+  document.body.append(back);
+}
+
+/* ---------- boot ---------- */
+async function boot() {
+  if (!window.supabase || /YOUR-/.test(CONFIG.SUPABASE_URL + CONFIG.SUPABASE_ANON_KEY)) {
+    root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('h1', { text: 'Almost there' }), h('p', { class: 'lede', text: 'Open billing.html and add your Supabase URL and anon key to CONFIG near the top of the script.' }))));
+    return;
+  }
+  SB = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+  const { data: sd } = await SB.auth.getSession();
+  if (!sd || !sd.session) { loginView(); SB.auth.onAuthStateChange((ev, s) => { if (s) location.reload(); }); return; }
+  S.user = sd.session.user;
+  try { S.currency = (Intl.DateTimeFormat().resolvedOptions().timeZone || '') === 'Asia/Manila' ? 'PHP' : 'USD'; } catch (e) {}
+  const [{ data: cfgRows }, { data: mems }] = await Promise.all([
+    SB.from('billing_config').select('key, value'),
+    SB.from('members').select('workspace_id, role, workspaces(name)').eq('user_id', S.user.id),
+  ]);
+  for (const r of cfgRows || []) S.cfg[r.key] = r.value;
+  S.cfg.business = S.cfg.business || {}; S.cfg.plans = S.cfg.plans || {};
+  S.accounts = (mems || []).filter(m => m.role === 'owner' || m.role === 'admin').map(m => ({ product: 'workspace', id: m.workspace_id, label: `Workspace: ${(m.workspaces && m.workspaces.name) || 'Untitled'}` }));
+  S.accounts.push({ product: 'cafe', id: S.user.id, label: 'Café app' });
+  const q = new URLSearchParams(location.search);
+  const want = S.accounts.find(a => a.product === q.get('product') && (a.product === 'cafe' || a.id === q.get('account')));
+  if (q.get('product') === 'workspace' && !want && q.get('account')) toast('Only the workspace owner or an admin can pay for that workspace.');
+  await selectAccount(want || S.accounts[0]);
+  // Update by itself when a payment is approved.
+  SB.channel('billing-' + S.user.id)
+    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'payment_claims', filter: 'claimed_by=eq.' + S.user.id }, async pl => {
+      if (pl.new && pl.new.status === 'approved') toast('Payment confirmed. Your plan is active! 🎉');
+      if (pl.new && pl.new.status === 'rejected') toast("We couldn't confirm a payment. Check your history below.");
+      await loadAccount(); render();
+    })
+    .subscribe();
+}
+boot();
+})();
+</script>
+</body>
+</html>
