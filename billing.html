@@ -171,18 +171,34 @@ const paid = () => !!(S.bill && S.bill.paid_until && new Date(S.bill.paid_until)
 /* ---------- sign in ---------- */
 function loginView(note) {
   const email = h('input', { class: 'field', type: 'email', placeholder: 'you@example.com', 'aria-label': 'Email address', id: 'email', autocomplete: 'email' });
-  const btn = h('button', { class: 'btn' }, 'Email me a sign-in link');
+  const btn = h('button', { class: 'btn' }, 'Email me a sign-in code');
   const p = h('p', { class: 'empty', text: note || 'Use the email you sign in to Buhat with.' });
   const go = async () => {
     const v = email.value.trim(); if (!/^\S+@\S+\.\S+$/.test(v)) { p.textContent = 'Enter a valid email address.'; return; }
     btn.disabled = true; btn.textContent = 'Sending…';
     const { error } = await SB.auth.signInWithOtp({ email: v, options: { emailRedirectTo: location.href.split('#')[0] } });
-    if (error) { btn.disabled = false; btn.textContent = 'Email me a sign-in link'; p.textContent = "Couldn't send the link: " + error.message; return; }
-    root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('div', { class: 'egg' }), h('h1', { text: 'Check your inbox' }), h('p', { class: 'lede', text: `We sent a sign-in link to ${v}. Open it on this device to continue.` }))));
+    if (error) { btn.disabled = false; btn.textContent = 'Email me a sign-in code'; p.textContent = "Couldn't send the code: " + error.message; return; }
+    codeView(v);
   };
   btn.onclick = go; email.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
   root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('div', { class: 'egg' }), h('h1', { text: 'Buhat Billing' }), h('p', { class: 'lede', text: 'Sign in to pay for your plan or download receipts.' }), email, btn, p)));
   setTimeout(() => email.focus(), 50);
+}
+
+function codeView(addr) {
+  const code = h('input', { class: 'field', inputmode: 'numeric', autocomplete: 'one-time-code', placeholder: '123456', 'aria-label': 'Sign-in code', id: 'code', maxlength: '10', style: 'text-align:center;font-size:22px;letter-spacing:.3em' });
+  const btn = h('button', { class: 'btn' }, 'Sign in');
+  const p = h('p', { class: 'empty', text: 'Use the newest email only. Asking for a new code cancels the old one.' });
+  const go = async () => {
+    const t = code.value.replace(/\D/g, ''); if (t.length < 6) { p.textContent = 'Enter the code from the email.'; return; }
+    btn.disabled = true; btn.textContent = 'Checking…';
+    const { error } = await SB.auth.verifyOtp({ email: addr, token: t, type: 'email' });
+    if (error) { btn.disabled = false; btn.textContent = 'Sign in'; p.textContent = /expired|invalid/i.test(error.message) ? 'That code is wrong or has expired. Check the newest email, or send a new code.' : "Couldn't sign in: " + error.message; return; }
+    location.reload();
+  };
+  btn.onclick = go; code.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  root.replaceChildren(h('div', { class: 'center' }, h('div', { class: 'login' }, h('div', { class: 'egg' }), h('h1', { text: 'Enter your code' }), h('p', { class: 'lede', text: `We emailed a code to ${addr}.` }), code, btn, p, h('button', { class: 'link', onclick: () => loginView() }, 'Use a different email'))));
+  setTimeout(() => code.focus(), 50);
 }
 
 /* ---------- data ---------- */
@@ -340,9 +356,13 @@ async function boot() {
     return;
   }
   SB = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+  const hashErr = new URLSearchParams(location.hash.slice(1));
+  if (hashErr.get('error')) history.replaceState(null, '', location.pathname + location.search);
   const { data: sd } = await SB.auth.getSession();
-  if (!sd || !sd.session) { loginView(); SB.auth.onAuthStateChange((ev, s) => { if (s) location.reload(); }); return; }
-  S.user = sd.session.user;
+  let session = sd && sd.session;
+  if (session) { const { data: who, error: whoErr } = await SB.auth.getUser(); if (whoErr || !who || !who.user) { await SB.auth.signOut().catch(() => {}); session = null; } }
+  if (!session) { loginView(hashErr.get('error_code') === 'otp_expired' ? 'That sign-in link expired or was already used. Send yourself a new code.' : ''); SB.auth.onAuthStateChange((ev, s) => { if (s && ev === 'SIGNED_IN') location.reload(); }); return; }
+  S.user = session.user;
   try { S.currency = (Intl.DateTimeFormat().resolvedOptions().timeZone || '') === 'Asia/Manila' ? 'PHP' : 'USD'; } catch (e) {}
   const [{ data: cfgRows }, { data: mems }] = await Promise.all([
     SB.from('billing_config').select('key, value'),
