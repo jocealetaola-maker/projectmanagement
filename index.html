@@ -639,6 +639,20 @@ body:has(#agentPanel.open) #dragonBuddy { right: calc(min(420px, 100vw) + 10px +
 .hatch-stage { display: grid; place-items: center; }
 .hatch-stage .dragon { width: 150px; height: 150px; }
 
+
+/* ---------- Selecting blocks ---------- */
+.block.bsel::before { content: ""; position: absolute; inset: -2px -6px; border-radius: calc(var(--r) * .5); background: color-mix(in srgb, var(--accent) 24%, transparent); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent-strong) 55%, transparent); pointer-events: none; z-index: 3; }
+.block.bsel .block.bsel::before { display: none; }
+.rubber { position: fixed; z-index: 60; background: color-mix(in srgb, var(--accent) 18%, transparent); border: 1.5px solid var(--accent-strong); border-radius: 6px; pointer-events: none; }
+body.rubbering, body.rubbering * { user-select: none !important; -webkit-user-select: none !important; cursor: default; }
+.sel-bar { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 70; display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 8px 6px 16px; box-shadow: var(--shadow); font-size: 13.5px; animation: popIn .16s; max-width: calc(100vw - 24px); flex-wrap: wrap; }
+.sel-bar b { margin-right: 4px; white-space: nowrap; }
+body:has(.sel-bar) .toast { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+.pill-btn.danger { background: color-mix(in srgb, var(--danger) 14%, var(--card)); color: var(--danger); }
+.pill-btn.danger:hover { background: var(--danger); color: var(--card); }
+.toast.has-act { display: flex; align-items: center; gap: 12px; padding-right: 8px; }
+.toast-act { background: color-mix(in srgb, var(--bg) 22%, transparent); color: var(--bg); padding: 4px 12px; border-radius: 99px; font-weight: 800; font-size: 13px; }
+.toast-act:hover { background: var(--bg); color: var(--fg); }
 /* ---------- Stickers ---------- */
 .stickers { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
 .stk { position: absolute; transform: translate(-50%, -50%) rotate(var(--rot)); font-size: var(--sz); line-height: 1; user-select: none; filter: drop-shadow(0 3px 2px hsl(0 0% 0% / .15)); }
@@ -1264,6 +1278,7 @@ function setHash() { if (!S.current) return; const hsh = '#' + (S.current.scope 
 function openPage(scope, id) {
   if (!S.pages[scope].has(id)) return;
   if (S.current && S.current.id !== id) { stopStickers(); for (const tid of Object.keys(T)) stopTimer(tid); }
+  if (!S.current || S.current.id !== id) clearSel();
   S.current = { scope, id }; S.remotePending = false;
   for (const a of ancestors(scope, id)) S.exp.add(keyOf(scope, a[0]));
   setHash(); renderSidebar(); renderPage(); closeDrawer();
@@ -1500,11 +1515,14 @@ function edEl(b, cls, ph, field = 'text') {
   return el;
 }
 function blockEl(b, n) {
-  const wrap = h('div', { class: 'block t-' + b.type, 'data-id': b.id });
+  const wrap = h('div', { class: 'block t-' + b.type + (SELB.has(b.id) ? ' bsel' : ''), 'data-id': b.id });
   if (b.color && COLORS.includes(b.color) && b.type !== 'callout' && TEXTLIKE.includes(b.type)) wrap.dataset.color = b.color;
   if (!S.ro) wrap.append(h('div', { class: 'bh' },
     h('button', { class: 'bh-add', title: b.type === 'columns' ? 'Add a block below the columns' : 'Add a block below', 'aria-label': 'Add a block below', onclick: e => insertMenu(e.currentTarget, b.id) }, '+'),
-    h('button', { class: 'bh-drag', title: b.type === 'columns' ? 'Drag to move the columns. Click for column options' : 'Drag to move. Click for options', 'aria-label': 'Block options', draggable: 'true', onclick: e => blockMenu(e.currentTarget, b.id) }, '⋮⋮'),
+    h('button', { class: 'bh-drag', title: (b.type === 'columns' ? 'Drag to move the columns. Click for column options' : 'Drag to move. Click for options') + '. Shift+click to select', 'aria-label': 'Block options', draggable: 'true', onclick: e => {
+      if (e.shiftKey) { e.preventDefault(); if (SELB.size && selAnchor) selRange(selAnchor, b.id); else if (SELB.has(b.id)) { SELB.delete(b.id); paintSel(); } else setSel([...SELB, b.id], selAnchor || b.id, b.id); return; }
+      blockMenu(e.currentTarget, b.id);
+    } }, '⋮⋮'),
     b.type === 'columns' ? h('span', { class: 'bh-lbl', text: 'Columns' }) : ''));
   const bc = h('div', { class: 'bc' + (wrap.dataset.color ? ' bg-' + b.color : '') });
   bc.append(content(b, n));
@@ -1670,6 +1688,7 @@ function syncEd(c) {
 }
 const pageEl = $('#page');
 pageEl.addEventListener('input', e => {
+  lastTypeAt = Date.now();
   const c = edCtx(e.target); if (!c) return;
   syncEd(c);
   if (c.field === 'text' && c.b.type === 'text') {
@@ -1698,6 +1717,15 @@ pageEl.addEventListener('keydown', e => {
   }
   const { ed, b, field } = c;
   const p = cur();
+  if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === 'a') {
+    // First press selects this block's text. Press again to select every block on the page.
+    e.preventDefault();
+    const s = getSelection(); const len = ed.textContent.length;
+    if (!len || (s.rangeCount && ed.contains(s.anchorNode) && s.toString().length >= len)) selectAllBlocks();
+    else { const r = document.createRange(); r.selectNodeContents(ed); s.removeAllRanges(); s.addRange(r); }
+    return;
+  }
+  if (e.key === 'Escape' && !SL && !POP) { e.preventDefault(); selectBlock(b.id); return; }
   if (e.key === 'Tab' && field === 'text' && b.type !== 'code') {
     e.preventDefault();
     const off = caretOffset(ed);
@@ -1780,11 +1808,13 @@ pageEl.addEventListener('paste', e => {
   const text = e.clipboardData.getData('text/plain') || '';
   if (c.b.type === 'code' || c.field === 'body' || !text.includes('\n')) { document.execCommand('insertText', false, text); return; }
   const lines = text.replace(/\r/g, '').split('\n');
+  const snap = pushUndo('paste');
   document.execCommand('insertText', false, lines.shift());
   syncEd(c);
   let after = c.b.id;
   for (const ln of lines) { const nb = { id: uid('b'), type: ['bullet', 'numbered', 'todo'].includes(c.b.type) ? c.b.type : 'text', text: esc(ln) }; insertAfterRaw(after, nb); after = nb.id; }
   renderBlocks(); curDirty(); focusBlock(after, 'end');
+  if (snap) { snap.at = Date.now(); if (lines.length >= 4) toastUndo(`Pasted ${lines.length + 1} lines`); }
 });
 pageEl.addEventListener('focusout', () => {
   setTimeout(() => {
@@ -1898,7 +1928,9 @@ function blockMenu(anchor, blockId) {
     { n: 'Duplicate', i: '⧉', act: () => { if (b.type === 'subpage') return toast('Use the page menu to duplicate pages.'); const c = reid(b); L.list.splice(L.i + 1, 0, c); renderBlocks(); curDirty(); } },
     { n: 'Move up', i: '↑', act: () => { const i = L.list.indexOf(b); if (i > 0) { L.list.splice(i, 1); L.list.splice(i - 1, 0, b); renderBlocks(); curDirty(); } } },
     { n: 'Move down', i: '↓', act: () => { const i = L.list.indexOf(b); if (i < L.list.length - 1) { L.list.splice(i, 1); L.list.splice(i + 1, 0, b); renderBlocks(); curDirty(); } } },
-    { n: 'Delete', i: '🗑', danger: true, act: () => { removeBlock(b.id); if (!p.blocks.length) p.blocks.push(blank()); renderBlocks(); curDirty(); } });
+    { n: 'Select', i: '▣', k: 'Esc', act: () => selectBlock(b.id) },
+    { n: 'Select all blocks', i: '▦', k: '⌘A ⌘A', act: selectAllBlocks },
+    { n: 'Delete', i: '🗑', danger: true, act: () => { pushUndo('delete'); removeBlock(b.id); if (!p.blocks.length) p.blocks.push(blank()); renderBlocks(); curDirty(); toastUndo('Block deleted'); } });
   openPop(anchor, menuList(items));
 }
 
@@ -3756,6 +3788,215 @@ async function boot() {
   if (new URLSearchParams(location.search).get('paid')) { history.replaceState(null, '', location.pathname + location.hash); toast('Thanks! Your payment is waiting for confirmation.'); }
 }
 
+/* ================= selecting many blocks, and undo ================= */
+const SELB = new Set();
+let selAnchor = null, selFocus = null;
+const isEditable = el => !!el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+function visibleBlockEls() { return $$('#blocks .block'); }
+function ancestorIds(id) { const out = []; let L = locate(id); while (L && L.parent) { out.push(L.parent.block.id); L = locate(L.parent.block.id); } return out; }
+function topSel() {
+  // Selected blocks without their selected parents' children, in page order.
+  const order = allBlocks(cur()).map(b => b.id);
+  return order.filter(id => SELB.has(id) && !ancestorIds(id).some(a => SELB.has(a)));
+}
+function paintSel() {
+  $$('.block.bsel').forEach(x => x.classList.remove('bsel'));
+  for (const id of SELB) blockElById(id)?.classList.add('bsel');
+  renderSelBar();
+}
+function setSel(ids, anchor, focus) {
+  SELB.clear(); for (const id of ids) if (id) SELB.add(id);
+  selAnchor = anchor !== undefined ? anchor : ids[0] || null; selFocus = focus !== undefined ? focus : ids[ids.length - 1] || null;
+  paintSel();
+}
+function clearSel() { if (!SELB.size) return; SELB.clear(); selAnchor = selFocus = null; paintSel(); }
+function selectAllBlocks() {
+  const p = cur(); if (!p) return;
+  if (document.activeElement && isEditable(document.activeElement)) document.activeElement.blur();
+  getSelection().removeAllRanges(); closeFmt(); closeSlash();
+  setSel(p.blocks.map(b => b.id));
+}
+function selectBlock(id) {
+  if (document.activeElement && isEditable(document.activeElement)) document.activeElement.blur();
+  getSelection().removeAllRanges(); closeFmt();
+  setSel([id], id, id);
+}
+function selRange(aId, fId) {
+  const els = visibleBlockEls().map(e => e.dataset.id);
+  let a = els.indexOf(aId), f = els.indexOf(fId); if (a < 0 || f < 0) return;
+  if (a > f) [a, f] = [f, a];
+  setSel(els.slice(a, f + 1), aId, fId);
+}
+function renderSelBar() {
+  let bar = $('#selBar');
+  const n = topSel().length;
+  if (!n) { bar?.remove(); return; }
+  if (!bar) { bar = h('div', { id: 'selBar', class: 'sel-bar', role: 'toolbar', 'aria-label': 'Selected blocks' }); document.body.append(bar); }
+  bar.replaceChildren(
+    h('b', { text: `${n} block${n === 1 ? '' : 's'} selected` }),
+    h('button', { class: 'pill-btn', onclick: () => copySel(false) }, 'Copy'),
+    S.ro ? '' : h('button', { class: 'pill-btn', onclick: duplicateSel }, 'Duplicate'),
+    S.ro ? '' : h('button', { class: 'pill-btn danger', onclick: deleteSel }, '🗑 Delete'),
+    h('button', { class: 'mini-x', style: 'opacity:1', 'aria-label': 'Clear selection', title: 'Clear selection (Esc)', onclick: clearSel }, '×'));
+}
+
+/* undo for big changes (deleting blocks, long pastes) */
+const UNDO = [];
+let lastTypeAt = 0;
+function pushUndo(kind, label) {
+  const p = cur(); if (!p || !S.current) return null;
+  const e = { kind, label, scope: S.current.scope, id: S.current.id, blocks: clone(p.blocks), at: Date.now() };
+  UNDO.push(e); if (UNDO.length > 30) UNDO.shift();
+  return e;
+}
+function undo() {
+  const e = UNDO.pop(); if (!e) { toast('Nothing to undo'); return false; }
+  const p = S.pages[e.scope] && S.pages[e.scope].get(e.id);
+  if (!p) { toast('That page no longer exists'); return false; }
+  for (const x of allBlocks(p)) if (!allBlocks({ blocks: e.blocks }).some(y => y.id === x.id)) stopTimer(x.id);
+  p.blocks = e.blocks; markDirty(e.scope, e.id, 100);
+  if (S.current && S.current.id === e.id) { clearSel(); renderBlocks(); }
+  else openPage(e.scope, e.id);
+  toast('Undone ↩'); return true;
+}
+function toastUndo(msg) {
+  $('.toast')?.remove();
+  const t = h('div', { class: 'toast has-act', role: 'status' }, h('span', { text: msg }), h('button', { class: 'toast-act', onclick: () => { t.remove(); undo(); } }, 'Undo'));
+  document.body.append(t); clearTimeout(toastT); toastT = setTimeout(() => t.remove(), 7000);
+}
+
+/* actions on the selection */
+function deleteSel() {
+  if (S.ro) return toast('You have view-only access.');
+  const p = cur(); const ids = topSel(); if (!p || !ids.length) return;
+  pushUndo('delete');
+  for (const id of ids) removeBlock(id);
+  if (!p.blocks.length) p.blocks.push(blank());
+  clearSel(); renderBlocks(); curDirty(100);
+  toastUndo(`Deleted ${ids.length} block${ids.length === 1 ? '' : 's'}`);
+}
+function duplicateSel() {
+  if (S.ro) return;
+  const ids = topSel(); if (!ids.length) return;
+  pushUndo('dup');
+  const last = locate(ids[ids.length - 1]); if (!last) return;
+  const copies = ids.map(id => blockById(id)).filter(b => b && b.type !== 'subpage').map(reid);
+  last.list.splice(last.i + 1, 0, ...copies);
+  renderBlocks(); curDirty(); setSel(copies.map(c => c.id));
+  toastUndo(`Duplicated ${copies.length} block${copies.length === 1 ? '' : 's'}`);
+}
+function blocksToText(list, depth = 0) {
+  const out = []; const ind = '  '.repeat(depth); let n = 0;
+  for (const b of list) {
+    const t = plain(b.text || '').trim();
+    n = b.type === 'numbered' ? n + 1 : 0;
+    switch (b.type) {
+      case 'h1': out.push(ind + '# ' + t); break;
+      case 'h2': out.push(ind + '## ' + t); break;
+      case 'h3': out.push(ind + '### ' + t); break;
+      case 'bullet': out.push(ind + '- ' + t); break;
+      case 'numbered': out.push(ind + n + '. ' + t); break;
+      case 'todo': out.push(ind + `- [${b.checked ? 'x' : ' '}] ` + t); break;
+      case 'quote': out.push(ind + '> ' + t); break;
+      case 'divider': out.push(ind + '---'); break;
+      case 'code': out.push(ind + '```\n' + str(b.text) + '\n```'); break;
+      case 'toggle': out.push(ind + '▸ ' + t); if (plain(b.body).trim()) out.push(ind + '  ' + plain(b.body)); break;
+      case 'columns': for (const c of arr(obj(b.data).cols)) out.push(blocksToText(arr(c.blocks), depth)); break;
+      case 'subpage': { const f = findPage(str(obj(b.data).pageId)); out.push(ind + '📄 ' + (f ? f.page.title || 'Untitled' : 'Page')); break; }
+      default: if (TEXTLIKE.includes(b.type)) out.push(ind + t); else { const pt = pageText({ title: '', blocks: [b] }).split('\n').slice(1).join('\n'); if (pt.trim()) out.push(pt); }
+    }
+    if (arr(b.children).length) out.push(blocksToText(b.children, depth + 1));
+  }
+  return out.filter(x => x !== '').join('\n');
+}
+function selText() { return blocksToText(topSel().map(id => blockById(id)).filter(Boolean)); }
+async function copySel(cut) {
+  const text = selText();
+  try { await navigator.clipboard.writeText(text); toast(cut ? 'Cut' : `Copied ${topSel().length} block${topSel().length === 1 ? '' : 's'}`); }
+  catch (e) { toast('Copy is blocked here. Press Ctrl+C (⌘C) instead.'); return; }
+  if (cut) deleteSel();
+}
+
+/* drag a box from the page margin to select blocks */
+let RB = null;
+function startRubber(e) {
+  const main = $('#main'); const m0 = main.scrollTop;
+  RB = { x0: e.clientX, y0: e.clientY + m0, el: null, add: e.shiftKey ? new Set(SELB) : null, moved: false, auto: 0, px: e.clientX, py: e.clientY };
+  const move = ev => {
+    RB.px = ev.clientX; RB.py = ev.clientY;
+    if (!RB.moved && Math.hypot(ev.clientX - RB.x0, ev.clientY + main.scrollTop - RB.y0) < 6) return;
+    if (!RB.moved) { RB.moved = true; RB.el = h('div', { class: 'rubber' }); document.body.append(RB.el); document.body.classList.add('rubbering'); getSelection().removeAllRanges(); if (isEditable(document.activeElement)) document.activeElement.blur(); }
+    drawRubber();
+  };
+  const tick = () => {
+    if (!RB) return;
+    const mr = main.getBoundingClientRect(); let dy = 0;
+    if (RB.py < mr.top + 40) dy = -Math.ceil((mr.top + 40 - RB.py) / 3); else if (RB.py > mr.bottom - 40) dy = Math.ceil((RB.py - mr.bottom + 40) / 3);
+    if (RB.moved && dy) { main.scrollTop += dy; drawRubber(); }
+    RB.auto = requestAnimationFrame(tick);
+  };
+  const up = () => {
+    removeEventListener('pointermove', move); removeEventListener('pointerup', up); removeEventListener('pointercancel', up);
+    if (RB) { cancelAnimationFrame(RB.auto); RB.el?.remove(); if (!RB.moved && !e.shiftKey) clearSel(); }
+    document.body.classList.remove('rubbering'); RB = null;
+  };
+  addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
+  RB.auto = requestAnimationFrame(tick);
+}
+function drawRubber() {
+  const main = $('#main'); const yNow = RB.py + main.scrollTop;
+  const top = Math.min(RB.y0, yNow) - main.scrollTop, bottom = Math.max(RB.y0, yNow) - main.scrollTop;
+  const left = Math.min(RB.x0, RB.px), right = Math.max(RB.x0, RB.px);
+  Object.assign(RB.el.style, { left: left + 'px', top: top + 'px', width: right - left + 'px', height: bottom - top + 'px' });
+  const hits = [];
+  for (const el of visibleBlockEls()) { const r = el.getBoundingClientRect(); if (r.bottom > top && r.top < bottom && r.right > left && r.left < right) hits.push({ el, r, id: el.dataset.id }); }
+  // A box that starts below a container's top picks blocks inside it, not the whole container.
+  const ids = new Set(hits.map(x => x.id));
+  for (const x of hits) { const inner = hits.some(y => y !== x && x.el.contains(y.el)); if (inner && top > x.r.top + 8) ids.delete(x.id); }
+  const keep = [...ids].filter(id => !ancestorIds(id).some(a => ids.has(a)));
+  const all = RB.add ? [...new Set([...RB.add, ...keep])] : keep;
+  SELB.clear(); for (const id of all) SELB.add(id); selAnchor = keep[0] || null; selFocus = keep[keep.length - 1] || null;
+  paintSel();
+}
+
+function bindSelection() {
+  // Start a selection box from the page margins or the empty space under the blocks.
+  $('#main').addEventListener('pointerdown', e => {
+    if (e.button !== 0 || e.pointerType === 'touch' || !cur()) return;
+    const t = e.target;
+    if (!t.closest('#page') || t.closest('.bc, .bh, button, a, input, select, textarea, [contenteditable="true"], .cover, .title, .page-tools, .tpl-row, .stk, .icon-wrap, .meta-line')) {
+      if (SELB.size && !t.closest('.sel-bar')) clearSel();
+      return;
+    }
+    if (t.closest('.col-add')) return;
+    startRubber(e);
+  });
+  document.addEventListener('pointerdown', e => { if (SELB.size && !e.target.closest('#main, .sel-bar, .pop, #modal, .toast')) clearSel(); });
+  document.addEventListener('keydown', e => {
+    const mod = e.metaKey || e.ctrlKey; const k = e.key.toLowerCase();
+    if (mod && k === 'z' && !e.shiftKey) {
+      const ae = document.activeElement; const top = UNDO[UNDO.length - 1];
+      const recentPaste = top && top.kind === 'paste' && top.at >= lastTypeAt && Date.now() - top.at < 120000;
+      if ((!isEditable(ae) && UNDO.length) || (recentPaste && ae && pageEl.contains(ae))) { e.preventDefault(); undo(); return; }
+    }
+    if (!SELB.size || isEditable(document.activeElement) || $('#modal')) return;
+    if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); deleteSel(); }
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); clearSel(); }
+    else if (mod && k === 'a') { e.preventDefault(); selectAllBlocks(); }
+    else if (mod && k === 'd') { e.preventDefault(); duplicateSel(); }
+    else if (e.key === 'Enter') { e.preventDefault(); const id = topSel()[0]; clearSel(); if (id) focusBlock(id, 'end'); }
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const els = visibleBlockEls().map(x => x.dataset.id); const i = els.indexOf(selFocus); if (i < 0) return;
+      const j = Math.max(0, Math.min(els.length - 1, i + (e.key === 'ArrowUp' ? -1 : 1)));
+      if (e.shiftKey) selRange(selAnchor, els[j]); else setSel([els[j]], els[j], els[j]);
+      blockElById(els[j])?.scrollIntoView({ block: 'nearest' });
+    }
+  }, true);
+  document.addEventListener('copy', e => { if (!SELB.size || isEditable(document.activeElement)) return; e.preventDefault(); e.clipboardData.setData('text/plain', selText()); toast(`Copied ${topSel().length} block${topSel().length === 1 ? '' : 's'}`); });
+  document.addEventListener('cut', e => { if (!SELB.size || isEditable(document.activeElement) || S.ro) return; e.preventDefault(); e.clipboardData.setData('text/plain', selText()); deleteSel(); });
+}
+
 /* ================= stickers ================= */
 function renderStickers(p) {
   const layer = h('div', { class: 'stickers', id: 'stickers' });
@@ -4064,6 +4305,7 @@ function bindGlobal() {
   $('#expandBtn').onclick = () => { $('#app').classList.remove('collapsed'); $('#expandBtn').hidden = true; lsSet('buhat.col', ''); };
   if (lsGet('buhat.col') === '1' && innerWidth > 760) { $('#app').classList.add('collapsed'); $('#expandBtn').hidden = false; }
   $('#menuBtn').onclick = openDrawer;
+  bindSelection();
   $('#main').addEventListener('scroll', () => { if (POP && !SL) closePop(); closeFmt(); }, { passive: true });
   document.addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); searchModal(); }
