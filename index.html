@@ -599,6 +599,9 @@ button.ev-more:hover { color: var(--accent-ink); }
 .dg-fx { position: absolute; pointer-events: none; font-size: 17px; line-height: 1; z-index: 4; }
 .dg-plus { font: 800 15px var(--font-display); color: var(--accent-ink); text-shadow: 0 1px 0 var(--card); }
 /* corner buddy */
+.dg-quick { display: grid; gap: 8px; padding: 4px; }
+.dg-ask { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; font-size: 15px; padding: 10px 14px; }
+.dg-quick-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; justify-content: center; }
 #dragonBuddy { position: fixed; right: calc(14px + var(--dx, 0px)); bottom: calc(10px + var(--dy, 0px) + env(safe-area-inset-bottom, 0px)); z-index: 44; width: 92px; height: 92px; cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; outline: none; }
 #dragonBuddy:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 20px; }
 #dragonBuddy.dragging { cursor: grabbing; }
@@ -3477,6 +3480,7 @@ function makeChat(id, compact) {
       if (run !== st.run) return;
       st.hist.push({ role: 'user', content: q }, { role: 'assistant', content: text });
       out.classList.remove('thinking'); renderMd(bt, text);
+      if (AI.avatar === 'dragon' && typeof buddyEl === 'function' && buddyEl()) act('happy', 850, buddyEl());
       out.append(h('div', { class: 'msg-acts' },
         h('button', { class: 'pill-btn', onclick: async e => { try { await navigator.clipboard.writeText(text); e.target.textContent = 'Copied'; } catch (er) { toast('Copy is blocked here. Select the text instead.'); } } }, 'Copy'),
         sorting ? '' : h('button', { class: 'pill-btn', onclick: e => { addAnswerToPage(text); e.target.textContent = 'Added'; e.target.disabled = true; } }, 'Add to page')));
@@ -3604,7 +3608,7 @@ function dragonView(opts = {}) {
 function paintAll() {
   for (const v of liveViews()) paintView(v);
   for (const d of DG.dens) { if (!d.isConnected) DG.dens.delete(d); else fillDen(d); }
-  const bud = $('#dragonBuddy'); if (bud) bud.setAttribute('aria-label', DG.pet ? `${DG.pet.name}, your team dragon. Press to pet. Drag to move.` : 'Your team’s dragon egg. Press to hatch it.');
+  const bud = $('#dragonBuddy'); if (bud) { bud.setAttribute('aria-label', DG.pet ? `${DG.pet.name}, your team dragon. Press to chat or play. Drag to move.` : 'Your team’s dragon egg. Press to hatch it or ask the AI.'); bud.title = DG.pet ? `Ask ${aiName()} · drag to move` : 'Tap the egg · drag to move'; }
 }
 function targets(el) { if (el) return [el]; const b = buddyEl(); if (b) return [b]; return liveViews().filter(v => !v.dataset.fixed); }
 function say(text, el, ms = 3600) {
@@ -3852,13 +3856,13 @@ function mountBuddy() {
   place(); addEventListener('resize', place);
   more.addEventListener('pointerdown', e => e.stopPropagation());
   more.addEventListener('click', e => { e.stopPropagation(); dragonMenu(more, v, false); });
-  bud.addEventListener('keydown', e => { if (e.target === bud && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); poke(v); } });
+  bud.addEventListener('keydown', e => { if (e.target === bud && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); buddyMenu(bud, v); } });
   bud.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
     const x0 = e.clientX, y0 = e.clientY, p0 = { ...pos }; let moved = false;
     try { bud.setPointerCapture(e.pointerId); } catch (er) {}
     const mv = m => { if (!moved && Math.hypot(m.clientX - x0, m.clientY - y0) < 6) return; moved = true; bud.classList.add('dragging'); pos.x = p0.x - (m.clientX - x0); pos.y = p0.y - (m.clientY - y0); place(); };
-    const up = () => { bud.removeEventListener('pointermove', mv); bud.removeEventListener('pointerup', up); bud.removeEventListener('pointercancel', up); bud.classList.remove('dragging'); if (moved) lsSet('buhat.dg.pos', JSON.stringify(pos)); else poke(v); };
+    const up = () => { bud.removeEventListener('pointermove', mv); bud.removeEventListener('pointerup', up); bud.removeEventListener('pointercancel', up); bud.classList.remove('dragging'); if (moved) lsSet('buhat.dg.pos', JSON.stringify(pos)); else buddyMenu(bud, v); };
     bud.addEventListener('pointermove', mv); bud.addEventListener('pointerup', up); bud.addEventListener('pointercancel', up);
   });
   document.body.append(bud);
@@ -6038,7 +6042,32 @@ const AI_PRESETS = [
   ['🎯 Coach', 'Act like a supportive productivity coach. Help me prioritise, break big tasks into small steps, and ask one good question when something is unclear.'],
   ['🇵🇭 Taglish', 'Reply in friendly Taglish, a natural mix of Filipino and English, like a helpful kaibigan at work.'],
 ];
-function aiName() { return str(AI.name).trim() || 'Pugad AI'; }
+function aiName() {
+  const n = str(AI.name).trim();
+  // With the dragon look, the assistant takes the dragon's name unless you gave it a different one.
+  if (AI.avatar === 'dragon' && (!n || n === 'Pugad AI') && typeof DG !== 'undefined' && DG.pet) return DG.pet.name;
+  return n || 'Pugad AI';
+}
+/* clicking the corner dragon: chat first, then pet / feed / tricks */
+function openAskPanel(v) {
+  if (!$('#agentPanel.open')) toggleAgent();
+  setTimeout(() => $('#agentPanel .chat-in')?.focus(), 250);
+  if (v && DG.pet) { act('happy', 850, v); say(pick(['Ask me anything! ✨', 'What can I help with? 🐉', 'Ooh, a question! 💭', 'I’m all ears… well, horns 🐲']), v, 2600); }
+}
+function buddyMenu(anchor, v) {
+  wake(true);
+  if ($('.pop .dg-quick')) { closePop(); return; }
+  const name = aiName();
+  const box = h('div', { class: 'dg-quick' },
+    h('button', { class: 'btn dg-ask', onclick: () => { closePop(); openAskPanel(v); } }, h('span', { text: '💬' }), h('span', { text: $('#agentPanel.open') ? 'Back to chat' : `Ask ${name}` })),
+    DG.pet ? h('div', { class: 'dg-quick-row' },
+      h('button', { class: 'pill-btn', onclick: () => { closePop(); poke(v); } }, '💖 Pet'),
+      h('button', { class: 'pill-btn', onclick: e => treatPop(e.currentTarget, v) }, '🍓 Feed'),
+      h('button', { class: 'pill-btn', onclick: e => { const a = e.currentTarget; closePop(); dragonMenu(a.isConnected ? a : anchor, v, false); } }, '✨ More'))
+      : h('div', { class: 'dg-quick-row' }, h('button', { class: 'pill-btn', onclick: () => { closePop(); poke(v); } }, '🥚 Tap the egg'), h('span', { class: 'w-sub', text: 'Tap 3 times to hatch' })));
+  openPop(anchor, box, { width: 280 });
+  setTimeout(() => box.querySelector('.dg-ask')?.focus(), 20);
+}
 function aiAvatarEl() {
   if (AI.avatar === 'dragon') { const v = dragonView({ stage: Math.max(1, typeof dStage === 'function' ? dStage(DG.pet) : 1), color: DG.pet ? DG.pet.color : 'theme', still: true }); v.classList.add('msg-av'); return v; }
   return h('span', { class: 'msg-av sparkle', 'aria-hidden': 'true', text: '✦' });
