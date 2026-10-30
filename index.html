@@ -981,6 +981,145 @@ textarea.l-field { resize: vertical; line-height: 1.5; }
 .vault-ack input { margin-top: 2px; accent-color: var(--accent-strong); }
 .vault-gen input[type=range] { accent-color: var(--accent-strong); width: 110px; }
 
+
+/* ---------- plush characters ---------- */
+.dragon svg { filter: drop-shadow(0 2px 2.5px rgb(60 30 40 / .14)); }
+.pl .pf { stroke-width: 1.4; stroke-opacity: .55; }
+.pl .ptx { opacity: .6; mix-blend-mode: soft-light; }
+.pl .pst { fill: none; stroke: #fff; stroke-opacity: .6; stroke-width: 1.3; stroke-dasharray: 2.2 3; stroke-linecap: round; }
+.c-main .pf { fill: hsl(var(--dh) var(--ds) var(--dl, 78%)); stroke: hsl(var(--dh) calc(var(--ds) * .6) calc(var(--dl, 78%) - 30%)); }
+.c-wing .pf { fill: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 7%)); stroke: hsl(var(--dh) calc(var(--ds) * .6) calc(var(--dl, 78%) - 32%)); }
+.c-dark .pf { fill: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 15%)); stroke: hsl(var(--dh) calc(var(--ds) * .6) calc(var(--dl, 78%) - 35%)); }
+.c-belly .pf { fill: hsl(42 95% 92%); stroke: hsl(36 50% 75%); }
+.c-belly2 .pf { fill: hsl(var(--dh) calc(var(--ds) * .8) calc(min(var(--dl, 78%) + 14%, 94%))); stroke: hsl(var(--dh) calc(var(--ds) * .5) calc(var(--dl, 78%) - 12%)); }
+.c-white .pf { fill: #fcf8f4; stroke: #d9cfc6; }
+.c-white2 .pf { fill: #f4ede6; stroke: #d9cfc6; }
+.c-black .pf { fill: #423a47; stroke: #2a232e; }
+.c-pink .pf { fill: #ffbdd0; stroke: #e894ad; }
+.c-orange .pf { fill: #ffb45c; stroke: #d98a2e; }
+.c-horn .pf { fill: hsl(44 90% 85%); stroke: hsl(38 60% 62%); }
+.c-gill .pf { fill: hsl(var(--dh) calc(var(--ds) * 1.1) calc(var(--dl, 78%) - 14%)); stroke: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 32%)); }
+.c-acc .pf { fill: hsl(calc(var(--dh) + 180) 70% 78%); stroke: hsl(calc(var(--dh) + 180) 45% 52%); }
+.c-acc2 .pf { fill: hsl(calc(var(--dh) + 180) 75% 68%); stroke: hsl(calc(var(--dh) + 180) 45% 48%); }
+.dragon[data-species="panda"] .c-acc .pf, .dragon[data-species="panda"] .c-acc2 .pf, .dragon[data-species="penguin"] .c-acc .pf, .dragon[data-species="penguin"] .c-acc2 .pf { fill: hsl(var(--dh) 75% 76%); stroke: hsl(var(--dh) 45% 50%); }
+.dragon[data-species="penguin"] .c-belly .pf { fill: #fcf8f4; }
+.c-egg .pf { fill: #fff8ec; stroke: #d8c7ab; }
+.egg-spots ellipse { fill: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 4%)); opacity: .85; }
+.dragon .stripe { fill: none; stroke: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 22%)); stroke-width: 3; stroke-linecap: round; }
+.dragon .whisk { fill: none; stroke: #6b5560; stroke-width: 1.4; stroke-linecap: round; opacity: .55; }
+.dragon .spot { fill: hsl(var(--dh) var(--ds) calc(var(--dl, 78%) - 16%)); }
+.dragon .beak { fill: #ffb24f; stroke: #d98a2e; stroke-width: 1.5; stroke-linejoin: round; }
+.p-acc2, .p-acc3 { display: none; }
+.ge-2 .p-acc2, .ge-3 .p-acc3 { display: inline; }
+.dragon[data-species="dragon"] .p-acc2, .dragon[data-species="dragon"] .p-acc3 { display: none; }
+.dragon[data-species="dragon"].ge-2 .p-acc2, .dragon[data-species="dragon"].ge-3 .p-acc3 { display: inline; }
+.dg-fire.bubbles circle { fill: hsl(195 90% 88% / .7); stroke: hsl(195 70% 70%); stroke-width: 1.2; }
+.a-fire .dg-fire.bubbles .f1 { animation-name: dgB1; } .a-fire .dg-fire.bubbles .f2 { animation-name: dgB2; } .a-fire .dg-fire.bubbles .f3 { animation-name: dgB3; } .a-fire .dg-fire.bubbles .f4 { animation-name: dgB4; }
+.dg-fire.bubbles circle { animation-duration: .9s !important; }
+@keyframes dgB1 { 0% { opacity: 1; transform: translate(0, 0) scale(.3); } 100% { opacity: 0; transform: translate(-30px, -50px) scale(1.4); } }
+@keyframes dgB2 { 0% { opacity: 1; transform: translate(0, 0) scale(.3); } 100% { opacity: 0; transform: translate(6px, -70px) scale(1.7); } }
+@keyframes dgB3 { 0% { opacity: 1; transform: translate(0, 0) scale(.3); } 100% { opacity: 0; transform: translate(34px, -46px) scale(1.2); } }
+@keyframes dgB4 { 0% { opacity: 1; transform: translate(0, 0) scale(.3); } 100% { opacity: 0; transform: translate(18px, -30px) scale(1); } }
+.dragon.still .dg-think, .dragon.still .dg-zz { display: none; }
+.char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; }
+.char-grid.small { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+.char-opt { display: grid; justify-items: center; gap: 2px; padding: 6px 4px; border-radius: 16px; border: 2px solid transparent; background: var(--bg); font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.char-opt:hover { border-color: var(--line); }
+.char-opt.on { border-color: var(--accent-strong); background: var(--accent-soft); color: var(--accent-ink); }
+.char-opt .dragon { width: 62px; height: 62px; pointer-events: none; }
+.char-grid.small .char-opt .dragon { width: 50px; height: 50px; }
+/* ---------- Devotionals ---------- */
+.dv { display: grid; gap: 10px; }
+.dv .w-head { margin-bottom: 0; }
+.dv-muted { color: var(--faint); }
+.dv-small { font-size: 12px; }
+.dv-lbl { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+.dv-lock { font-size: 11.5px; color: var(--faint); text-align: right; }
+.dv-credit { font-size: 11px; color: var(--faint); font-style: italic; }
+.dv-empty { font-size: 13.5px; padding: 10px 12px; border-radius: calc(var(--r) * .7); background: var(--bg); line-height: 1.45; }
+.dv-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.dv-row > .field { flex: 1 1 160px; min-width: 0; }
+.dv-stack { display: grid; gap: 6px; }
+.dv-tr { border: 1px solid var(--line); background: var(--card); border-radius: 99px; padding: 4px 10px; font-size: 12.5px; font-weight: 700; color: var(--muted); max-width: 100%; }
+.dv-ta { width: 100%; resize: vertical; font: inherit; font-size: 14px; line-height: 1.5; min-height: 64px; }
+.dv-daynav { display: flex; align-items: center; gap: 6px; }
+.dv-daylbl { min-width: 110px; text-align: center; font-family: var(--font-display); }
+.dv-card { position: relative; padding: 22px 22px 16px; border-radius: calc(var(--r) * 1.1); background: linear-gradient(135deg, hsl(var(--h) 80% 96%), hsl(calc(var(--h) + 40) 75% 95%)); border: 1px solid var(--line); overflow: hidden; }
+.dv-card::before { content: "“"; position: absolute; left: 10px; top: -14px; font: 700 84px/1 Georgia, serif; color: hsl(var(--h) 60% 80%); opacity: .7; pointer-events: none; }
+.dv-verse { position: relative; display: grid; gap: 8px; }
+.dv-vtext { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.6; color: var(--fg); }
+.dv-verse.big .dv-vtext { font-size: clamp(16px, 2.2cqi, 20px); }
+.dv-ref { font-weight: 800; color: var(--accent-ink); font-size: 13.5px; text-align: right; }
+.dv-retry { color: var(--muted); font-size: 13.5px; text-align: left; text-decoration: underline; text-decoration-style: dotted; }
+.dv-acts { gap: 6px; }
+.dv-sec { display: grid; gap: 6px; }
+.dv-soapgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.dv-soapbox { border-radius: calc(var(--r) * .9); padding: 10px; display: grid; gap: 8px; align-content: start; }
+.dv-soaph { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); }
+.dv-letter { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; color: #fff; flex: none; }
+.dv-s { background: var(--c-sky); } .dv-s .dv-letter { background: #5aa3e0; }
+.dv-o { background: var(--c-butter); } .dv-o .dv-letter { background: #d9a62b; }
+.dv-a { background: var(--c-mint); } .dv-a .dv-letter { background: #45b585; }
+.dv-p { background: var(--c-lilac); } .dv-p .dv-letter { background: #9a7be0; }
+.dv-soapbox .dv-ta, .dv-soapbox .field { background: color-mix(in srgb, var(--card) 85%, transparent); }
+.dv-soapbox b { color: var(--fg); }
+.dv-past, .dv-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.dv-chip { padding: 4px 11px; border-radius: 99px; background: var(--bg); border: 1px solid var(--line); font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.dv-chip:hover { border-color: var(--accent); color: var(--accent-ink); }
+.dv-chip.big { padding: 8px 14px; font-size: 14px; background: var(--accent-soft); color: var(--accent-ink); border-color: transparent; }
+.dv-addrow { display: grid; gap: 6px; }
+.dv-who { flex: 1 1 140px; }
+.dv-list { display: grid; gap: 6px; }
+.dv-pr { display: flex; gap: 10px; align-items: flex-start; padding: 9px 10px; border-radius: calc(var(--r) * .7); background: var(--bg); border: 1px solid transparent; }
+.dv-pr:hover { border-color: var(--line); }
+.dv-pr.answered { background: color-mix(in srgb, var(--c-butter) 45%, var(--bg)); }
+.dv-prcat { font-size: 18px; line-height: 1.3; }
+.dv-prmain { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.dv-prtext { font-size: 14px; font-weight: 600; word-break: break-word; }
+.dv-note { font-size: 13px; color: var(--fg); margin-top: 4px; white-space: pre-wrap; }
+.dv-prbtns { display: flex; gap: 4px; align-items: center; flex: none; }
+.dv-planhead { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.dv-dayno { font-family: var(--font-display); font-size: 22px; }
+.dv-donerow { justify-content: space-between; }
+.dv-strip { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 3px; }
+.dv-sday { display: grid; justify-items: center; gap: 3px; font-size: 10px; color: var(--faint); font-weight: 700; }
+.dv-sday i { width: 100%; max-width: 22px; aspect-ratio: 1; border-radius: 7px; background: var(--bg); border: 1px solid var(--line); }
+.dv-sday.on i { background: var(--accent-strong); border-color: var(--accent-strong); }
+.dv-sday.today span { color: var(--accent-ink); }
+.dv-reader { display: grid; gap: 12px; }
+.dv-rhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.dv-rtitle { font-family: var(--font-display); font-size: 20px; }
+.dv-rtext { max-height: 58vh; overflow-y: auto; padding: 4px 6px; font-family: Georgia, 'Times New Roman', serif; font-size: 16.5px; line-height: 1.75; }
+.dv-vn { font-family: var(--font-body); font-size: 10.5px; font-weight: 800; color: var(--accent-ink); margin-right: 3px; }
+.dv-search { width: 100%; }
+.dv-sn { border-radius: calc(var(--r) * .7); background: var(--bg); border: 1px solid transparent; overflow: hidden; }
+.dv-sn.open { border-color: var(--line); background: var(--card); }
+.dv-snhead { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "d t c" "d s c"; align-items: center; gap: 0 10px; width: 100%; text-align: left; padding: 8px 10px; }
+.dv-sndate { grid-area: d; font-weight: 800; font-size: 12px; color: var(--accent-ink); background: var(--accent-soft); border-radius: 10px; padding: 6px 8px; text-align: center; min-width: 52px; }
+.dv-sntitle { grid-area: t; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dv-snhead .dv-small { grid-area: s; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dv-caret { grid-area: c; color: var(--faint); }
+.dv-snbody { display: grid; gap: 8px; padding: 4px 10px 12px; }
+.dv-flash { display: grid; gap: 12px; justify-items: center; text-align: center; padding: 22px 18px; border-radius: calc(var(--r) * 1.1); background: linear-gradient(135deg, var(--c-lilac), var(--c-sky)); }
+.dv-flashref { font-family: var(--font-display); font-weight: 650; font-size: 20px; }
+.dv-flashtext { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 1.8; }
+.dv-blank { font: inherit; color: var(--accent-ink); letter-spacing: .04em; border-radius: 6px; padding: 0 2px; background: color-mix(in srgb, var(--card) 60%, transparent); }
+.dv-blank:hover { background: var(--card); }
+.dv-mv { display: grid; gap: 6px; padding: 9px 10px; border-radius: calc(var(--r) * .7); background: var(--bg); }
+.dv-mv .dv-ta { min-height: 48px; font-family: Georgia, serif; font-size: 14px; }
+.dv-gday { display: grid; gap: 4px; }
+.dv-glist { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.dv-g { display: flex; gap: 8px; align-items: center; padding: 6px 10px; border-radius: 12px; font-size: 14px; }
+.dv-g.thanks { background: color-mix(in srgb, var(--c-mint) 55%, var(--bg)); }
+.dv-g.praise { background: color-mix(in srgb, var(--c-butter) 60%, var(--bg)); }
+.dv-gt { flex: 1; min-width: 0; word-break: break-word; }
+.dv-recent summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--muted); padding: 4px 0; }
+.dv-recent[open] { display: grid; gap: 8px; }
+@container (max-width: 420px) {
+  .dv-card { padding: 18px 14px 12px; }
+  .dv-snhead .dv-small { display: none; }
+}
+
 /* ---------- Stickers ---------- */
 .stickers { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
 .stk { position: absolute; transform: translate(-50%, -50%) rotate(var(--rot)); font-size: var(--sz); line-height: 1; user-select: none; filter: drop-shadow(0 3px 2px hsl(0 0% 0% / .15)); }
@@ -1399,7 +1538,14 @@ const ITEMS = [
   { t: 'meals', n: 'Meal planner', d: 'Plan the week’s meals, send ingredients to groceries', i: '🍲', k: 'food menu cook recipes dinner lunch breakfast week' },
   { t: 'countdown', n: 'Countdowns', d: 'Days until birthdays, trips and paydays', i: '⏳', k: 'birthday anniversary event days until timer date' },
   { t: 'wellness', n: 'Water & sleep', d: 'Glasses of water and hours of sleep', i: '💧', k: 'health water hydration sleep wellbeing tracker' },
-  { t: 'journal', n: 'Journal', d: 'A daily prompt, gratitude and notes', i: '📔', k: 'diary gratitude reflection prompts writing' },
+  { t: 'journal', n: 'Journal', d: 'A daily prompt, gratitude and notes', i: '📔', k: 'diary reflection prompts writing' },
+  { t: 'votd', n: 'Verse of the day', d: 'A daily Bible verse with your reflection', i: '📖', g: 'Faith', k: 'bible verse devotional scripture daily faith' },
+  { t: 'soap', n: 'SOAP journal', d: 'Scripture, Observation, Application, Prayer', i: '✍️', k: 'devotional bible study quiet time faith' },
+  { t: 'prayer', n: 'Prayer journal', d: 'Prayer requests and answered prayers', i: '🙏', k: 'pray requests answered devotional faith' },
+  { t: 'plan', n: 'Bible reading plan', d: 'Bible in a year and more, tick each day', i: '📚', k: 'reading plan bible year devotional faith' },
+  { t: 'sermon', n: 'Sermon notes', d: 'Notes from church: points and takeaways', i: '🎤', k: 'church preaching message notes faith' },
+  { t: 'memory', n: 'Memory verses', d: 'Practise verses until you know them by heart', i: '🧠', k: 'memorize memorise scripture flashcards bible faith' },
+  { t: 'gratitude', n: 'Gratitude & praise', d: 'Daily thanks and praise list', i: '💛', k: 'thankful thanks praise blessings faith' },
   { t: 'goals', n: 'Goals', d: 'Progress bars and milestones', i: '🎯', g: 'Goals', k: 'goal target progress milestone okr savings resolution' },
   { t: 'pomodoro', n: 'Pomodoro timer', d: 'Focus sprints with breaks', i: '◔', k: 'timer focus tomato' },
   { t: 'dragon', n: 'Dragon den', d: 'Your team dragon. Pet it, feed it, watch it grow', i: '🐉', k: 'dragon pet mascot buddy egg cute' },
@@ -1590,6 +1736,7 @@ const TEMPLATES = [
   { id: 'weekly', n: 'Weekly planner', i: '🗓️', d: 'Seven-day plan with a habit tracker', make: () => ({ title: 'This week', icon: '🗓️', cover: 'sea', blocks: [wk('week'), mk('h2', 'Habits'), wk('habit'), mk('h2', 'Notes'), mk('text', '')] }) },
   { id: 'project', n: 'Project board', i: '🧩', d: 'Kanban board and project notes', make: () => ({ title: 'Project board', icon: '🧩', cover: 'lilac', blocks: [mk('h2', 'Goal'), mk('text', ''), wk('kanban'), mk('h2', 'Notes'), mk('bullet', '')] }) },
   { id: 'journal', n: 'Daily journal', i: '🌸', d: 'Mood, gratitude and a focus timer', make: () => ({ title: 'Journal', icon: '🌸', cover: 'gingham', blocks: [mk('h2', 'How I feel'), wk('mood'), mk('h2', 'Grateful for'), mk('bullet', ''), mk('h2', 'Focus time'), wk('pomodoro')] }) },
+  { id: 'quiet', n: 'Quiet time', i: '🕊️', d: 'Verse of the day, SOAP journal, prayer and a reading plan', make: () => ({ title: 'Quiet time', icon: '🕊️', cover: 'clouds', wide: true, blocks: [mk('callout', 'Your entries on this page are private to you, even if the page is shared. 🔒', { icon: '🕊️', color: 'sky' }), wk('votd'), { id: uid('b'), type: 'columns', data: { cols: [{ id: uid('col'), w: 1.4, blocks: [wk('soap')] }, { id: uid('col'), w: 1, blocks: [wk('prayer'), wk('plan')] }] } }, mk('text', '')] }) },
   { id: 'homelife', n: 'Home & life', i: '🏡', d: 'Groceries, meal plan and countdowns', make: () => ({ title: 'Home & life', icon: '🏡', cover: 'butter', wide: true, blocks: [{ id: uid('b'), type: 'columns', data: { cols: [{ id: uid('col'), w: 1, blocks: [wk('grocery'), wk('countdown')] }, { id: uid('col'), w: 1.9, blocks: [wk('meals')] }] } }, mk('text', '')] }) },
   { id: 'wellbeing', n: 'Goals & wellbeing', i: '🌱', d: 'Goals, water & sleep, and a journal', make: () => ({ title: 'Goals & wellbeing', icon: '🌱', cover: 'mint', blocks: [wk('goals'), { id: uid('b'), type: 'columns', data: { cols: [{ id: uid('col'), w: 1, blocks: [wk('wellness')] }, { id: uid('col'), w: 1.3, blocks: [wk('journal')] }] } }, mk('text', '')] }) },
   { id: 'calendar', n: 'Calendar', i: '📅', d: 'Month, week and day views for your events', make: () => ({ title: 'Calendar', icon: '📅', cover: 'butter', blocks: [wk('calendar'), mk('text', '')] }) },
@@ -1608,6 +1755,13 @@ function defData(t) {
     case 'db': return dbTemplate('blank');
     case 'habit': return { title: 'Habit tracker', habits: [] };
     case 'mood': return { title: 'Mood tracker', moods: {} };
+    case 'votd': return { title: 'Verse of the day', tr: 'web' };
+    case 'soap': return { title: 'SOAP journal', tr: 'web' };
+    case 'prayer': return { title: 'Prayer journal' };
+    case 'plan': return { title: 'Reading plan', plan: 'year', tr: 'web' };
+    case 'sermon': return { title: 'Sermon notes', tr: 'web' };
+    case 'memory': return { title: 'Memory verses', tr: 'web' };
+    case 'gratitude': return { title: 'Gratitude & praise' };
     case 'grocery': return { title: 'Grocery list', items: [] };
     case 'meals': return { title: 'Meal planner', days: {} };
     case 'goals': return { title: 'Goals', goals: [] };
@@ -1959,6 +2113,13 @@ function content(b, n) {
     case 'db': return wDb(b);
     case 'habit': return wHabit(b);
     case 'mood': return wMood(b);
+    case 'votd': return wDvVotd(b);
+    case 'soap': return wDvSoap(b);
+    case 'prayer': return wDvPrayer(b);
+    case 'plan': return wDvPlan(b);
+    case 'sermon': return wDvSermon(b);
+    case 'memory': return wDvMemory(b);
+    case 'gratitude': return wDvGrat(b);
     case 'grocery': return wLGrocery(b);
     case 'meals': return wLMeals(b);
     case 'goals': return wLGoals(b);
@@ -3381,6 +3542,7 @@ function pageText(p, max = 12000) {
       case 'week': { const ks = Object.keys(obj(d.items)).sort().slice(-14); lines.push('[Weekly planner]'); for (const k of ks) lines.push(`  ${k}: ${arr(d.items[k]).map(i => (i.done ? '(done) ' : '') + str(i.text)).join('; ')}`); break; }
       case 'calendar': lines.push(`[Calendar] ${arr(d.events).slice(-40).map(e => `${str(e.date)}${e.start ? ' ' + str(e.start) + '-' + str(e.end) : ''} ${str(e.text)}${e.done ? ' (done)' : ''}`).join('; ')}`); break;
       case 'habit': lines.push(`[Habit tracker] ${arr(d.habits).map(x => str(x.name)).join('; ')}`); break;
+      case 'votd': case 'soap': case 'prayer': case 'plan': case 'sermon': case 'memory': case 'gratitude': devoPageText(b, lines); break;
       case 'vault': break; // never send passwords to the AI
       case 'bookmark': if (d.url) lines.push(`[Bookmark] ${str(d.title)} ${str(d.url)}`); break;
       case 'image': if (d.caption) lines.push(`[Image] ${str(d.caption)}`); break;
@@ -3524,47 +3686,197 @@ function toggleAgent() {
   renderTopbar();
 }
 
-/* ================= Team dragon: one per workspace, raised together ================= */
-const DG_SVG = `<svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+/* ================= plush characters: pick how your team pet looks ================= */
+const CHARS = {
+  dragon:  { n: 'Dragon',  e: '🐉', hs: [155, 50], l: 78, special: ['🔥 Fire', 'fire'] },
+  cat:     { n: 'Cat',     e: '🐱', hs: [28, 85],  l: 76, special: ['💕 Hug', 'hearts'] },
+  bunny:   { n: 'Bunny',   e: '🐰', hs: [330, 30], l: 88, special: ['💕 Hug', 'hearts'] },
+  bear:    { n: 'Bear',    e: '🐻', hs: [27, 42],  l: 66, special: ['💕 Hug', 'hearts'] },
+  panda:   { n: 'Panda',   e: '🐼', hs: [340, 70], l: 95, special: ['🎋 Snack', 'bamboo'], fixed: true },
+  frog:    { n: 'Frog',    e: '🐸', hs: [105, 45], l: 70, special: ['🫧 Bubbles', 'bubbles'] },
+  axolotl: { n: 'Axolotl', e: '🦎', hs: [340, 80], l: 84, special: ['🫧 Bubbles', 'bubbles'] },
+  chick:   { n: 'Chick',   e: '🐥', hs: [46, 95],  l: 72, special: ['🎵 Sing', 'notes'] },
+  penguin: { n: 'Penguin', e: '🐧', hs: [222, 30], l: 40, special: ['🎵 Sing', 'notes'] },
+};
+const CHAR_KEYS = Object.keys(CHARS);
+const FELT_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAL10lEQVR42kWXaXObh2GEn/fFRQIkAN4ExZuUxCVlU5IlR77r2JNJ2iT1T02cyWSaw3ZiJ6ktS6IqmUuKt3hfAA/cBIF+SJru1/26s89u0Orhkg/5WnHPss8gy8qxQr8jlAjU7Tv8v5boZledLDPspPa54Of/dF6SdVU1z+nPrjCmKPsMuosXIW0K9QOPfIcT9ZPlFhFSviYgTt7jLGlV1gaveU2Kp7r2NIEvdMIFU14Af+k8NV+yRZJv/JFyjBJjgFB7JILWsPqo+EzDPmSSbzTvAinQMe/4W6Z1RIUqBULmeOUkvbQxqt9T8bt6yghRNmg5pitnVXKaCPfZ1VN66KXi+ZAKC7RzwA+M6b/VRUFdqnDiElAgwi5NRjxEO69oMMyGDln0T/wGi8TYdK97PK8Od3FJkTF2uNAxUYa97QCiXPOQpnKe0bGHKXLAlu5RIwLq5jllIuTp9IDqnLNDjX0+1B/9qZaYcr9eUceOcEPDfqlFx8iTZMyXJBmAYGbKW8o4So5LHbpIijoTVLilTtaoOaKyL5nXKRee0hYZH3GAdORHfC65zL4G2aXFkI8Vp+k3KFNUhF3H+TCYaXOLmMY8QI2X6vW+Km5TDw2HnPOIY3p4InyXRWa14hqj1Am0SowpQ6iiu4TNgHadI05CJwyyR5KU40GrS4EfUKaX51zTy2vuaINrer2lpod16E4dM8Wh59hgl9t064IVdzNEXlme+4G23aOQQy5o+YG+YYY29n1AimKokH7O6WVRUSI8pVvPSXLpvM4Y1ZLn1OZeJyhzoJJiVLTpTuI6ZZum24jzmCM997qPPEtcX5NxH9+7R1muGQtaD/U//hlr2qPNE7Tr775LlRbPiRCo0326dqBjl+hjVGtEOCXiG0r5lCSvlaHsEh9zrqeOM0eUJTo1SN0lrmkFrTFa1BniVAWqNPyu/od2p9miWy2K7lc7q9xm06MUdMBtUi4Rp8qaxtxFU6ZBLwFZr3KbH3TPewzxhF4qTIWUOFCX9snS8Kh79J1TzqvGHA3GPKNjtmi4z+MUNQR08FTHpBTophtcEXeFIY8zQIq3WeGhY+pijRl18FBXoYqExMiTcUpJFZjQOaO0yCjpY6266hlPaJEi064zxBlR39UGBcdVZYV1RTxFgabXueKWnvPEi4oQo65dx0L6qbFFHy81wiQtGgyrRlTP/JoptxHRC6Yoal6dmuQBG0ZH9BII8uqmwi/Y0CEN5rWiDT9iWA+paN8DrtEftD7RpfdVJs4xP/dv6KKpgqOadYt+fcUdj/MdRyQ0Qtl5jbhFjZa26eWd/6tZ/5G6Etz2Gavq5tzvsay0h3kRtG7o0mjKq2rnXTb8kinG9IKsu/mOm0o7p288rSWq7uc+X6vBADtOUwJ9wmsXuaTINAu8rUMuDBOcqEGSEtlQ/QxoxOvccBloKkGWPxES6rmyKvAMHNNTOrnJDvCBP/asY8pQ1yf+tSOK0UZOZ7qvPZ9xoX4OdeScIcOt0CdOcaaMZhgCr9HJmQJnWCfFCSWmQCN+y2XH1QZ6TVm73KXOPX6nDKte5VyHnqbhDua55zSnvqknbHICoUIte4gKaBb0E8/T8vsMME+F+075GvieTmW05zJQpc4FL0jp0k06VSerNob4nqLSlP2EBd5hi5x6fQIhKfqU923gsb9kj29ZYxM7xzjWKTkg0O994LSS4DWqztPwAQUe0EeSMzKkdIs1CjpjhFl9rwh1jxCFkE6OPaVtIKprqmoRU1M14Iwcd7jUV4z63xSy4xvAezKztLhNge+c9Xv8iB0XHPKA196gygtPkHJRFyT5bdAaUSdbbtf7fOFubdMk9Ic68G3+Qp7P/pnDBTLsca28B3VB1BNapkk3WUe4yTp5FRikRslpIjpzhCp3ifIqqkEfq4MkeICCJ1njAxZ8n3UmifF3VWgij+l7d6riH/NXMhYl+h2lg0AJXzBJi0E2mfICDXX7XGNO6jkN9wczgQeY0rlR4BIjOvcGoa65opdTKgyQ5sq7yriPW9pmi0nWGWCHG5waxnnMW2pwQj/PPK4Y4nPSPifKJPmg9bG+8UdaclFJKq4rQR/7NEl5niQmwgCZf62fO3xOXGmf600vaZR1T3OiEXdQ5yXXvKNlF/UBi+7RMvheVOZKFzRIkPO1fiDpqloU3atl39MVRSrU3U2LHzTuHX6ply5q0GVNsuKbivvaBTU5IUnCV65RZJFZ/YoesmwHrQ6N+oS7OueYfboo+BGPeZuaqh5hmRIVKsr5khzHamfNv+S3dDHNnlrs+g0VHTLAFmVC0rTTr+e+1E/5G6E7ovrUvyFL0klyvMlTprkgTV0vGAFdckWUwEcqU2PMr5nXqv+DP1FU1ksK2KCdIW2Q4pCI+/SCOY+y7C/0Yz6nEXqRUH36A2hNjxXnBee8rTN3YaBO3jmGFNJF0lcaUZQzrfAJkx7npx4mSoa8jxx1F9d0k+alDhlXnf+iU++HSuoWTWbBVU95Wz3c4Qt3kHECGPJNXXiAtOfdrabPWfC+E/oLl1rBuiTnBGm1s8wQMQKizDiggy43+NgbQetjttlWj9/mbyq6zGd66pQueMi3pL2pNE0SRDnylK59xoQWSBNxVFeO0lDeOZ0QpQmMuk/bzqrlTp0yxTqFqJa4ZNZN4MxXfMaXdGiV+/5CP/a60gwR8xE3laXlG+yx54wOmWbO/0ANwFcMs0vB+3SR0YLf1Hd0+4KGysHMTQ48oX0iNCz+SkRi2xW1+S118jnzPlCGdY/qmDpJQlIU/CM9c78SvlbUNfKMU9UW3Q50RA8XjuiUNEnnQjZIaJtOX3NFDz9ijCt3Ckoc8Ct+yTMdOOBKJabdZMx9xH1HfyCjQ1d54Q2100tSMQZocUWaNL3q86jvckw8aL1JgbyGvcnP9AdPaY05XtJBzXc51QmP+LXhvrY9BKqy7HHlnWJYa3S4RFp7JJ1njCGeKMGk21lWyLifcpNEyD59jBPhZ/qcQE3HWWLSJ87xjG7a/Tf+k0/1kjGWOWaPrDZc04V2iDqpPkKmnWVGNW2olxvu0pJGnKJCRGs0gplhqj7hM/3ApQdZ4j32GNZrDklTpY1jv4s15NdM8xgpbjghTa9eUfKMtukmZIEBJxRxhkPaKDHPDlXtMBTMdDjHnNYcUFGZQR9zoQazbDlCgbsk+YpHOifPOV0uacqHatDtlhJ+RVMVpxRSpp1uYlTIc8frxHXgT1kjG/UQs1rxFUl1kfcLpA4fUKKgOkNceZOHbJCiRZeb3GKBkH4fkaWqJtPeoJMjj6jBMVM+V5KIQvrdjgl5EbR6dMWoM6wyTJ1TJTj3mUbY86giJL1Fh8quKelrnVlckqGqNpYIGPM6H2iZvG+yT4X77HDNBHHKtLNKjSBUg15e8ZiIVjggQd136XTD72uTdRaJqeoZtTyqgofp05EiXHLtkDlWuaUCR24qxqBmlFeT+zpjgTiojYSGo04q8Ds6YcnzqnFEVN9zmxJFTzOgb9XmNgrUSZAlQsXv6WuabjLJrmd1xaGnNcMieZ/Sx7sskOKejjhwm3YohXS4U0WantMz75DwDOPccMuPdUTEc44xyw1/rLxH6dAyV8wpwhmDzqrmJE1mDLO8zzjvckKdBnkCjpj2XRpROrVJyXVu+Q3OiXJJCzjVDBtaIseF0XMGqOmcqoe04j3N0smW2kiyT44vdcl9DXteay5rgIguXOaOCn5GGFLxDAEf0a2qtqlz4CaoQoc/oMQzGsAVVWdIuaSK43zAORFKPvI2t3yocY952AheUnGPazRVx9QIyIU6YdkP+E41HzFGhH+A5jb7OrKM3+LXTHiTHrp44Cp1rXCsp4oypQ79WecuMA/6HYseUZElhRw7omsnyLEbzMxw4Rqz+pbb3lWVpIe14IjuOctfNOGUzln3R1rztU5p0kWBeyzw7//6BugJSfaYwNz1U8Xo4cCTnNCnlaDVQZv6KDHAFVsUHPKJCj5Sr1/TS4QcZdoJONMpCV+ypyHOGCbGHh/6N/xCJmSTEXewqCF3sKkbRIh5hVvs/C/lG1ITYtlqMAAAAABJRU5ErkJggg==';
+function myKind() { const k = S.settings.petKind; return CHARS[k] ? k : 'dragon'; }
+function myColor() { return str(S.settings.petColor) || 'auto'; }
+function speciesName(kind) { return (CHARS[kind || myKind()] || CHARS.dragon).n.toLowerCase(); }
+function stageName(st, kind) {
+  if (st <= 0) return 'Egg'; if (st === 1) return 'Hatchling';
+  return ['', '', 'Little', 'Teen', 'Grown', 'Legendary'][Math.min(5, st)] + ' ' + speciesName(kind);
+}
+
+// shape helpers: each piece gets a felt fill, soft 3D shading, a felt texture and stitched seams
+const PL_DEFS = `<defs>
+<radialGradient id="pgHl" cx=".36" cy=".28" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".72" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".2"/></radialGradient>
+<pattern id="pgFelt" width="26" height="26" patternUnits="userSpaceOnUse"><image href="${'${FELT}'}" width="26" height="26"/></pattern>
+</defs>`;
+function plE(cx, cy, rx, ry, cls, rot = 0, opts = {}) {
+  const tf = rot ? ` transform="rotate(${rot} ${cx} ${cy})"` : '';
+  const g = `cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}"`;
+  const ins = Math.min(3.2, rx * .18, ry * .18);
+  return `<g class="pl ${cls}"${tf}><ellipse class="pf" ${g}/><ellipse ${g} fill="url(#pgHl)"/><ellipse ${g} fill="url(#pgFelt)" class="ptx"/>${opts.noStitch || rx < 9 ? '' : `<ellipse class="pst" cx="${cx}" cy="${cy}" rx="${rx - ins}" ry="${ry - ins}"/>`}</g>`;
+}
+function plP(d, cls, opts = {}) {
+  return `<g class="pl ${cls}"><path class="pf" d="${d}"/><path d="${d}" fill="url(#pgHl)"/><path d="${d}" fill="url(#pgFelt)" class="ptx"/>${opts.noStitch ? '' : `<path class="pst" d="${d}"/>`}</g>`;
+}
+const flat = (tag, attrs) => `<${tag} ${Object.entries(attrs).map(([k, v]) => `${k}="${v}"`).join(' ')}/>`;
+
+function charParts(kind) {
+  // Returns { back, body, head, top, face } SVG strings for a character.
+  const P = { back: '', armL: '', armR: '', feet: '', body: '', belly: '', head: '', top: '', face: '', eyeY: 86, mouth: '', mo: '', nose: '' };
+  const bodyCls = kind === 'panda' ? 'c-white' : 'c-main';
+  P.body = plE(100, 142, 50, 44, bodyCls);
+  P.feet = plE(76, 182, 17, 10, kind === 'panda' ? 'c-black' : kind === 'penguin' || kind === 'chick' ? 'c-orange' : 'c-main', 0, { noStitch: true }) + plE(124, 182, 17, 10, kind === 'panda' ? 'c-black' : kind === 'penguin' || kind === 'chick' ? 'c-orange' : 'c-main', 0, { noStitch: true });
+  P.armL = plE(62, 140, 10, 15, kind === 'panda' ? 'c-black' : 'c-main', 28, { noStitch: true });
+  P.armR = plE(138, 140, 10, 15, kind === 'panda' ? 'c-black' : 'c-main', -28, { noStitch: true });
+  P.belly = plE(100, 151, 30, 29, 'c-belly');
+  P.head = plE(100, 84, 51, 43, kind === 'panda' ? 'c-white' : 'c-main');
+  P.mouth = '<path class="dg-mouth" d="M93 105 Q96.5 109.5 100 106 Q103.5 109.5 107 105"/>';
+  P.mo = '<g class="dg-mo"><ellipse cx="100" cy="108" rx="6.5" ry="5.5" fill="#7b2d43"/><ellipse cx="100" cy="111" rx="3.8" ry="2.4" fill="#ff8fa8"/></g>';
+  switch (kind) {
+    case 'dragon':
+      P.back = `<g class="dg-tail">${plP('M136 156 C166 160 182 140 176 116 C174 108 166 108 166 116 C168 136 152 144 132 140 Z', 'c-main')}${plP('M171 113 L169 94 L186 106 Z', 'c-dark', { noStitch: true })}</g>`
+        + `<g class="dg-wing l"><g class="dg-flap">${plP('M70 112 C40 110 22 88 28 60 C38 72 46 74 54 72 C50 86 58 96 74 100 Z', 'c-wing')}</g></g>`
+        + `<g class="dg-wing r"><g class="dg-flap">${plP('M130 112 C160 110 178 88 172 60 C162 72 154 74 146 72 C150 86 142 96 126 100 Z', 'c-wing')}</g></g>`;
+      P.top = `<g class="p-acc2">${plP('M76 52 C68 38 68 26 74 18 C82 30 88 40 90 48 Z', 'c-horn', { noStitch: true })}${plP('M124 52 C132 38 132 26 126 18 C118 30 112 40 110 48 Z', 'c-horn', { noStitch: true })}</g>`
+        + `<g class="p-acc3">${plP('M90 44 L100 26 L110 44 Z', 'c-dark', { noStitch: true })}</g>`
+        + plP('M54 80 C36 76 30 62 36 52 C44 62 52 66 60 68 Z', 'c-dark', { noStitch: true }) + plP('M146 80 C164 76 170 62 164 52 C156 62 148 66 140 68 Z', 'c-dark', { noStitch: true });
+      P.nose = '<circle class="dg-ns" cx="95" cy="98" r="1.6"/><circle class="dg-ns" cx="105" cy="98" r="1.6"/>';
+      break;
+    case 'cat':
+      P.back = `<g class="dg-tail">${plP('M138 160 C170 166 182 140 172 118 C168 110 160 112 162 120 C170 138 156 150 136 146 Z', 'c-main')}<path d="M168 126 l7 -3 M170 136 l7 0 M164 147 l6 4" class="stripe"/></g>`;
+      P.top = plP('M58 66 C54 46 58 30 66 24 C76 34 86 44 90 50 Z', 'c-main', { noStitch: true }) + plP('M64 58 C62 46 64 38 68 34 C74 40 80 46 82 50 Z', 'c-pink', { noStitch: true })
+        + plP('M142 66 C146 46 142 30 134 24 C124 34 114 44 110 50 Z', 'c-main', { noStitch: true }) + plP('M136 58 C138 46 136 38 132 34 C126 40 120 46 118 50 Z', 'c-pink', { noStitch: true })
+        + '<path class="stripe" d="M92 48 l2 9 M100 46 l0 10 M108 48 l-2 9"/>';
+      P.nose = '<path d="M96.5 98 L103.5 98 L100 102 Z" fill="#f28aa6"/><path class="whisk" d="M60 98 L80 100 M60 106 L80 104 M140 98 L120 100 M140 106 L120 104"/>';
+      break;
+    case 'bunny':
+      P.back = plE(146, 162, 13, 12, 'c-white');
+      P.top = plE(80, 32, 12, 32, 'c-main', -8) + plE(80, 36, 6, 22, 'c-pink', -8, { noStitch: true }) + plE(120, 32, 12, 32, 'c-main', 8) + plE(120, 36, 6, 22, 'c-pink', 8, { noStitch: true });
+      P.nose = '<ellipse cx="100" cy="99" rx="4" ry="2.8" fill="#f28aa6"/>';
+      P.mo = '<g class="dg-mo"><ellipse cx="100" cy="108" rx="6.5" ry="5.5" fill="#7b2d43"/><rect x="97" y="103" width="6" height="4.5" rx="1" fill="#fff"/></g>';
+      break;
+    case 'bear':
+      P.top = plE(64, 50, 15, 14, 'c-main') + plE(64, 51, 8, 7, 'c-belly', 0, { noStitch: true }) + plE(136, 50, 15, 14, 'c-main') + plE(136, 51, 8, 7, 'c-belly', 0, { noStitch: true });
+      P.face0 = plE(100, 102, 17, 12, 'c-belly', 0, { noStitch: true });
+      P.nose = '<ellipse cx="100" cy="97" rx="5.5" ry="4" fill="#4a3530"/>';
+      break;
+    case 'panda':
+      P.top = plE(63, 50, 15, 14, 'c-black') + plE(137, 50, 15, 14, 'c-black');
+      P.face0 = plE(79, 88, 13, 16, 'c-black', 30, { noStitch: true }) + plE(121, 88, 13, 16, 'c-black', -30, { noStitch: true });
+      P.nose = '<ellipse cx="100" cy="99" rx="5" ry="3.5" fill="#3d3440"/>';
+      P.belly = plE(100, 151, 28, 27, 'c-white2');
+      break;
+    case 'frog':
+      P.eyeY = 60;
+      P.top = plE(78, 58, 18, 17, 'c-main') + plE(122, 58, 18, 17, 'c-main');
+      P.belly = plE(100, 151, 30, 29, 'c-belly2');
+      P.mouth = '<path class="dg-mouth" d="M80 100 Q100 114 120 100"/>';
+      P.mo = '<g class="dg-mo"><path d="M82 100 Q100 122 118 100 Z" fill="#7b2d43"/><ellipse cx="100" cy="109" rx="7" ry="3" fill="#ff8fa8"/></g>';
+      P.face0 = '<circle cx="86" cy="72" r="3" class="spot"/><circle cx="118" cy="76" r="2.2" class="spot"/><circle cx="122" cy="160" r="4" class="spot"/><circle cx="76" cy="132" r="3" class="spot"/>';
+      break;
+    case 'axolotl': {
+      const g = (x, y, r) => plE(x, y, 5.5, 15, 'c-gill', r, { noStitch: true });
+      P.back = `<g class="dg-tail">${plP('M136 156 C168 164 190 148 186 124 C176 132 160 138 134 140 Z', 'c-main')}</g>` + g(44, 66, -60) + g(42, 84, -90) + g(46, 102, -120) + g(156, 66, 60) + g(158, 84, 90) + g(154, 102, 120);
+      P.belly = plE(100, 151, 30, 29, 'c-belly2');
+      P.mouth = '<path class="dg-mouth" d="M86 103 Q100 112 114 103"/>';
+      P.face0 = '<circle cx="80" cy="104" r="1.6" class="spot"/><circle cx="120" cy="104" r="1.6" class="spot"/>';
+      break;
+    }
+    case 'chick':
+      P.armL = plE(58, 138, 9, 17, 'c-wing', 40, { noStitch: true }); P.armR = plE(142, 138, 9, 17, 'c-wing', -40, { noStitch: true });
+      P.top = plP('M96 44 C92 30 98 24 102 30 C104 22 112 24 108 36 C114 32 118 38 110 44 Z', 'c-main', { noStitch: true });
+      P.belly = plE(100, 151, 30, 29, 'c-belly2');
+      P.nose = ''; P.mouth = '<path d="M93 101 L107 101 L100 109 Z" class="beak"/>';
+      P.mo = '<g class="dg-mo"><path d="M93 99 L107 99 L100 104 Z" class="beak"/><path d="M94 106 L106 106 L100 114 Z" class="beak"/></g>';
+      break;
+    case 'penguin':
+      P.armL = plE(56, 140, 9, 22, 'c-main', 22, { noStitch: true }); P.armR = plE(144, 140, 9, 22, 'c-main', -22, { noStitch: true });
+      P.belly = plE(100, 150, 34, 33, 'c-white');
+      P.face0 = plP('M100 116 C70 118 60 92 70 76 C78 66 92 68 100 78 C108 68 122 66 130 76 C140 92 130 118 100 116 Z', 'c-white', { noStitch: true });
+      P.nose = ''; P.mouth = '<path d="M93 99 L107 99 L100 106 Z" class="beak"/>';
+      P.mo = '<g class="dg-mo"><path d="M93 97 L107 97 L100 102 Z" class="beak"/><path d="M94 104 L106 104 L100 111 Z" class="beak"/></g>';
+      break;
+  }
+  return P;
+}
+function charSVG(kind) {
+  if (!CHARS[kind]) kind = 'dragon';
+  const P = charParts(kind); const ey = P.eyeY, dy = ey - 86;
+  const eye = (x) => `<g class="dg-eye" style="transform-origin:${x}px ${ey}px"><g class="dg-look"><ellipse cx="${x}" cy="${ey}" rx="9.5" ry="12" fill="#2b1f2e"/><circle cx="${x + 3}" cy="${ey - 5}" r="3.8" fill="#fff"/><circle cx="${x - 3}" cy="${ey + 5}" r="1.9" fill="#fff"/></g></g>`;
+  const special = CHARS[kind].special[1];
+  const fx = special === 'fire' ? '<g class="dg-fire"><circle class="f1" cx="100" cy="114" r="7"/><circle class="f2" cx="100" cy="114" r="9"/><circle class="f3" cx="100" cy="114" r="6"/><circle class="f4" cx="100" cy="114" r="8"/></g>'
+    : special === 'bubbles' ? '<g class="dg-fire bubbles"><circle class="f1" cx="100" cy="108" r="6"/><circle class="f2" cx="100" cy="108" r="8"/><circle class="f3" cx="100" cy="108" r="5"/><circle class="f4" cx="100" cy="108" r="7"/></g>' : '';
+  const acc = kind === 'dragon' ? '' :
+    `<g class="p-acc2">${plE(126, 47, 9, 7, 'c-acc', -20, { noStitch: true })}${plE(142, 49, 9, 7, 'c-acc', 20, { noStitch: true })}${plE(134, 48, 4.5, 4.5, 'c-acc2', 0, { noStitch: true })}</g>`
+    + `<g class="p-acc3">${plP('M62 116 C80 128 120 128 138 116 L140 126 C120 138 80 138 60 126 Z', 'c-acc')}${plP('M118 128 L128 156 L116 154 L110 130 Z', 'c-acc', { noStitch: true })}</g>`;
+  return `<svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">${PL_DEFS.replace('${FELT}', FELT_PNG)}
 <ellipse class="dg-shadow" cx="100" cy="193" rx="46" ry="6"/>
 <g class="dg-egg"><g class="dg-eggin">
- <path class="dg-eggshell o" d="M100 48 C138 48 152 104 150 136 C148 168 128 188 100 188 C72 188 52 168 50 136 C48 104 62 48 100 48 Z"/>
- <ellipse class="dg-bd" cx="80" cy="112" rx="10" ry="8"/><ellipse class="dg-wg" cx="121" cy="94" rx="7" ry="6"/><ellipse class="dg-bd" cx="124" cy="150" rx="12" ry="9"/><ellipse class="dg-wg" cx="78" cy="160" rx="7" ry="5"/><ellipse class="dg-dk" cx="100" cy="72" rx="5" ry="4"/>
+ ${plP('M100 48 C138 48 152 104 150 136 C148 168 128 188 100 188 C72 188 52 168 50 136 C48 104 62 48 100 48 Z', 'c-egg')}
+ <g class="egg-spots"><ellipse cx="80" cy="112" rx="10" ry="8"/><ellipse cx="121" cy="94" rx="7" ry="6"/><ellipse cx="124" cy="150" rx="12" ry="9"/><ellipse cx="78" cy="160" rx="7" ry="5"/><ellipse cx="100" cy="72" rx="5" ry="4"/></g>
  <path class="dg-crack c1" d="M66 100 L78 108 L72 116 L86 123"/><path class="dg-crack c2" d="M120 118 L130 127 L123 134 L136 142 L129 150"/><path class="dg-crack c3" d="M84 66 L94 76 L102 67 L112 78"/>
 </g></g>
 <g class="dg-grow"><g class="dg-bob"><g class="dg-act">
- <g class="dg-tail"><path class="dg-bd o" d="M136 156 C166 160 182 140 176 116 C174 108 166 108 166 116 C168 136 152 144 132 140 Z"/><path class="dg-dk o" d="M171 113 L169 94 L186 106 Z"/></g>
- <g class="dg-wing l"><g class="dg-flap"><path class="dg-wg o" d="M70 112 C40 110 22 88 28 60 C38 72 46 74 54 72 C50 86 58 96 74 100 Z"/></g></g>
- <g class="dg-wing r"><g class="dg-flap"><path class="dg-wg o" d="M130 112 C160 110 178 88 172 60 C162 72 154 74 146 72 C150 86 142 96 126 100 Z"/></g></g>
- <ellipse class="dg-bd o" cx="100" cy="142" rx="50" ry="44"/>
- <ellipse class="dg-bl" cx="100" cy="150" rx="30" ry="30"/>
- <path class="dg-bl2" d="M80 138 Q100 144 120 138 M77 152 Q100 158 123 152 M81 166 Q100 171 119 166"/>
- <ellipse class="dg-bd o" cx="64" cy="142" rx="9" ry="13" transform="rotate(25 64 142)"/>
- <ellipse class="dg-bd o" cx="136" cy="142" rx="9" ry="13" transform="rotate(-25 136 142)"/>
- <ellipse class="dg-bd o" cx="76" cy="182" rx="17" ry="10"/><ellipse class="dg-bd o" cx="124" cy="182" rx="17" ry="10"/>
- <path class="dg-toe" d="M68 187 v-4 M76 188 v-4 M84 187 v-4 M116 187 v-4 M124 188 v-4 M132 187 v-4"/>
- <g class="p-horns"><path class="dg-hn o" d="M76 52 C68 38 68 26 74 18 C82 30 88 40 90 48 Z"/><path class="dg-hn o" d="M124 52 C132 38 132 26 126 18 C118 30 112 40 110 48 Z"/></g>
- <path class="p-spikes dg-dk o" d="M90 44 L100 26 L110 44 Z"/>
- <path class="dg-dk o" d="M54 80 C36 76 30 62 36 52 C44 62 52 66 60 68 Z"/>
- <path class="dg-dk o" d="M146 80 C164 76 170 62 164 52 C156 62 148 66 140 68 Z"/>
- <ellipse class="dg-bd o" cx="100" cy="84" rx="50" ry="42"/>
- <path class="p-shell" d="M58 70 C66 38 134 38 142 70 L134 61 L126 70 L118 59 L110 69 L100 58 L90 69 L82 59 L74 70 L66 61 Z"/>
- <g class="p-crown"><path d="M84 42 L86 22 L94 32 L100 17 L106 32 L114 22 L116 42 Z" fill="#ffd45e" stroke="#d99d22" stroke-width="2.5" stroke-linejoin="round"/><circle cx="100" cy="35" r="3.2" fill="#ff7aa8"/></g>
- <ellipse class="dg-ck" cx="66" cy="100" rx="9" ry="5.5"/><ellipse class="dg-ck" cx="134" cy="100" rx="9" ry="5.5"/>
- <g class="dg-open">
-  <g class="dg-eye" style="transform-origin:80px 86px"><g class="dg-look"><ellipse cx="80" cy="86" rx="10" ry="12.5" fill="#2b1f2e"/><circle cx="83" cy="81" r="4" fill="#fff"/><circle cx="77" cy="91" r="2" fill="#fff"/></g></g>
-  <g class="dg-eye" style="transform-origin:120px 86px"><g class="dg-look"><ellipse cx="120" cy="86" rx="10" ry="12.5" fill="#2b1f2e"/><circle cx="123" cy="81" r="4" fill="#fff"/><circle cx="117" cy="91" r="2" fill="#fff"/></g></g>
- </g>
- <path class="dg-cl dg-cl-happy" d="M70 90 Q80 77 90 90 M110 90 Q120 77 130 90"/>
- <path class="dg-cl dg-cl-sleep" d="M70 86 Q80 94 90 86 M110 86 Q120 94 130 86"/>
- <circle class="dg-ns" cx="95" cy="98" r="1.6"/><circle class="dg-ns" cx="105" cy="98" r="1.6"/>
- <path class="dg-mouth" d="M92 104 Q96 109 100 105 Q104 109 108 104"/>
- <g class="dg-mo"><ellipse cx="100" cy="107" rx="7" ry="6" fill="#7b2d43"/><ellipse cx="100" cy="110" rx="4" ry="2.6" fill="#ff8fa8"/></g>
- <g class="dg-fire"><circle class="f1" cx="100" cy="114" r="7"/><circle class="f2" cx="100" cy="114" r="9"/><circle class="f3" cx="100" cy="114" r="6"/><circle class="f4" cx="100" cy="114" r="8"/></g>
+ ${P.back}${P.feet}${P.body}${P.belly}${P.armL}${P.armR}${kind === 'penguin' ? '' : ''}${P.head}${P.face0 || ''}
+ <g class="p-shell"><path class="shell" d="M58 70 C66 38 134 38 142 70 L134 61 L126 70 L118 59 L110 69 L100 58 L90 69 L82 59 L74 70 L66 61 Z"/></g>
+ ${P.top}${acc}
+ <g class="p-crown"><path d="M84 ${42 - (kind === 'frog' ? 4 : 0)} L86 22 L94 32 L100 17 L106 32 L114 22 L116 42 Z" fill="#ffd45e" stroke="#d99d22" stroke-width="2.5" stroke-linejoin="round"/><circle cx="100" cy="35" r="3.2" fill="#ff7aa8"/></g>
+ <ellipse class="dg-ck" cx="68" cy="${100 + Math.max(0, dy * .3)}" rx="9" ry="5.5"/><ellipse class="dg-ck" cx="132" cy="${100 + Math.max(0, dy * .3)}" rx="9" ry="5.5"/>
+ <g class="dg-open">${eye(kind === 'frog' ? 78 : 80)}${eye(kind === 'frog' ? 122 : 120)}</g>
+ <path class="dg-cl dg-cl-happy" d="M${kind === 'frog' ? 68 : 70} ${ey + 4} Q${kind === 'frog' ? 78 : 80} ${ey - 9} ${kind === 'frog' ? 88 : 90} ${ey + 4} M${kind === 'frog' ? 112 : 110} ${ey + 4} Q${kind === 'frog' ? 122 : 120} ${ey - 9} ${kind === 'frog' ? 132 : 130} ${ey + 4}"/>
+ <path class="dg-cl dg-cl-sleep" d="M${kind === 'frog' ? 68 : 70} ${ey} Q${kind === 'frog' ? 78 : 80} ${ey + 8} ${kind === 'frog' ? 88 : 90} ${ey} M${kind === 'frog' ? 112 : 110} ${ey} Q${kind === 'frog' ? 122 : 120} ${ey + 8} ${kind === 'frog' ? 132 : 130} ${ey}"/>
+ ${P.nose}${P.mouth}${P.mo}${fx}
 </g></g></g>
 <g class="dg-zz"><text x="142" y="54">z</text><text x="154" y="40">z</text><text x="167" y="25">Z</text></g>
 <g class="dg-think"><circle cx="146" cy="58" r="3"/><circle cx="154" cy="47" r="4.5"/><ellipse cx="173" cy="28" rx="20" ry="16"/><text x="173" y="34" text-anchor="middle">🍓</text></g>
 </svg>`;
+}
+const CHAR_CACHE = {};
+function charMarkup(kind) { return CHAR_CACHE[kind] || (CHAR_CACHE[kind] = charSVG(kind)); }
+function setViewKind(v, kind) {
+  if (v.dataset.kindNow === kind) return;
+  v.dataset.kindNow = kind;
+  const old = v.querySelector('svg'); const tmp = document.createElement('div'); tmp.innerHTML = charMarkup(kind);
+  if (old) old.replaceWith(tmp.firstChild); else v.prepend(tmp.firstChild);
+  v.dataset.species = kind;
+}
+function charPicker(onDone) {
+  let kind = myKind(), color = myColor();
+  const stage = Math.max(2, dStage(DG.pet));
+  const preview = dragonView({ stage, kind, color, still: true });
+  const grid = h('div', { class: 'char-grid', role: 'radiogroup', 'aria-label': 'Character' });
+  const colors = h('div', { class: 'dg-hues', role: 'radiogroup', 'aria-label': 'Colour' });
+  const draw = () => {
+    grid.replaceChildren(...CHAR_KEYS.map(k => h('button', { class: 'char-opt' + (k === kind ? ' on' : ''), role: 'radio', 'aria-checked': String(k === kind), title: CHARS[k].n, onclick: () => { kind = k; if (CHARS[k].fixed && color !== 'auto') color = 'auto'; draw(); } },
+      dragonView({ stage: 2, kind: k, color: k === kind ? color : 'auto', still: true }), h('span', { text: CHARS[k].n }))));
+    const opts = ['auto', ...DCOLORS];
+    colors.replaceChildren(...opts.map(c => h('button', { class: c === color ? 'on' : '', role: 'radio', 'aria-checked': String(c === color), title: c === 'auto' ? (kind === 'dragon' ? 'Team colour' : 'Natural') : c === 'theme' ? 'Match the theme' : c, 'aria-label': c === 'auto' ? 'Natural colour' : c, onclick: () => { color = c; draw(); } }, dragonView({ stage: 2, kind, color: c, still: true }))));
+    preview.dataset.kind = kind; preview.dataset.color = color; paintView(preview); act('pet', 600, preview);
+  };
+  draw();
+  const save = h('button', { class: 'btn', onclick: () => {
+    S.settings.petKind = kind; S.settings.petColor = color; saveSettings();
+    closeModal(); refreshCharacters(); act('happy', 850); say(`Ta-da! I'm a ${CHARS[kind].n.toLowerCase()} now ${CHARS[kind].e}`);
+    if (onDone) onDone();
+  } }, 'Use this look');
+  openModal('Choose your pet', h('div', { style: 'display:grid;gap:14px' },
+    h('div', { class: 'hatch-stage' }, preview),
+    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Character' }), grid),
+    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Colour' }), colors),
+    h('p', { class: 'w-sub', style: 'margin:0', text: 'This changes how the team pet looks on your screen only. Its name and growth are shared with your team.' }),
+    h('div', { class: 'btns' }, save)), true);
+}
+function refreshCharacters() {
+  for (const v of liveViews()) if (!v.dataset.kind) setViewKind(v, myKind());
+  paintAll(); updateAiBadge();
+  const dens = [...DG.dens]; for (const d of dens) if (d.isConnected) fillDen(d);
+}
+
+/* ================= Team dragon: one per workspace, raised together ================= */
 const DSTAGES = [
   { n: 'Egg', at: -1 },
   { n: 'Hatchling', at: 0 },
@@ -3583,25 +3895,33 @@ const firstName = () => str(S.meName).split(/\s+/)[0] || 'friend';
 const hoursSinceFed = () => DG.pet && DG.pet.fed_at ? (Date.now() - Date.parse(DG.pet.fed_at)) / 36e5 : Infinity;
 function liveViews() { for (const v of DG.views) if (!v.isConnected) DG.views.delete(v); return [...DG.views]; }
 function buddyEl() { const b = $('#dragonBuddy'); return b && b.isConnected ? b.querySelector('.dragon') : null; }
-function hueVars(el, color) {
-  if (color === 'theme' || !DHUES[color]) { el.style.setProperty('--dh', 'var(--h)'); el.style.setProperty('--ds', 'calc(var(--s) * 1%)'); }
-  else { el.style.setProperty('--dh', DHUES[color][0]); el.style.setProperty('--ds', DHUES[color][1] + '%'); }
+function hueVars(el, color, kind) {
+  const C = CHARS[kind] || CHARS.dragon;
+  let c = color || 'auto';
+  if (c === 'auto') c = kind === 'dragon' ? (DG.pet ? DG.pet.color : 'mint') : 'natural';
+  if (c === 'natural') { el.style.setProperty('--dh', C.hs[0]); el.style.setProperty('--ds', C.hs[1] + '%'); }
+  else if (c === 'theme' || !DHUES[c]) { el.style.setProperty('--dh', 'var(--h)'); el.style.setProperty('--ds', 'calc(var(--s) * 1%)'); }
+  else { el.style.setProperty('--dh', DHUES[c][0]); el.style.setProperty('--ds', DHUES[c][1] + '%'); }
+  el.style.setProperty('--dl', C.l + '%');
 }
 function paintView(v) {
   const st = Number(v.dataset.fixed || dStage(DG.pet));
   v.className = v.className.replace(/\b(st|ge)-\d\b/g, '').replace(/\s+/g, ' ').trim();
   v.classList.add('st-' + st); for (let i = 1; i <= st; i++) v.classList.add('ge-' + i);
-  hueVars(v, v.dataset.color || (DG.pet ? DG.pet.color : 'mint'));
+  const kind = v.dataset.kind || myKind(); setViewKind(v, kind);
+  hueVars(v, v.dataset.color || myColor(), kind);
   v.classList.toggle('hungry', !!DG.pet && hoursSinceFed() > 20);
   v.classList.toggle('focus', DG.focus); v.classList.toggle('sleep', DG.napping && !DG.focus);
   v.classList.remove('cr1', 'cr2', 'cr3'); if (st === 0 && DG.crack) v.classList.add('cr' + Math.min(3, DG.crack));
 }
 function dragonView(opts = {}) {
-  const v = h('div', { class: 'dragon', html: DG_SVG });
+  const v = h('div', { class: 'dragon' });
+  if (opts.kind) v.dataset.kind = opts.kind;
+  setViewKind(v, opts.kind || myKind());
   if (opts.stage != null) v.dataset.fixed = String(opts.stage);
   if (opts.color) v.dataset.color = opts.color;
   v.append(h('div', { class: 'dg-say', role: 'status', 'aria-live': 'polite' }));
-  if (!opts.still) DG.views.add(v);
+  if (!opts.still) DG.views.add(v); else v.classList.add('still');
   paintView(v);
   return v;
 }
@@ -3653,13 +3973,13 @@ function applyPet(row, quiet) {
   if (next) DG.crack = 0;
   paintAll();
   if (quiet) return;
-  if (!prev && next) { act('happy', 900); for (const v of targets()) confetti(v); say(`I'm ${next.name}! Nice to meet you 🐉💖`); }
+  if (!prev && next) { act('happy', 900); for (const v of targets()) confetti(v); say(`I'm ${next.name}! Nice to meet you ${CHARS[myKind()].e}💖`); }
   else if (prev && next && dStage(next) > dStage(prev)) celebrateGrow(dStage(next));
 }
 function celebrateGrow(st) {
   act('grow', 1300); setTimeout(() => act('happy', 900), 300);
   for (const v of liveViews().filter(x => !x.dataset.fixed)) confetti(v);
-  const msg = `${dName()} grew into a ${DSTAGES[st].n.toLowerCase()}! 🎉`;
+  const msg = `${dName()} grew into a ${stageName(st).toLowerCase()}! 🎉`;
   say(msg, null, 5000); toast(msg);
 }
 async function loadDragon() {
@@ -3757,7 +4077,14 @@ function treatPop(anchor, v) {
 function trick(name, v) {
   if (!DG.pet) return say('Hatch me first! 🥚', v);
   wake(true);
-  if (name === 'fire') { act('fire', 1600, v); say(pick(['RAWR! 🔥', 'Behold my mighty flame! 🔥', '*tiny fire* 🔥']), v); }
+  if (name === 'fire') {
+    const sp = CHARS[(v && v.dataset.kindNow) || myKind()].special[1];
+    if (sp === 'fire') { act('fire', 1600, v); say(pick(['RAWR! 🔥', 'Behold my mighty flame! 🔥', '*tiny fire* 🔥']), v); }
+    else if (sp === 'bubbles') { act('fire', 1600, v); say(pick(['Blub blub 🫧', '*bubble bubble* 🫧', 'Pop! 🫧']), v); }
+    else if (sp === 'notes') { act('dance', 1400, v); for (const t of targets(v)) for (let i = 0; i < 5; i++) setTimeout(() => fx(t, pick(['🎵', '🎶', '♪'])), i * 180); say(pick(['La la la~ 🎵', '♪ Tweet tweet ♪', 'Singing for you 🎶']), v); }
+    else if (sp === 'bamboo') { act('eat', 1150, v); for (const t of targets(v)) hearts(t, 3, ['🎋', '💚']); say(pick(['Nom nom bamboo 🎋', 'Crunchy! 🎋']), v); }
+    else { act('pet', 650, v); for (const t of targets(v)) hearts(t, 6); say(pick(['Big hug! 💕', 'Squeeze! 🤗', 'Love you lots 💖']), v); }
+  }
   else if (name === 'dance') { act('dance', 1400, v); say('💃 La la la~', v, 1800); }
   else if (name === 'spin') { act('spin', 950, v); say('Wheee! 🌀', v, 1500); }
   else if (name === 'fly') flyAround();
@@ -3780,49 +4107,57 @@ function dragonMenu(anchor, v, inDen) {
   const p = DG.pet; const st = dStage(p);
   const box = h('div', { class: 'dg-menu' });
   if (!p) {
-    box.append(h('div', { class: 'pop-title', text: 'A mystery egg 🥚' }), h('div', { class: 'w-sub', text: 'Your team’s dragon is waiting to hatch. Tap the egg three times.' }), h('button', { class: 'btn', onclick: () => { closePop(); hatchDialog(); } }, 'Hatch it now'));
+    box.append(h('div', { class: 'pop-title', text: 'A mystery egg 🥚' }), h('div', { class: 'w-sub', text: 'Your team’s pet is waiting to hatch. Tap the egg three times.' }), h('button', { class: 'btn', onclick: () => { closePop(); hatchDialog(); } }, 'Hatch it now'));
   } else {
     const nx = DSTAGES[st + 1];
-    box.append(h('div', { class: 'pop-title', text: `${p.name} · ${DSTAGES[st].n}` }),
+    box.append(h('div', { class: 'pop-title', text: `${p.name} · ${stageName(st)}` }),
       h('div', { class: 'dg-bar', title: `${p.xp} XP` }, h('i', { style: `width:${nx ? Math.max(3, Math.round((p.xp - DSTAGES[st].at) / (nx.at - DSTAGES[st].at) * 100)) : 100}%` })),
-      h('div', { class: 'w-sub', text: nx ? `${p.xp} XP · ${nx.at - p.xp} more to become a ${nx.n.toLowerCase()}` : `${p.xp} XP · fully grown legend 👑` }),
+      h('div', { class: 'w-sub', text: nx ? `${p.xp} XP · ${nx.at - p.xp} more to become a ${stageName(st + 1).toLowerCase()}` : `${p.xp} XP · fully grown legend 👑` }),
       h('div', { class: 'dg-row' },
         h('button', { class: 'pill-btn', onclick: e => treatPop(e.currentTarget, v) }, '🍓 Feed'),
-        h('button', { class: 'pill-btn', onclick: () => { closePop(); trick('fire', v); } }, '🔥 Fire'),
+        h('button', { class: 'pill-btn', onclick: () => { closePop(); trick('fire', v); } }, CHARS[myKind()].special[0]),
         h('button', { class: 'pill-btn', onclick: () => { closePop(); trick('dance', v); } }, '💃 Dance'),
         h('button', { class: 'pill-btn', onclick: () => { closePop(); trick('spin', v); } }, '🌀 Spin'),
         inDen ? '' : h('button', { class: 'pill-btn', onclick: () => { closePop(); trick('fly'); } }, '✈️ Fly')));
   }
   const items = [];
-  if (p && isAdminRole()) items.push({ n: 'Rename or recolour', i: '✎', act: renameDialog });
+  items.push({ n: 'Change character (just for you)', i: '🎭', act: () => charPicker() });
+  if (p && isAdminRole()) items.push({ n: 'Rename the team pet', i: '✎', act: renameDialog });
   if (!inDen && cur() && !S.ro) items.push({ n: 'Add a dragon den to this page', i: '🏡', act: () => { const pg = cur(); const last = pg.blocks[pg.blocks.length - 1]; const nb = { id: uid('b'), type: 'dragon', data: defData('dragon') }; if (last && last.type === 'text' && !plain(last.text).trim()) pg.blocks.splice(pg.blocks.length - 1, 0, nb); else pg.blocks.push(nb, blank()); renderBlocks(); curDirty(); blockElById(nb.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); } });
-  if (!inDen) items.push({ n: 'Hide from the corner', i: '🙈', act: () => { S.settings.dragon = false; saveSettings(); mountBuddy(); toast('Dragon hidden. Bring it back any time in Customize.'); } });
+  if (!inDen) items.push({ n: 'Hide from the corner', i: '🙈', act: () => { S.settings.dragon = false; saveSettings(); mountBuddy(); toast('Pet hidden. Bring it back any time in Customize.'); } });
   if (items.length) box.append(h('div', { class: 'msep' }), menuList(items));
   box.append(h('div', { class: 'w-sub', style: 'font-size:12px', text: 'Grows when anyone on the team ticks off a task (+1), a habit (+1) or finishes a focus session (+3).' }));
   openPop(anchor, box);
 }
-function huePicker(val, onPick) {
-  const row = h('div', { class: 'dg-hues', role: 'radiogroup', 'aria-label': 'Dragon colour' });
-  const draw = () => row.replaceChildren(...DCOLORS.map(c => h('button', { class: c === val ? 'on' : '', role: 'radio', 'aria-checked': String(c === val), title: c === 'theme' ? 'Match the theme' : c, 'aria-label': c === 'theme' ? 'Match the theme' : c, onclick: () => { val = c; draw(); onPick(c); } }, dragonView({ stage: 2, color: c, still: true }))));
-  draw(); return row;
+function huePicker(val, onPick, kindOf) {
+  const row = h('div', { class: 'dg-hues', role: 'radiogroup', 'aria-label': 'Colour' });
+  const draw = () => row.replaceChildren(...DCOLORS.map(c => h('button', { class: c === val ? 'on' : '', role: 'radio', 'aria-checked': String(c === val), title: c === 'theme' ? 'Match the theme' : c, 'aria-label': c === 'theme' ? 'Match the theme' : c, onclick: () => { val = c; draw(); onPick(c); } }, dragonView({ stage: 2, color: c, kind: kindOf ? kindOf() : 'dragon', still: true }))));
+  row.redraw = draw; draw(); return row;
 }
 function hatchDialog() {
   if (DG.pet || $('#modal')) return;
   let color = 'theme';
-  const preview = dragonView({ stage: 1, color, still: true });
-  const name = h('input', { class: 'field', value: 'Mochi', maxlength: '24', 'aria-label': 'Dragon name', id: 'dgName' });
+  let kind = myKind();
+  const preview = dragonView({ stage: 1, color: kind === 'dragon' ? color : undefined, kind, still: true });
+  const kinds = h('div', { class: 'char-grid small', role: 'radiogroup', 'aria-label': 'Character' });
+  const drawKinds = () => kinds.replaceChildren(...CHAR_KEYS.map(k => h('button', { class: 'char-opt' + (k === kind ? ' on' : ''), role: 'radio', 'aria-checked': String(k === kind), title: CHARS[k].n, onclick: () => { kind = k; preview.dataset.kind = k; if (!touched && k !== 'dragon') { delete preview.dataset.color; } else preview.dataset.color = color; paintView(preview); act('pet', 600, preview); drawKinds(); if (typeof hp !== 'undefined') hp.redraw(); } }, dragonView({ stage: 1, kind: k, still: true }), h('span', { text: CHARS[k].n }))));
+  let touched = false;
+  const hp = huePicker(color, c => { color = c; touched = true; preview.dataset.color = c; paintView(preview); act('pet', 600, preview); }, () => kind);
+  drawKinds();
+  const name = h('input', { class: 'field', value: 'Mochi', maxlength: '24', 'aria-label': 'Pet name', id: 'dgName' });
   const btn = h('button', { class: 'btn' }, 'Hatch! 🐣');
-  const note = h('div', { class: 'w-sub', text: 'This is your whole team’s dragon. Everyone sees it and helps it grow.' });
+  const note = h('div', { class: 'w-sub', text: 'This is your whole team’s pet. Everyone helps it grow, and each person can pick how it looks for them.' });
   btn.onclick = async () => {
     btn.disabled = true; btn.textContent = 'Hatching…';
-    try { const r = await dragonRpc('dragon_hatch', { p_name: name.value.trim() || 'Mochi', p_color: color }); closeModal(); applyPet(r); }
+    try { S.settings.petKind = kind; S.settings.petColor = touched && kind !== 'dragon' ? color : 'auto'; saveSettings(); const r = await dragonRpc('dragon_hatch', { p_name: name.value.trim() || 'Mochi', p_color: color }); closeModal(); refreshCharacters(); applyPet(r); }
     catch (e) { btn.disabled = false; btn.textContent = 'Hatch! 🐣'; note.textContent = /pets|function|schema/i.test(e.message || '') ? 'The dragon isn’t switched on yet. Run dragon.sql in Supabase first.' : "Couldn't hatch: " + e.message; note.classList.add('err'); }
   };
   name.addEventListener('keydown', e => { if (e.key === 'Enter') btn.click(); });
   openModal('Your egg is hatching! 🥚✨', h('div', { style: 'display:grid;gap:14px' },
     h('div', { class: 'hatch-stage' }, preview),
-    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Name your dragon' }), name),
-    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Pick a colour' }), huePicker(color, c => { color = c; preview.dataset.color = c; paintView(preview); act('pet', 600, preview); })),
+    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Which pet hatches for you?' }), kinds),
+    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Name your pet' }), name),
+    h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Pick a colour' }), hp),
     note, h('div', { class: 'btns' }, btn)));
   setTimeout(() => { name.focus(); name.select(); }, 30);
 }
@@ -3919,7 +4254,7 @@ function wDragon(b) {
 }
 function fillDen(info) {
   const v = info._v; const p = DG.pet;
-  if (!DG.loaded) { info.replaceChildren(h('div', { class: 'w-sub', text: 'Checking on your dragon…' })); return; }
+  if (!DG.loaded) { info.replaceChildren(h('div', { class: 'w-sub', text: 'Checking on your pet…' })); return; }
   if (!p) {
     info.replaceChildren(h('div', { class: 'den-name', text: 'A mystery egg 🥚' }),
       h('p', { class: 'w-sub', style: 'margin:0', text: 'Something’s wiggling in your team’s nest. Tap the egg three times to hatch it. Then every task anyone ticks off helps it grow.' }),
@@ -3937,17 +4272,18 @@ function fillDen(info) {
   if (missing.length && S.user && S.user.profiles && !info._asked) { info._asked = true; S.user.profiles(missing).then(ps => { for (const id of missing) S.names.set(id, (ps[id] && ps[id].name) || 'a teammate'); fillDen(info); }).catch(() => {}); }
   const fedBy = p.fed_by ? (p.fed_by === S.uid ? 'you' : S.names.get(p.fed_by) || 'a teammate') : '';
   info.replaceChildren(
-    h('div', { class: 'den-name' }, h('span', { text: p.name }), h('span', { class: 'den-chip', text: DSTAGES[st].n }),
+    h('div', { class: 'den-name' }, h('span', { text: p.name }), h('span', { class: 'den-chip', text: stageName(st) }),
       isAdminRole() ? h('button', { class: 'nav-btn', title: 'Rename or recolour', 'aria-label': 'Rename or recolour the dragon', onclick: renameDialog }, '✎') : ''),
     h('div', {}, h('div', { class: 'dg-bar' }, h('i', { style: `width:${Math.max(3, pct)}%` })),
-      h('div', { class: 'w-sub', style: 'margin-top:4px', text: nx ? `${p.xp} XP · ${nx.at - p.xp} more to become a ${nx.n.toLowerCase()}` : `${p.xp} XP · a true legend 👑` })),
+      h('div', { class: 'w-sub', style: 'margin-top:4px', text: nx ? `${p.xp} XP · ${nx.at - p.xp} more to become a ${stageName(st + 1).toLowerCase()}` : `${p.xp} XP · a true legend 👑` })),
     h('div', { class: 'den-stats' },
       h('div', { class: 'den-stat' }, h('b', { text: mood }), p.fed_at ? `Fed ${timeAgo(Date.parse(p.fed_at))}${fedBy ? ' by ' + fedBy : ''}` : 'Never fed yet'),
       h('div', { class: 'den-stat' }, h('b', { text: `${teamToday} XP today` }), 'from the whole team')),
     h('div', { class: 'btns' },
       h('button', { class: 'btn', onclick: e => treatPop(e.currentTarget, v) }, '🍓 Feed'),
       h('button', { class: 'btn ghost', onclick: () => poke(v) }, '💖 Pet'),
-      h('button', { class: 'btn ghost', onclick: e => openPop(e.currentTarget, menuList([{ n: 'Breathe fire', i: '🔥', act: () => trick('fire', v) }, { n: 'Dance', i: '💃', act: () => trick('dance', v) }, { n: 'Spin', i: '🌀', act: () => trick('spin', v) }])) }, '✨ Tricks')),
+      h('button', { class: 'btn ghost', onclick: () => charPicker() }, '🎭 Look'),
+      h('button', { class: 'btn ghost', onclick: e => openPop(e.currentTarget, menuList([{ n: CHARS[myKind()].special[0].slice(2).trim(), i: CHARS[myKind()].special[0].slice(0, 2), act: () => trick('fire', v) }, { n: 'Dance', i: '💃', act: () => trick('dance', v) }, { n: 'Spin', i: '🌀', act: () => trick('spin', v) }])) }, '✨ Tricks')),
     top.length ? h('div', {}, h('div', { class: 'mgroup', style: 'padding-left:0', text: 'Top helpers' }), h('div', { class: 'den-helpers' }, top.map(([id, n], i) => h('span', { text: `${['🥇', '🥈', '🥉', '🌟', '🌟'][i]} ${id === S.uid ? 'You' : S.names.get(id) || '…'} · ${n}` })))) : '',
     h('div', { class: 'w-sub', style: 'font-size:12px', text: 'Grows when anyone ticks off a task (+1), a habit (+1) or finishes a focus session (+3). Up to 40 XP per person a day.' }));
 }
@@ -5496,6 +5832,515 @@ function wVault(b) {
   return el;
 }
 
+/* ================= Devotionals: Bible verses + private journals ================= */
+// Settings (title, translation, plan) live in the block and are shared.
+// Entries live in public.private_entries: one row per person per block, readable only by its writer.
+const DV_TR = {
+  web: ['World English Bible', 'WEB'],
+  kjv: ['King James Version', 'KJV'],
+  asv: ['American Standard Version', 'ASV'],
+  bbe: ['Bible in Basic English', 'BBE'],
+};
+const DV = { rows: new Map(), status: new Map(), timers: new Map(), missing: false };
+function devoTr(d) { return DV_TR[str(d && d.tr)] ? d.tr : 'web'; }
+function devoPriv(b) {
+  const st = DV.status.get(b.id);
+  if (st === 'ready') return DV.rows.get(b.id);
+  if (!st) devoLoad(b);
+  return null;
+}
+async function devoLoad(b) {
+  const id = b.id; DV.status.set(id, 'loading');
+  if (!SB || !W || !S.uid) { DV.rows.set(id, {}); DV.status.set(id, 'ready'); devoRefresh(id); return; }
+  try {
+    const { data, error } = await SB.from('private_entries').select('data').eq('workspace_id', W).eq('block_id', id).maybeSingle();
+    if (error) throw error;
+    DV.rows.set(id, obj(data && data.data)); DV.status.set(id, 'ready');
+  } catch (e) {
+    if (/private_entries|relation|schema cache|does not exist/i.test(str(e && e.message))) DV.missing = true;
+    DV.status.set(id, 'error');
+  }
+  devoRefresh(id);
+}
+function devoRefresh(id) { const bb = blockById(id); if (bb && blockElById(id)) rerender(bb); }
+function devoSave(b, now) {
+  const id = b.id; clearTimeout(DV.timers.get(id));
+  DV.timers.set(id, setTimeout(() => devoFlush(id), now ? 0 : 700));
+}
+async function devoFlush(id) {
+  clearTimeout(DV.timers.get(id)); DV.timers.delete(id);
+  const data = DV.rows.get(id); if (!data || !SB || !W || !S.uid) return;
+  const { error } = await SB.from('private_entries').upsert({ workspace_id: W, block_id: id, user_id: S.uid, data, updated_at: new Date().toISOString() }, { onConflict: 'workspace_id,block_id,user_id' });
+  if (error) toast(/private_entries/i.test(str(error.message)) ? 'Run private.sql in Supabase to save journal entries.' : "Your journal entry didn't save. Check your connection.");
+}
+function devoFlushAll() { for (const id of [...DV.timers.keys()]) devoFlush(id); }
+addEventListener('beforeunload', devoFlushAll);
+document.addEventListener('visibilitychange', () => { if (document.hidden) devoFlushAll(); });
+
+/* ---------- Bible text from bible-api.com (public-domain translations) ---------- */
+const DV_MEM = new Map(); const DV_TIMES = [];
+async function devoThrottle() {
+  // bible-api.com allows 15 requests every 30 seconds; stay under it.
+  for (;;) {
+    const now = Date.now();
+    while (DV_TIMES.length && now - DV_TIMES[0] > 30000) DV_TIMES.shift();
+    if (DV_TIMES.length < 13) { DV_TIMES.push(now); return; }
+    await new Promise(r => setTimeout(r, 30050 - (now - DV_TIMES[0])));
+  }
+}
+const devoClean = t => str(t).replace(/\s+/g, ' ').trim();
+function devoCacheGet(k) { if (DV_MEM.has(k)) return DV_MEM.get(k); try { const v = JSON.parse(localStorage.getItem('buhat.bible.' + k) || 'null'); if (v) { DV_MEM.set(k, v); return v; } } catch (e) {} return null; }
+function devoCacheSet(k, v) {
+  DV_MEM.set(k, v);
+  try {
+    const idxKey = 'buhat.bible.idx'; let idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); idx = idx.filter(x => x !== k); idx.push(k);
+    while (idx.length > 120) { const old = idx.shift(); localStorage.removeItem('buhat.bible.' + old); }
+    localStorage.setItem('buhat.bible.' + k, JSON.stringify(v)); localStorage.setItem(idxKey, JSON.stringify(idx));
+  } catch (e) {}
+}
+async function devoVerse(ref, tr) {
+  ref = devoClean(ref); tr = DV_TR[tr] ? tr : 'web';
+  if (!ref) throw new Error('Type a reference first, like John 3:16');
+  const k = tr + ':' + ref.toLowerCase();
+  const hit = devoCacheGet(k); if (hit) return hit;
+  await devoThrottle();
+  let r;
+  try { r = await fetch(`https://bible-api.com/${encodeURIComponent(ref)}?translation=${tr}`); }
+  catch (e) { throw new Error("Couldn't reach the Bible service. Check your connection."); }
+  if (r.status === 404) throw new Error(`Couldn't find “${ref}”. Try a format like John 3:16 or Psalm 23.`);
+  if (r.status === 429) throw new Error('Too many verses at once. Wait a moment and try again.');
+  if (!r.ok) throw new Error("The Bible service didn't answer. Try again in a moment.");
+  const j = await r.json().catch(() => ({}));
+  const verses = arr(j.verses).map(v => ({ book: str(v.book_name), ch: num(v.chapter), v: num(v.verse), text: devoClean(v.text) }));
+  if (!verses.length && !j.text) throw new Error(`Couldn't find “${ref}”.`);
+  const out = { ref: str(j.reference) || ref, text: devoClean(j.text) || verses.map(v => v.text).join(' '), verses, tr };
+  devoCacheSet(k, out); return out;
+}
+async function devoRandom(tr) {
+  tr = DV_TR[tr] ? tr : 'web';
+  await devoThrottle();
+  const r = await fetch(`https://bible-api.com/data/${tr}/random`).catch(() => null);
+  if (!r || !r.ok) throw new Error("Couldn't get a random verse. Try again in a moment.");
+  const j = await r.json().catch(() => ({})); const v = obj(j.random_verse);
+  if (!v.book) throw new Error("Couldn't get a random verse.");
+  const out = { ref: `${v.book} ${v.chapter}:${v.verse}`, text: devoClean(v.text), verses: [{ book: str(v.book), ch: num(v.chapter), v: num(v.verse), text: devoClean(v.text) }], tr };
+  devoCacheSet(tr + ':' + out.ref.toLowerCase(), out); return out;
+}
+function devoCredit(tr) { return h('div', { class: 'dv-credit', text: `${DV_TR[tr][0]} · public domain` }); }
+function devoTrSelect(b, d, onChange) {
+  const s = h('select', { class: 'dv-tr', 'aria-label': 'Bible translation', title: S.ro ? 'Translation' : 'Bible translation for this block', disabled: S.ro ? true : null },
+    Object.entries(DV_TR).map(([k, v]) => h('option', { value: k, selected: devoTr(d) === k ? true : null }, v[1])));
+  s.addEventListener('change', () => { d.tr = s.value; curDirty(); if (onChange) onChange(); rerender(b); });
+  return s;
+}
+/** Shows a verse (fetches it), with a retry link if it fails. */
+function devoVerseView(ref, tr, opts = {}) {
+  const box = h('div', { class: 'dv-verse' + (opts.big ? ' big' : '') });
+  const load = () => {
+    box.replaceChildren(h('div', { class: 'dv-vtext dv-muted', text: 'Loading…' }), h('div', { class: 'dv-ref', text: ref }));
+    devoVerse(ref, tr).then(v => {
+      box.replaceChildren(h('div', { class: 'dv-vtext', text: v.text }), h('div', { class: 'dv-ref', text: '— ' + v.ref }));
+      if (opts.onLoad) opts.onLoad(v);
+    }, e => {
+      box.replaceChildren(h('button', { class: 'dv-retry', onclick: load, text: (e && e.message ? e.message + ' ' : "Couldn't load the verse. ") + 'Tap to retry.' }), h('div', { class: 'dv-ref', text: ref }));
+    });
+  };
+  load();
+  return box;
+}
+function devoLock() { return h('div', { class: 'dv-lock', text: '🔒 Only you can see your entries' }); }
+function devoGate(b, d, cls, render) {
+  // Common shell: loads the private row, shows a friendly note if the table isn't set up.
+  const el = h('div', { class: 'w dv ' + cls });
+  const p = devoPriv(b);
+  if (!p) {
+    el.append(wHead(b, d));
+    if (DV.status.get(b.id) === 'error') el.append(h('div', { class: 'dv-empty' }, DV.missing ? 'Run private.sql in Supabase to start journaling here. Your entries will be private to you.' : "Couldn't open your journal. ", DV.missing ? '' : h('button', { class: 'linkish', onclick: () => { DV.status.delete(b.id); rerender(b); } }, 'Try again')));
+    else el.append(h('div', { class: 'dv-empty dv-muted', text: 'Opening your private journal…' }));
+    return el;
+  }
+  render(el, p);
+  el.append(devoLock());
+  return el;
+}
+const devoTA = (val, ph, onIn, rows = 3) => { const t = h('textarea', { class: 'field dv-ta', rows: String(rows), placeholder: ph, 'aria-label': ph }); t.value = str(val); t.addEventListener('input', () => onIn(t.value)); t.addEventListener('keydown', e => e.stopPropagation()); return t; };
+const devoIn = (val, ph, onIn, extra = {}) => { const t = h('input', { class: 'field', placeholder: ph, 'aria-label': ph, value: str(val), maxlength: '300', ...extra }); t.addEventListener('input', () => onIn(t.value)); t.addEventListener('keydown', e => e.stopPropagation()); return t; };
+const devoDayLabel = k => { const t = todayIso(); if (k === t) return 'Today'; if (k === iso(addDays(new Date(), -1))) return 'Yesterday'; return parseIso(k).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }); };
+function devoDayNav(b, vs, onGo) {
+  const t = todayIso();
+  return h('div', { class: 'dv-daynav' },
+    h('button', { class: 'nav-btn', 'aria-label': 'Previous day', onclick: () => { vs.day = iso(addDays(parseIso(vs.day), -1)); onGo(); } }, '‹'),
+    h('b', { class: 'dv-daylbl', text: devoDayLabel(vs.day) }),
+    h('button', { class: 'nav-btn', 'aria-label': 'Next day', disabled: vs.day >= t ? true : null, onclick: () => { if (vs.day < t) { vs.day = iso(addDays(parseIso(vs.day), 1)); onGo(); } } }, '›'),
+    vs.day !== t ? h('button', { class: 'pill-btn', onclick: () => { vs.day = t; onGo(); } }, 'Today') : '');
+}
+function devoVS(b) { return VS[b.id] = VS[b.id] || { day: todayIso() }; }
+
+/* ---------- Verse of the day ---------- */
+const DV_VERSES = ['John 3:16', 'Psalm 23:1-3', 'Philippians 4:6-7', 'Isaiah 41:10', 'Jeremiah 29:11', 'Romans 8:28', 'Proverbs 3:5-6', 'Matthew 11:28-30', 'Joshua 1:9', 'Psalm 46:1',
+  '2 Corinthians 5:17', 'Galatians 5:22-23', 'Romans 12:2', 'Philippians 4:13', 'Psalm 119:105', 'Isaiah 40:31', 'Matthew 6:33', 'Hebrews 11:1', '1 Corinthians 13:4-7', 'Lamentations 3:22-23',
+  'Psalm 37:4', 'Romans 15:13', 'John 14:27', 'Ephesians 2:8-9', 'Micah 6:8', 'Psalm 27:1', 'Colossians 3:23', '2 Timothy 1:7', 'James 1:5', '1 Peter 5:7',
+  'Psalm 34:8', 'Matthew 5:14-16', 'Romans 5:8', 'John 15:5', 'Psalm 16:11', 'Deuteronomy 31:6', 'Isaiah 26:3', 'Zephaniah 3:17', 'Psalm 139:13-14', 'Hebrews 12:1-2',
+  'Romans 8:38-39', '1 John 4:19', 'Psalm 121:1-2', 'Proverbs 16:3', 'Matthew 5:9', 'Colossians 3:12-14', 'Psalm 19:14', 'John 16:33', 'Psalm 91:1-2', 'Ephesians 3:20',
+  'Isaiah 43:2', 'Psalm 46:10', 'Matthew 22:37-39', 'John 8:12', '2 Corinthians 12:9', 'Psalm 118:24', 'Romans 10:9', 'Hebrews 13:8', 'Psalm 62:1-2', 'Proverbs 18:10',
+  'Philippians 1:6', 'Psalm 145:18', 'Isaiah 9:6', 'Luke 1:37', 'John 1:5', 'Psalm 103:2-5', '1 Thessalonians 5:16-18', 'Galatians 6:9', 'Psalm 30:5', 'Matthew 7:7',
+  'Ephesians 4:32', 'Psalm 55:22', 'Romans 12:12', 'Isaiah 55:8-9', 'John 10:10', 'Psalm 4:8', 'Hebrews 4:16', 'James 1:2-4', 'Psalm 73:26', '1 Corinthians 10:13',
+  'Proverbs 4:23', 'Psalm 32:8', 'Matthew 28:19-20', 'John 13:34-35', 'Romans 15:7', 'Psalm 100:4-5', 'Nahum 1:7', 'Psalm 9:9-10', 'Colossians 3:15', 'Ephesians 6:10',
+  'Psalm 28:7', '2 Chronicles 7:14', 'Isaiah 30:15', 'Psalm 37:5', 'John 11:25', 'Romans 6:23', 'Psalm 40:1-3', 'Proverbs 17:17', 'Matthew 6:34', 'Psalm 42:11',
+  '1 John 1:9', 'Psalm 51:10', 'Isaiah 53:5', 'John 14:6', 'Psalm 34:18', 'Romans 8:1', 'Philippians 2:3-4', 'Psalm 90:12', 'Galatians 2:20', 'Psalm 147:3',
+  'Exodus 14:14', 'Psalm 56:3', 'Isaiah 40:8', 'John 15:13', '1 Corinthians 16:14', 'Psalm 18:2', 'Hebrews 10:23', 'Psalm 31:24', 'Romans 12:10', 'Proverbs 15:1',
+  'Matthew 5:16', 'Psalm 136:1', 'Isaiah 12:2', 'John 6:35', 'Colossians 4:2', 'Psalm 5:3', '1 Peter 3:15', 'Psalm 25:4-5', 'Ruth 1:16', 'Psalm 84:11',
+  'Romans 8:31', 'Ephesians 5:1-2', 'Psalm 20:4', 'Habakkuk 3:17-18', 'Mark 10:27', 'Psalm 63:1', 'Luke 6:31', 'John 4:14', 'Psalm 86:5', '2 Corinthians 4:16-18',
+  'Psalm 107:1', 'Matthew 18:20', 'Isaiah 58:11', 'Psalm 150:6', 'Revelation 21:4', 'Psalm 8:3-4', 'Numbers 6:24-26', 'Psalm 113:3', 'Acts 1:8', 'Psalm 66:20'];
+function devoDayRef(k) { const [y, m, d] = k.split('-').map(Number); const n = Math.floor(Date.UTC(y, m - 1, d) / 864e5); return DV_VERSES[((n % DV_VERSES.length) + DV_VERSES.length) % DV_VERSES.length]; }
+function wDvVotd(b) {
+  const d = b.data = obj(b.data); const tr = devoTr(d); const vs = devoVS(b);
+  return devoGate(b, d, 'dv-votd', (el, p) => {
+    p.votd = obj(p.votd); const e = p.votd[vs.day] = obj(p.votd[vs.day]);
+    const ref = str(e.rand) || devoDayRef(vs.day);
+    el.append(wHead(b, d, [devoTrSelect(b, d)]));
+    el.append(devoDayNav(b, vs, () => rerender(b)));
+    let shown = null;
+    const card = h('div', { class: 'dv-card' }, devoVerseView(ref, tr, { big: true, onLoad: v => { shown = v; } }));
+    el.append(card);
+    el.append(h('div', { class: 'btns dv-acts' },
+      h('button', { class: 'pill-btn', onclick: async ev => { const btn = ev.currentTarget; btn.disabled = true; try { const v = await devoRandom(tr); e.rand = v.ref; devoSave(b); rerender(b); } catch (er) { toast(er.message); btn.disabled = false; } } }, '🎲 Random'),
+      e.rand ? h('button', { class: 'pill-btn', onclick: () => { delete e.rand; devoSave(b); rerender(b); } }, '↺ Today’s verse') : '',
+      h('button', { class: 'pill-btn', onclick: async () => { const v = shown; if (!v) return toast('The verse is still loading.'); try { await navigator.clipboard.writeText(`“${v.text}” — ${v.ref} (${DV_TR[tr][1]})`); toast('Verse copied'); } catch (er) { toast('Copy is blocked here. Select the text instead.'); } } }, '⧉ Copy'),
+      h('button', { class: 'pill-btn', onclick: () => devoUseInSoap(shown || { ref, text: '' }) }, '✍️ Use in SOAP')));
+    el.append(h('div', { class: 'dv-sec' }, h('span', { class: 'dv-lbl', text: 'My reflection' }),
+      devoTA(e.reflection, 'What is God saying to you through this verse?', v => { e.reflection = v; devoSave(b); }, 3)));
+    el.append(devoCredit(tr));
+  });
+}
+function devoUseInSoap(v) {
+  const soap = allBlocks(cur()).find(x => x.type === 'soap');
+  if (!soap) { toast('Add a SOAP journal to this page first. Type /soap on any line.'); return; }
+  const apply = () => {
+    const p = DV.rows.get(soap.id); if (!p) return;
+    p.soap = obj(p.soap); const k = todayIso(); const e = p.soap[k] = obj(p.soap[k]);
+    e.ref = v.ref; if (v.text) e.scripture = `${v.text} — ${v.ref}`;
+    devoSave(soap); const vs = devoVS(soap); vs.day = k; rerender(soap);
+    blockElById(soap.id)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); toast('Added to today’s SOAP');
+  };
+  if (DV.status.get(soap.id) === 'ready') apply();
+  else { devoPriv(soap); const iv = setInterval(() => { const st = DV.status.get(soap.id); if (st === 'ready') { clearInterval(iv); apply(); } else if (st === 'error') { clearInterval(iv); toast("Couldn't open the SOAP journal."); } }, 150); }
+}
+
+/* ---------- SOAP journal ---------- */
+const DV_SOAP = [['s', 'S', 'Scripture', 'Write out the verse, or load it above'], ['o', 'O', 'Observation', 'What does it say? What stands out to you?'], ['a', 'A', 'Application', 'How can you live this out today?'], ['p', 'P', 'Prayer', 'Talk to God about it']];
+function wDvSoap(b) {
+  const d = b.data = obj(b.data); const tr = devoTr(d); const vs = devoVS(b);
+  return devoGate(b, d, 'dv-soap', (el, p) => {
+    p.soap = obj(p.soap); const e = p.soap[vs.day] = obj(p.soap[vs.day]);
+    el.append(wHead(b, d, [devoTrSelect(b, d)]), devoDayNav(b, vs, () => rerender(b)));
+    const refIn = devoIn(e.ref, 'Reference, e.g. Psalm 23:1-3', v => { e.ref = v; devoSave(b); }, { class: 'field dv-refin' });
+    const scripture = devoTA(e.scripture, DV_SOAP[0][3], v => { e.scripture = v; devoSave(b); }, 3);
+    const loadBtn = h('button', { class: 'pill-btn', onclick: async () => {
+      loadBtn.disabled = true; loadBtn.textContent = 'Loading…';
+      try { const v = await devoVerse(refIn.value, tr); e.ref = v.ref; e.scripture = `${v.text} — ${v.ref}`; refIn.value = v.ref; scripture.value = e.scripture; devoSave(b); }
+      catch (er) { toast(er.message); }
+      loadBtn.disabled = false; loadBtn.textContent = '📖 Load';
+    } }, '📖 Load');
+    refIn.addEventListener('keydown', ev => { if (ev.key === 'Enter') { ev.preventDefault(); loadBtn.click(); } });
+    const grid = h('div', { class: 'dv-soapgrid' });
+    for (const [k, letter, name, ph] of DV_SOAP) {
+      const body = k === 's' ? h('div', { class: 'dv-stack' }, h('div', { class: 'dv-row' }, refIn, loadBtn), scripture) : devoTA(e[k], ph, v => { e[k] = v; devoSave(b); }, 3);
+      grid.append(h('div', { class: 'dv-soapbox dv-' + k }, h('div', { class: 'dv-soaph' }, h('span', { class: 'dv-letter', text: letter }), h('b', { text: name })), body));
+    }
+    el.append(grid);
+    const past = Object.keys(p.soap).filter(k => k !== vs.day && Object.values(obj(p.soap[k])).some(x => str(x).trim())).sort().reverse().slice(0, 12);
+    for (const k of Object.keys(p.soap)) if (!Object.values(obj(p.soap[k])).some(x => str(x).trim()) && k !== vs.day) delete p.soap[k];
+    if (past.length) el.append(h('div', { class: 'dv-past' }, h('span', { class: 'dv-lbl', text: 'Past entries' }), past.map(k => h('button', { class: 'dv-chip', onclick: () => { vs.day = k; rerender(b); } }, devoDayLabel(k)))));
+    el.append(devoCredit(tr));
+  });
+}
+
+/* ---------- Prayer journal ---------- */
+const DV_CATS = [['me', 'Me', '🙋'], ['family', 'Family', '🏡'], ['friends', 'Friends', '🤝'], ['work', 'Work', '💼'], ['church', 'Church', '⛪'], ['world', 'World', '🌏']];
+function wDvPrayer(b) {
+  const d = b.data = obj(b.data); const vs = VS[b.id] = VS[b.id] || { tab: 'open' };
+  return devoGate(b, d, 'dv-prayer', (el, p) => {
+    p.items = arr(p.items);
+    const open = p.items.filter(x => !x.answered), done = p.items.filter(x => x.answered);
+    el.append(wHead(b, d, [h('div', { class: 'seg', role: 'tablist' },
+      h('button', { class: vs.tab === 'open' ? 'on' : '', role: 'tab', onclick: () => { vs.tab = 'open'; rerender(b); } }, `🙏 Praying ${open.length}`),
+      h('button', { class: vs.tab === 'done' ? 'on' : '', role: 'tab', onclick: () => { vs.tab = 'done'; rerender(b); } }, `✨ Answered ${done.length}`))]));
+    if (vs.tab === 'open') {
+      let cat = vs.cat || 'me';
+      const txt = devoIn('', 'What would you like to pray for?', () => {}, { id: 'dvpr-' + b.id });
+      const who = devoIn('', 'For whom? (optional)', () => {}, { class: 'field dv-who' });
+      const sel = h('select', { class: 'dv-tr', 'aria-label': 'Category' }, DV_CATS.map(([k, n, i]) => h('option', { value: k, selected: k === cat ? true : null }, `${i} ${n}`)));
+      sel.addEventListener('change', () => { vs.cat = sel.value; });
+      const add = () => { const t = txt.value.trim(); if (!t) return txt.focus(); p.items.unshift({ id: uid('pr'), text: t.slice(0, 500), who: who.value.trim().slice(0, 80), cat: sel.value, added: todayIso() }); devoSave(b); rerender(b); refocus('dvpr-' + b.id); };
+      txt.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+      el.append(h('div', { class: 'dv-addrow' }, txt, h('div', { class: 'dv-row' }, who, sel, h('button', { class: 'btn', onclick: add }, 'Add'))));
+    }
+    const list = h('div', { class: 'dv-list' });
+    const show = vs.tab === 'open' ? open : done.sort((a, z) => str(z.answeredOn).localeCompare(str(a.answeredOn)));
+    for (const it of show) {
+      const c = DV_CATS.find(x => x[0] === it.cat) || DV_CATS[0];
+      const row = h('div', { class: 'dv-pr' + (it.answered ? ' answered' : '') },
+        h('span', { class: 'dv-prcat', title: c[1], text: c[2] }),
+        h('div', { class: 'dv-prmain' },
+          h('div', { class: 'dv-prtext', text: str(it.text) }),
+          h('div', { class: 'dv-muted dv-small', text: [it.who ? 'For ' + it.who : '', 'Since ' + devoDayLabel(str(it.added) || todayIso()), it.answered ? 'Answered ' + devoDayLabel(str(it.answeredOn)) : ''].filter(Boolean).join(' · ') }),
+          it.answered && it.note ? h('div', { class: 'dv-note', text: '✨ ' + str(it.note) }) : ''),
+        it.answered
+          ? mini('Options', e => openPop(e.currentTarget, menuList([{ n: 'Move back to praying', i: '↩', act: () => { delete it.answered; delete it.answeredOn; delete it.note; devoSave(b); rerender(b); } }, { n: 'Delete', i: '🗑', danger: true, act: () => { p.items = p.items.filter(x => x !== it); devoSave(b); rerender(b); } }])), '⋯')
+          : h('div', { class: 'dv-prbtns' },
+            h('button', { class: 'pill-btn', onclick: e => devoAnswerPop(e.currentTarget, b, it) }, '✨ Answered'),
+            mini('Delete', () => { p.items = p.items.filter(x => x !== it); devoSave(b); rerender(b); })));
+      list.append(row);
+    }
+    if (!show.length) list.append(h('div', { class: 'dv-empty dv-muted', text: vs.tab === 'open' ? 'Add a prayer request above. When it’s answered, mark it ✨ and remember what God did.' : 'Answered prayers will appear here.' }));
+    el.append(list);
+  });
+}
+function devoAnswerPop(anchor, b, it) {
+  const note = h('textarea', { class: 'field dv-ta', rows: '3', placeholder: 'How did God answer? (optional)', 'aria-label': 'How God answered' });
+  note.addEventListener('keydown', e => e.stopPropagation());
+  openPop(anchor, h('div', { style: 'width:280px;display:grid;gap:8px' }, h('div', { class: 'pop-title', text: 'Answered prayer ✨' }), note,
+    h('div', { class: 'pop-row', style: 'justify-content:flex-end' }, h('button', { class: 'btn', onclick: () => { it.answered = true; it.answeredOn = todayIso(); if (note.value.trim()) it.note = note.value.trim().slice(0, 1000); closePop(); devoSave(b); rerender(b); toast('Praise God! 🙌'); } }, 'Save'))));
+  setTimeout(() => note.focus(), 20);
+}
+
+/* ---------- Reading plans ---------- */
+const DV_BOOKS = [['Genesis', 50], ['Exodus', 40], ['Leviticus', 27], ['Numbers', 36], ['Deuteronomy', 34], ['Joshua', 24], ['Judges', 21], ['Ruth', 4], ['1 Samuel', 31], ['2 Samuel', 24], ['1 Kings', 22], ['2 Kings', 25], ['1 Chronicles', 29], ['2 Chronicles', 36], ['Ezra', 10], ['Nehemiah', 13], ['Esther', 10], ['Job', 42], ['Psalms', 150], ['Proverbs', 31], ['Ecclesiastes', 12], ['Song of Solomon', 8], ['Isaiah', 66], ['Jeremiah', 52], ['Lamentations', 5], ['Ezekiel', 48], ['Daniel', 12], ['Hosea', 14], ['Joel', 3], ['Amos', 9], ['Obadiah', 1], ['Jonah', 4], ['Micah', 7], ['Nahum', 3], ['Habakkuk', 3], ['Zephaniah', 3], ['Haggai', 2], ['Zechariah', 14], ['Malachi', 4],
+  ['Matthew', 28], ['Mark', 16], ['Luke', 24], ['John', 21], ['Acts', 28], ['Romans', 16], ['1 Corinthians', 16], ['2 Corinthians', 13], ['Galatians', 6], ['Ephesians', 6], ['Philippians', 4], ['Colossians', 4], ['1 Thessalonians', 5], ['2 Thessalonians', 3], ['1 Timothy', 6], ['2 Timothy', 4], ['Titus', 3], ['Philemon', 1], ['Hebrews', 13], ['James', 5], ['1 Peter', 5], ['2 Peter', 3], ['1 John', 5], ['2 John', 1], ['3 John', 1], ['Jude', 1], ['Revelation', 22]];
+const DV_ALL_CH = DV_BOOKS.flatMap(([bk, n]) => Array.from({ length: n }, (_, i) => [bk, i + 1]));
+const DV_PLANS = {
+  year: { n: 'Bible in a year', d: 'The whole Bible in 365 days' },
+  nt90: { n: 'New Testament in 90 days', d: 'About 3 chapters a day' },
+  gospels30: { n: 'Gospels in 30 days', d: 'Matthew, Mark, Luke and John' },
+  pp31: { n: 'Psalms & Proverbs in a month', d: '5 Psalms and 1 Proverb a day' },
+  pace3: { n: 'Genesis to Revelation, 3 a day', d: 'The whole Bible at a gentle pace' },
+};
+const DV_PLAN_CACHE = {};
+function devoSplit(chs, days) { const out = []; for (let i = 0; i < days; i++) out.push(chs.slice(Math.floor(i * chs.length / days), Math.floor((i + 1) * chs.length / days))); return out; }
+function devoPlanDays(kind) {
+  if (DV_PLAN_CACHE[kind]) return DV_PLAN_CACHE[kind];
+  const bookCh = names => DV_ALL_CH.filter(([bk]) => names.includes(bk));
+  const ntStart = DV_ALL_CH.findIndex(([bk]) => bk === 'Matthew');
+  let days;
+  if (kind === 'nt90') days = devoSplit(DV_ALL_CH.slice(ntStart), 90);
+  else if (kind === 'gospels30') days = devoSplit(bookCh(['Matthew', 'Mark', 'Luke', 'John']), 30);
+  else if (kind === 'pp31') days = Array.from({ length: 31 }, (_, d) => [...(d < 30 ? [1, 31, 61, 91, 121].map(o => ['Psalms', o + d]) : []), ['Proverbs', d + 1]]);
+  else if (kind === 'pace3') days = Array.from({ length: Math.ceil(DV_ALL_CH.length / 3) }, (_, i) => DV_ALL_CH.slice(i * 3, i * 3 + 3));
+  else days = devoSplit(DV_ALL_CH, 365);
+  return DV_PLAN_CACHE[kind] = days;
+}
+function devoGroup(chs) {
+  // [['Genesis',1],['Genesis',2],['Exodus',1]] → [{label:'Genesis 1–2', start:['Genesis',1]}, …]
+  const out = [];
+  for (const [bk, c] of chs) {
+    const last = out[out.length - 1];
+    if (last && last.bk === bk && last.to === c - 1 && bk !== 'Psalms') { last.to = c; last.label = `${bk} ${last.from}–${c}`; }
+    else out.push({ bk, from: c, to: c, label: `${bk === 'Psalms' ? 'Psalm' : bk} ${c}` });
+  }
+  return out;
+}
+function wDvPlan(b) {
+  const d = b.data = obj(b.data); const tr = devoTr(d); const kind = DV_PLANS[d.plan] ? d.plan : 'year';
+  return devoGate(b, d, 'dv-plan', (el, p) => {
+    p.plans = obj(p.plans); const me = p.plans[kind] = obj(p.plans[kind]);
+    if (!me.start) { me.start = todayIso(); me.done = {}; devoSave(b); }
+    me.done = obj(me.done);
+    const days = devoPlanDays(kind); const total = days.length;
+    const todayN = Math.max(0, Math.min(total - 1, Math.round((dayStart(new Date()) - parseIso(me.start)) / 864e5)));
+    const vs = VS[b.id] = VS[b.id] || {}; if (vs.kind !== kind) { vs.kind = kind; vs.day = null; }
+    const firstOpen = (() => { for (let i = 0; i <= todayN; i++) if (!me.done[i]) return i; return todayN; })();
+    const dayN = vs.day != null ? Math.max(0, Math.min(total - 1, vs.day)) : todayN;
+    const doneCount = Object.keys(me.done).length; const pct = Math.round(doneCount / total * 100);
+    const sel = h('select', { class: 'dv-tr', 'aria-label': 'Reading plan', disabled: S.ro ? true : null, title: 'Plan for this block (everyone on the page uses the same plan)' }, Object.entries(DV_PLANS).map(([k, v]) => h('option', { value: k, selected: k === kind ? true : null }, v.n)));
+    sel.addEventListener('change', () => { d.plan = sel.value; curDirty(); rerender(b); });
+    el.append(wHead(b, d, [sel, devoTrSelect(b, d)]));
+    el.append(h('div', { class: 'dv-planhead' },
+      h('div', {}, h('b', { class: 'dv-dayno', text: `Day ${dayN + 1}` }), h('span', { class: 'dv-muted', text: ` of ${total}` })),
+      h('div', { class: 'dv-row' },
+        h('button', { class: 'nav-btn', 'aria-label': 'Previous day', disabled: dayN <= 0 ? true : null, onclick: () => { vs.day = dayN - 1; rerender(b); } }, '‹'),
+        h('button', { class: 'nav-btn', 'aria-label': 'Next day', disabled: dayN >= total - 1 ? true : null, onclick: () => { vs.day = dayN + 1; rerender(b); } }, '›'),
+        dayN !== todayN ? h('button', { class: 'pill-btn', onclick: () => { vs.day = null; rerender(b); } }, 'Today') : '')));
+    el.append(h('div', { class: 'dv-chips' }, devoGroup(days[dayN]).map(g => h('button', { class: 'dv-chip big', title: 'Read ' + g.label, onclick: () => devoReader(g.bk, g.from, tr, g) }, '📖 ' + g.label))));
+    const isDone = !!me.done[dayN];
+    el.append(h('div', { class: 'dv-row dv-donerow' },
+      h('button', { class: 'btn' + (isDone ? ' ghost' : ''), onclick: () => { if (isDone) delete me.done[dayN]; else { me.done[dayN] = todayIso(); dragonDone('habit'); toast(`Day ${dayN + 1} done 🙌`); } devoSave(b); if (!isDone && vs.day != null && dayN < todayN) vs.day = null; rerender(b); } }, isDone ? '✓ Done · undo' : `Mark day ${dayN + 1} as read`),
+      firstOpen < todayN && dayN === todayN ? h('button', { class: 'linkish', onclick: () => { vs.day = firstOpen; rerender(b); } }, `You’re ${todayN - Object.keys(me.done).filter(k => +k <= todayN).length} day(s) behind. Catch up from day ${firstOpen + 1} →`) : ''));
+    el.append(h('div', { class: 'dg-bar', title: `${pct}% read` }, h('i', { style: `width:${Math.max(2, pct)}%` })));
+    el.append(h('div', { class: 'dv-muted dv-small', text: `${doneCount} of ${total} days read · ${pct}% · started ${parseIso(me.start).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}` }));
+    const readOn = new Set(Object.values(me.done));
+    const strip = h('div', { class: 'dv-strip', 'aria-label': 'Last 14 days' });
+    for (let i = 13; i >= 0; i--) { const dt = addDays(new Date(), -i); const k = iso(dt); strip.append(h('div', { class: 'dv-sday' + (readOn.has(k) ? ' on' : '') + (i === 0 ? ' today' : ''), title: dt.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' }) + (readOn.has(k) ? ': read' : '') }, h('span', { text: dt.toLocaleDateString('en-GB', { weekday: 'narrow' }) }), h('i'))); }
+    el.append(strip);
+    el.append(h('div', { class: 'dv-row', style: 'justify-content:flex-end' }, h('button', { class: 'linkish dv-small', onclick: () => confirmModal('Restart this plan?', 'Your ticks for this plan will be cleared and day 1 becomes today. Only your own progress changes.', 'Restart', () => { p.plans[kind] = { start: todayIso(), done: {} }; vs.day = null; devoSave(b); rerender(b); }) }, 'Restart my plan')));
+    el.append(devoCredit(tr));
+  });
+}
+function devoReader(book, ch, tr, group) {
+  const body = h('div', { class: 'dv-reader' });
+  let cur0 = DV_ALL_CH.findIndex(([bk, c]) => bk === book && c === ch); if (cur0 < 0) cur0 = 0;
+  let t = tr;
+  const trSel = h('select', { class: 'dv-tr', 'aria-label': 'Translation' }, Object.entries(DV_TR).map(([k, v]) => h('option', { value: k, selected: k === t ? true : null }, v[1])));
+  trSel.addEventListener('change', () => { t = trSel.value; draw(); });
+  const title = h('b', { class: 'dv-rtitle' });
+  const text = h('div', { class: 'dv-rtext' });
+  const prev = h('button', { class: 'btn ghost', onclick: () => { if (cur0 > 0) { cur0--; draw(); } } }, '‹ Previous');
+  const next = h('button', { class: 'btn ghost', onclick: () => { if (cur0 < DV_ALL_CH.length - 1) { cur0++; draw(); } } }, 'Next ›');
+  const draw = () => {
+    const [bk, c] = DV_ALL_CH[cur0];
+    title.textContent = `${bk === 'Psalms' ? 'Psalm' : bk} ${c}`;
+    prev.disabled = cur0 <= 0; next.disabled = cur0 >= DV_ALL_CH.length - 1;
+    text.replaceChildren(h('p', { class: 'dv-muted', text: 'Loading…' }));
+    const ref = `${bk} ${c}`; const want = cur0;
+    devoVerse(ref, t).then(v => {
+      if (want !== cur0) return;
+      const p = h('p', {});
+      for (const vv of v.verses) p.append(h('sup', { class: 'dv-vn', text: String(vv.v) }), document.createTextNode(vv.text + ' '));
+      text.replaceChildren(p, devoCredit(t));
+      text.scrollTop = 0;
+    }, e => { if (want === cur0) text.replaceChildren(h('button', { class: 'dv-retry', onclick: draw, text: e.message + ' Tap to retry.' })); });
+  };
+  body.append(h('div', { class: 'dv-rhead' }, title, trSel), text, h('div', { class: 'dv-row', style: 'justify-content:space-between' }, prev, next));
+  openModal(group ? `Reading · ${group.label}` : 'Reading', body, true);
+  draw();
+}
+
+/* ---------- Sermon notes ---------- */
+function wDvSermon(b) {
+  const d = b.data = obj(b.data); const tr = devoTr(d); const vs = VS[b.id] = VS[b.id] || { q: '', open: null };
+  return devoGate(b, d, 'dv-sermon', (el, p) => {
+    p.notes = arr(p.notes);
+    const q = h('input', { class: 'field dv-search', placeholder: 'Search notes', 'aria-label': 'Search sermon notes', value: vs.q });
+    q.addEventListener('input', () => { vs.q = q.value; drawList(); }); q.addEventListener('keydown', e => e.stopPropagation());
+    el.append(wHead(b, d, [devoTrSelect(b, d), h('button', { class: 'pill-btn', onclick: () => { const n = { id: uid('sn'), date: todayIso(), title: '', speaker: '', passage: '', points: '', takeaway: '' }; p.notes.unshift(n); vs.open = n.id; devoSave(b); rerender(b); setTimeout(() => $(`[data-sn="${n.id}"] input`)?.focus(), 30); } }, '+ New note')]));
+    if (p.notes.length > 2) el.append(q);
+    const list = h('div', { class: 'dv-list' }); el.append(list);
+    const drawList = () => {
+      list.replaceChildren();
+      const qq = vs.q.trim().toLowerCase();
+      const items = [...p.notes].sort((a, z) => str(z.date).localeCompare(str(a.date))).filter(n => !qq || [n.title, n.speaker, n.passage, n.points, n.takeaway].join(' ').toLowerCase().includes(qq));
+      for (const n of items) {
+        const open = vs.open === n.id;
+        const head = h('button', { class: 'dv-snhead', 'aria-expanded': String(open), onclick: () => { vs.open = open ? null : n.id; drawList(); } },
+          h('span', { class: 'dv-sndate', text: parseIso(str(n.date) || todayIso()).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) }),
+          h('span', { class: 'dv-sntitle', text: str(n.title) || 'Untitled sermon' }),
+          h('span', { class: 'dv-muted dv-small', text: [n.speaker, n.passage].filter(Boolean).join(' · ') }), h('span', { class: 'dv-caret', text: open ? '▾' : '▸' }));
+        const card = h('div', { class: 'dv-sn' + (open ? ' open' : ''), 'data-sn': n.id }, head);
+        if (open) {
+          const set = (k, v) => { n[k] = v; devoSave(b); };
+          const passage = devoIn(n.passage, 'Passage, e.g. Romans 8:28-39', v => set('passage', v));
+          const date = h('input', { class: 'field', type: 'date', value: str(n.date), 'aria-label': 'Date' }); date.addEventListener('change', () => set('date', date.value || todayIso()));
+          card.append(h('div', { class: 'dv-snbody' },
+            h('div', { class: 'dv-row' }, devoIn(n.title, 'Sermon title', v => { set('title', v); const t = head.querySelector('.dv-sntitle'); if (t) t.textContent = v || 'Untitled sermon'; }), date),
+            h('div', { class: 'dv-row' }, devoIn(n.speaker, 'Speaker', v => set('speaker', v)), passage,
+              h('button', { class: 'pill-btn', title: 'Read the passage', onclick: e => { const ref = passage.value.trim(); if (!ref) return toast('Type the passage first.'); openPop(e.currentTarget, h('div', { style: 'width:320px;max-height:320px;overflow:auto' }, devoVerseView(ref, tr), devoCredit(tr))); } }, '📖')),
+            h('span', { class: 'dv-lbl', text: 'Key points' }), devoTA(n.points, '• One point per line', v => set('points', v), 5),
+            h('span', { class: 'dv-lbl', text: 'My takeaway' }), devoTA(n.takeaway, 'What will you do with what you heard?', v => set('takeaway', v), 3),
+            h('div', { class: 'dv-row', style: 'justify-content:flex-end' }, h('button', { class: 'linkish dv-small', onclick: () => confirmModal('Delete this note?', 'This can’t be undone.', 'Delete', () => { p.notes = p.notes.filter(x => x !== n); devoSave(b); rerender(b); }) }, 'Delete note'))));
+        }
+        list.append(card);
+      }
+      if (!items.length) list.append(h('div', { class: 'dv-empty dv-muted', text: p.notes.length ? 'No notes match your search.' : 'Tap “+ New note” during the service to start.' }));
+    };
+    drawList();
+  });
+}
+
+/* ---------- Memory verses ---------- */
+const DV_BOX_DAYS = [0, 1, 2, 4, 8, 16];
+function devoHideSet(text, level, seed) {
+  const words = text.split(/\s+/).filter(Boolean);
+  const frac = [0, .3, .6, 1][level] || 0;
+  // Hide a fixed share of the words, picked in a scrambled but repeatable order.
+  const want = frac ? Math.max(1, Math.round(words.length * frac)) : 0;
+  const order = words.map((w, i) => [Math.abs(Math.sin((i + 1) * 12.9898 + seed * 78.233) * 43758.5453) % 1, i]).sort((a, z) => a[0] - z[0]);
+  const hidden = new Set(order.slice(0, want).map(x => x[1]));
+  return { words, hidden };
+}
+function wDvMemory(b) {
+  const d = b.data = obj(b.data); const tr = devoTr(d); const vs = VS[b.id] = VS[b.id] || { mode: 'list', level: 1, shown: false, rev: new Set(), idx: 0 };
+  return devoGate(b, d, 'dv-memory', (el, p) => {
+    p.verses = arr(p.verses);
+    const t = todayIso(); const due = p.verses.filter(v => str(v.due || t) <= t);
+    el.append(wHead(b, d, [devoTrSelect(b, d), h('span', { class: 'w-sub', text: p.verses.length ? `${due.length} due today` : '' }),
+      p.verses.length ? h('button', { class: 'pill-btn', onclick: () => { vs.mode = vs.mode === 'list' ? 'practice' : 'list'; vs.idx = 0; vs.shown = false; vs.rev = new Set(); rerender(b); } }, vs.mode === 'list' ? '🧠 Practise' : '☰ My verses') : '']));
+    if (vs.mode === 'practice' && p.verses.length) {
+      const queue = due.length ? due : p.verses;
+      const v = queue[vs.idx % queue.length];
+      const levels = h('div', { class: 'seg', role: 'group', 'aria-label': 'Hide words' }, [['Off', 0], ['Some', 1], ['Most', 2], ['All', 3]].map(([l, n]) => h('button', { class: vs.level === n ? 'on' : '', onclick: () => { vs.level = n; vs.rev = new Set(); vs.shown = false; rerender(b); } }, l)));
+      const card = h('div', { class: 'dv-flash' }, h('div', { class: 'dv-flashref', text: str(v.ref) }));
+      if (!vs.shown && vs.level === 3) card.append(h('button', { class: 'btn', onclick: () => { vs.shown = true; rerender(b); } }, 'Reveal'));
+      else {
+        const { words, hidden } = devoHideSet(str(v.text), vs.level, vs.idx + str(v.ref).length);
+        const line = h('p', { class: 'dv-flashtext' });
+        words.forEach((w, i) => {
+          if (hidden.has(i) && !vs.rev.has(i) && !vs.shown) line.append(h('button', { class: 'dv-blank', title: 'Tap to peek', onclick: () => { vs.rev.add(i); rerender(b); }, text: w.replace(/[\p{L}\p{N}]/gu, '_') }), ' ');
+          else line.append(document.createTextNode(w + ' '));
+        });
+        card.append(line);
+        if (vs.level > 0 && !vs.shown) card.append(h('button', { class: 'linkish dv-small', onclick: () => { vs.shown = true; rerender(b); } }, 'Show all words'));
+      }
+      const grade = ok => {
+        const box = ok ? Math.min(5, num(v.box, 1) + 1) : 1;
+        v.box = box; v.due = iso(addDays(new Date(), ok ? DV_BOX_DAYS[box] : 0)); v.last = t;
+        if (ok) dragonDone('habit');
+        devoSave(b); vs.idx++; vs.shown = false; vs.rev = new Set();
+        if (ok && !p.verses.some(x => str(x.due || t) <= t)) { toast('All caught up for today! 🎉'); vs.mode = 'list'; }
+        rerender(b);
+      };
+      el.append(h('div', { class: 'dv-row' }, h('span', { class: 'dv-lbl', text: 'Hide words' }), levels), card,
+        h('div', { class: 'btns', style: 'justify-content:center' }, h('button', { class: 'btn ghost', onclick: () => grade(false) }, '↺ Again'), h('button', { class: 'btn', onclick: () => grade(true) }, '✓ Got it')),
+        h('div', { class: 'dv-muted dv-small', style: 'text-align:center', text: `Box ${num(v.box, 1)} of 5 · ${queue.length} in today’s set` }));
+    } else {
+      const ref = devoIn('', 'Add a verse, e.g. Philippians 4:13', () => {}, { id: 'dvmem-' + b.id });
+      const add = async () => {
+        const r = ref.value.trim(); if (!r) return ref.focus();
+        ref.disabled = true;
+        try { const v = await devoVerse(r, tr); p.verses.unshift({ id: uid('mv'), ref: v.ref, text: v.text, box: 1, due: todayIso(), added: todayIso() }); devoSave(b); rerender(b); refocus('dvmem-' + b.id); }
+        catch (e) { toast(e.message); ref.disabled = false; ref.focus(); }
+      };
+      ref.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+      el.append(h('div', { class: 'dv-row' }, ref, h('button', { class: 'btn', onclick: add }, 'Add')));
+      const list = h('div', { class: 'dv-list' });
+      for (const v of p.verses) {
+        const txt = devoTA(v.text, 'Verse text', val => { v.text = val; devoSave(b); }, 2);
+        list.append(h('div', { class: 'dv-mv' }, h('div', { class: 'dv-row', style: 'justify-content:space-between' }, h('b', { text: str(v.ref) }), h('span', { class: 'dv-muted dv-small', text: `Box ${num(v.box, 1)} · ${str(v.due || t) <= t ? 'due today' : 'next ' + devoDayLabel(str(v.due))}` }), mini('Remove', () => { p.verses = p.verses.filter(x => x !== v); devoSave(b); rerender(b); })), txt));
+      }
+      if (!p.verses.length) list.append(h('div', { class: 'dv-empty dv-muted', text: 'Add a verse to memorise. Practise a little each day; verses you know well come back less often.' }));
+      el.append(list, devoCredit(tr));
+    }
+  });
+}
+
+/* ---------- Gratitude & praise ---------- */
+function wDvGrat(b) {
+  const d = b.data = obj(b.data); const vs = VS[b.id] = VS[b.id] || { kind: 'thanks' };
+  return devoGate(b, d, 'dv-grat', (el, p) => {
+    p.days = obj(p.days); const t = todayIso(); const today = p.days[t] = arr(p.days[t]);
+    let streak = 0; { let dt = new Date(); if (!arr(p.days[iso(dt)]).length) dt = addDays(dt, -1); while (arr(p.days[iso(dt)]).length && streak < 2000) { streak++; dt = addDays(dt, -1); } }
+    el.append(wHead(b, d, [streak ? h('span', { class: 'streak', text: `🔥 ${streak} day${streak > 1 ? 's' : ''}` }) : '']));
+    const kindSeg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Type' }, [['thanks', '🙏 Thanks'], ['praise', '💛 Praise']].map(([k, l]) => h('button', { class: vs.kind === k ? 'on' : '', onclick: () => { vs.kind = k; rerender(b); } }, l)));
+    const inp = devoIn('', vs.kind === 'praise' ? 'Praise God for…' : 'I’m thankful for…', () => {}, { id: 'dvgr-' + b.id });
+    const add = () => { const v = inp.value.trim(); if (!v) return inp.focus(); today.push({ id: uid('g'), text: v.slice(0, 300), kind: vs.kind }); devoSave(b); rerender(b); refocus('dvgr-' + b.id); };
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); add(); } });
+    el.append(h('div', { class: 'dv-row' }, kindSeg), h('div', { class: 'dv-row' }, inp, h('button', { class: 'btn', onclick: add }, 'Add')));
+    const dayList = (k, items, editable) => h('div', { class: 'dv-gday' }, h('span', { class: 'dv-lbl', text: devoDayLabel(k) }),
+      h('ul', { class: 'dv-glist' }, items.map(it => h('li', { class: 'dv-g ' + (it.kind === 'praise' ? 'praise' : 'thanks') }, h('span', { text: it.kind === 'praise' ? '💛' : '🙏' }), h('span', { class: 'dv-gt', text: str(it.text) }), editable ? mini('Remove', () => { p.days[k] = arr(p.days[k]).filter(x => x !== it); devoSave(b); rerender(b); }) : ''))));
+    el.append(today.length ? dayList(t, today, true) : h('div', { class: 'dv-empty dv-muted', text: 'What are you grateful for today? Even small things count.' }));
+    const recent = Object.keys(p.days).filter(k => k < t && arr(p.days[k]).length).sort().reverse().slice(0, 5);
+    if (recent.length) el.append(h('details', { class: 'dv-recent' }, h('summary', { text: `Earlier (${recent.length} day${recent.length > 1 ? 's' : ''})` }), ...recent.map(k => dayList(k, arr(p.days[k]), false))));
+    for (const k of Object.keys(p.days)) if (!arr(p.days[k]).length && k !== t) delete p.days[k];
+  });
+}
+
+/* ---------- what the AI and copy-as-text may see (never private entries) ---------- */
+function devoPageText(b, lines) {
+  const d = obj(b.data);
+  if (b.type === 'votd') lines.push(`[Verse of the day: ${devoDayRef(todayIso())}]`);
+  else if (b.type === 'plan') lines.push(`[Reading plan: ${(DV_PLANS[d.plan] || DV_PLANS.year).n}]`);
+  else lines.push(`[${str(d.title) || 'Devotional'} · private entries not shared]`);
+}
+
 /* ================= Supabase: sign-in, workspaces, live pages ================= */
 let SB = null, W = null;
 const isAdminRole = () => ['owner', 'admin'].includes(S.role);
@@ -6052,7 +6897,7 @@ function aiName() {
 function openAskPanel(v) {
   if (!$('#agentPanel.open')) toggleAgent();
   setTimeout(() => $('#agentPanel .chat-in')?.focus(), 250);
-  if (v && DG.pet) { act('happy', 850, v); say(pick(['Ask me anything! ✨', 'What can I help with? 🐉', 'Ooh, a question! 💭', 'I’m all ears… well, horns 🐲']), v, 2600); }
+  if (v && DG.pet) { act('happy', 850, v); say(pick(['Ask me anything! ✨', 'What can I help with? ✨', 'Ooh, a question! 💭', 'I’m all ears 👂']), v, 2600); }
 }
 function buddyMenu(anchor, v) {
   wake(true);
@@ -6072,12 +6917,12 @@ function aiAvatarEl() {
   if (AI.avatar === 'dragon') { const v = dragonView({ stage: Math.max(1, typeof dStage === 'function' ? dStage(DG.pet) : 1), color: DG.pet ? DG.pet.color : 'theme', still: true }); v.classList.add('msg-av'); return v; }
   return h('span', { class: 'msg-av sparkle', 'aria-hidden': 'true', text: '✦' });
 }
-function aiTitleText() { return (AI.avatar === 'dragon' ? '🐉 ' : '✦ ') + aiName(); }
+function aiTitleText() { return (AI.avatar === 'dragon' ? CHARS[myKind()].e + ' ' : '✦ ') + aiName(); }
 function aiSettingsSection(admin) {
   const name = h('input', { class: 'field', value: aiName(), maxlength: '40', 'aria-label': 'Assistant name', id: 'aiNameIn', disabled: admin ? null : true });
   let avatar = AI.avatar === 'dragon' ? 'dragon' : 'sparkle';
   const look = h('div', { class: 'seg', role: 'group', 'aria-label': 'Assistant look' });
-  const drawLook = () => look.replaceChildren(...[['sparkle', '✦ Sparkle'], ['dragon', '🐉 Team dragon']].map(([k, l]) => h('button', { class: avatar === k ? 'on' : '', disabled: admin ? null : true, onclick: () => { avatar = k; drawLook(); } }, l)));
+  const drawLook = () => look.replaceChildren(...[['sparkle', '✦ Sparkle'], ['dragon', '🐣 Team pet']].map(([k, l]) => h('button', { class: avatar === k ? 'on' : '', disabled: admin ? null : true, onclick: () => { avatar = k; drawLook(); } }, l)));
   drawLook();
   const persona = h('textarea', { class: 'field', rows: '4', maxlength: '2000', placeholder: 'How should your assistant talk and help? e.g. Keep it short, use Taglish, always end with a next step.', 'aria-label': 'Personality and instructions', id: 'aiPersonaIn', disabled: admin ? null : true });
   persona.value = str(AI.persona);
@@ -6321,7 +7166,7 @@ function customize() {
     h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Corners' }), segm('radius', [['crisp', 'Crisp'], ['soft', 'Soft'], ['bubbly', 'Bubbly']])),
     h('div', { class: 'msec' }, h('span', { class: 'lbl', text: 'Background' }), segm('pattern', [['none', 'Plain'], ['dots', 'Polka dots'], ['grid', 'Grid paper'], ['gingham', 'Gingham']])),
     h('label', { class: 'switch' }, motion, 'Playful animations'),
-    h('label', { class: 'switch' }, dragonT, 'Team dragon in the corner 🐉'),
+    h('div', { class: 'frow', style: 'align-items:center;gap:12px' }, h('label', { class: 'switch' }, dragonT, 'Team pet in the corner'), h('button', { class: 'pill-btn', onclick: () => charPicker() }, `${CHARS[myKind()].e} Choose your pet`)),
     h('div', { class: 'msep' }),
     h('div', { class: 'msec' }, h('span', { class: 'lbl', text: S.mode === 'db' ? 'Workspace (everyone sees this)' : 'Workspace' }),
       h('div', { class: 'frow' }, h('button', { class: 'ws-ico', style: 'width:40px;height:40px', 'aria-label': 'Workspace icon', onclick: e => emojiPop(e.currentTarget, em => { S.meta.icon = em; renderSidebar(); saveMeta(); customize(); }) }, S.meta.icon || '🐣'), nameIn)),
