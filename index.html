@@ -650,9 +650,334 @@ body.rubbering, body.rubbering * { user-select: none !important; -webkit-user-se
 body:has(.sel-bar) .toast { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 .pill-btn.danger { background: color-mix(in srgb, var(--danger) 14%, var(--card)); color: var(--danger); }
 .pill-btn.danger:hover { background: var(--danger); color: var(--card); }
+.undo-btn { font-size: 18px; }
+.undo-btn:disabled { opacity: .3; cursor: default; background: none !important; }
 .toast.has-act { display: flex; align-items: center; gap: 12px; padding-right: 8px; }
 .toast-act { background: color-mix(in srgb, var(--bg) 22%, transparent); color: var(--bg); padding: 4px 12px; border-radius: 99px; font-weight: 800; font-size: 13px; }
 .toast-act:hover { background: var(--bg); color: var(--fg); }
+
+/* ---------- Page history ---------- */
+.hist { display: grid; grid-template-columns: 210px 1fr; gap: 14px; min-height: 360px; }
+@media (max-width: 640px) { .hist { grid-template-columns: 1fr; } .hist-list { max-height: 180px; } }
+.hist-list { display: flex; flex-direction: column; gap: 2px; max-height: 60vh; overflow-y: auto; border-right: 1px solid var(--line); padding-right: 8px; }
+.hist-item { display: grid; text-align: left; padding: 7px 10px; border-radius: 10px; gap: 1px; font-size: 13.5px; }
+.hist-item:hover { background: var(--hover); }
+.hist-item[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); }
+.hist-view { min-width: 0; display: grid; grid-template-rows: auto 1fr; gap: 10px; }
+.hist-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.hist-preview { white-space: pre-wrap; font-size: 13.5px; line-height: 1.55; background: var(--bg); border-radius: calc(var(--r) * .7); padding: 12px 14px; max-height: 52vh; overflow: auto; color: var(--muted); }
+/* ---------- AI persona ---------- */
+.msg.assistant.has-av { position: relative; margin-left: 36px; max-width: calc(94% - 36px); }
+.msg-av { position: absolute; left: -36px; bottom: -2px; width: 30px; height: 30px; }
+.msg-av.sparkle { display: grid; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-ink); font-size: 15px; }
+.ai-persona textarea { resize: vertical; min-height: 84px; font: inherit; }
+.ai-persona .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+/* ---------- Databases ---------- */
+.w-db { padding-bottom: 10px; }
+.w-db .w-head { row-gap: 8px; }
+.db-search { border: 1px solid var(--line); background: var(--bg); border-radius: 99px; padding: 4px 12px; font-size: 13px; width: 150px; outline: none; }
+.db-search:focus { border-color: var(--accent); background: var(--card); }
+.db-tabs { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid var(--line); margin: -4px 0 10px; }
+.db-tab { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; font-size: 13px; font-weight: 700; color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px; border-radius: 8px 8px 0 0; }
+.db-tab:hover { background: var(--hover); color: var(--fg); }
+.db-tab.on { color: var(--fg); border-bottom-color: var(--accent-strong); }
+.db-tab.add { color: var(--faint); font-size: 16px; padding: 4px 10px; }
+.db-caret { font-size: 10px; color: var(--faint); }
+.db-sortnote { margin-left: auto; font-size: 12px; color: var(--faint); padding: 0 6px; }
+.db-ti { font-size: 12px; color: var(--faint); width: 16px; text-align: center; flex: none; }
+.db-chip { display: inline-flex; align-items: center; padding: 1px 9px; border-radius: 99px; font-size: 12.5px; font-weight: 700; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; line-height: 1.6; }
+.db-chip.sm { font-size: 11.5px; padding: 0 7px; }
+.db-empty { color: var(--faint); font-size: 13px; }
+/* table */
+.db-scroll { overflow-x: auto; margin: 0 -14px; padding: 0 14px; }
+.db-table { border-collapse: separate; border-spacing: 0; min-width: 100%; font-size: 14px; }
+.db-table th, .db-table td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 0; text-align: left; vertical-align: top; min-width: 130px; max-width: 280px; background: var(--card); }
+.db-table th:last-child, .db-table td:last-child { border-right: 0; }
+.db-table thead th { border-bottom-width: 1.5px; }
+.db-table .db-title { position: sticky; left: 0; z-index: 1; min-width: 200px; box-shadow: 1px 0 0 var(--line); }
+.db-table .t-checkbox { min-width: 76px; }
+.db-table .t-number { min-width: 110px; }
+.db-table .db-addcol { min-width: 44px; width: 44px; }
+.db-th { display: flex; align-items: center; gap: 6px; width: 100%; padding: 7px 8px; font-size: 12.5px; font-weight: 800; color: var(--muted); white-space: nowrap; text-align: left; }
+.db-th:hover { background: var(--hover); color: var(--fg); }
+.db-addcol .db-th { justify-content: center; font-size: 16px; color: var(--faint); }
+.db-tcell { display: flex; align-items: flex-start; gap: 4px; padding: 6px 6px 6px 8px; }
+.db-title-ed { flex: 1; font-weight: 700; min-height: 1.4em; }
+.db-title-ed:empty::before, .db-ed:empty::before { content: attr(data-ph); color: var(--faint); font-weight: 600; }
+.db-open { flex: none; font-size: 11.5px; font-weight: 800; color: var(--muted); padding: 1px 7px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); opacity: 0; transition: opacity .12s; white-space: nowrap; }
+.db-open:hover { background: var(--hover); color: var(--fg); }
+.db-table tr:hover .db-open, .db-open:focus-visible { opacity: 1; }
+.db-table tr:hover td { background: color-mix(in srgb, var(--hover) 55%, var(--card)); }
+.db-txt { display: flex; align-items: flex-start; gap: 4px; padding: 6px 8px; min-height: 34px; cursor: text; }
+.db-txt .ied { flex: 1; padding: 0; }
+.db-ed.dbnum { text-align: right; font-variant-numeric: tabular-nums; }
+.db-go { flex: none; font-size: 12px; font-weight: 800; color: var(--accent-ink); text-decoration: none; padding: 0 4px; border-radius: 4px; }
+.db-go:hover { background: var(--accent-soft); }
+.db-pick { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; width: 100%; min-height: 34px; padding: 5px 8px; text-align: left; font-size: 14px; }
+.db-pick:not(:disabled):hover { background: var(--hover); }
+.db-pick:disabled { cursor: default; color: inherit; }
+.db-pick.overdue { color: var(--danger); font-weight: 700; }
+.db-cb { padding: 3px 6px; }
+.db-person { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; }
+.db-person .avatar { width: 20px; height: 20px; font-size: 10.5px; }
+.db-none { padding: 14px 10px; color: var(--faint); font-size: 13.5px; text-align: center; }
+.db-newrow { width: 100%; text-align: left; padding: 7px 10px; font-size: 13.5px; font-weight: 700; color: var(--faint); }
+.db-newrow:hover { background: var(--hover); color: var(--muted); }
+.db-count { display: block; padding: 7px 10px; font-size: 12.5px; color: var(--faint); }
+.db-table tfoot td { border-bottom: 0; }
+.db-agg { width: 100%; text-align: right; padding: 7px 8px; font-size: 12.5px; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.db-agg.ghost { color: transparent; }
+.db-table tfoot:hover .db-agg.ghost { color: var(--faint); }
+.db-agg:not(:disabled):hover { background: var(--hover); }
+/* board, gallery, cards */
+.db-board .kcol { flex-basis: 250px; }
+.db-card { flex-direction: column; gap: 5px; cursor: pointer; }
+.db-ct { font-weight: 800; font-size: 14px; word-break: break-word; }
+.db-cp { display: flex; flex-wrap: wrap; gap: 3px; align-items: center; font-size: 12.5px; color: var(--muted); min-width: 0; }
+.db-cpn { color: var(--faint); font-weight: 700; }
+.db-newcard { text-align: left; padding: 6px 8px; border-radius: calc(var(--r) * .5); color: var(--faint); font-weight: 700; font-size: 13px; }
+.db-newcard:hover { background: var(--card); color: var(--muted); }
+.db-gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+.db-gcard { background: var(--card); border: 1px solid var(--line); border-radius: calc(var(--r) * .8); overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; text-align: left; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; min-width: 0; }
+.db-gcard:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.db-gcover { height: 112px; display: grid; place-items: center; font-family: var(--font-display); font-size: 40px; font-weight: 650; overflow: hidden; }
+.db-gcover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.db-gbody { padding: 10px 12px 12px; display: grid; gap: 6px; }
+.db-gcard.add { border-style: dashed; box-shadow: none; display: grid; place-items: center; min-height: 160px; color: var(--faint); font-weight: 800; }
+.db-gcard.add:hover { color: var(--accent-ink); border-color: var(--accent); }
+.db-cal .cal-nav { margin-bottom: 8px; flex-wrap: wrap; }
+.db-cal .cal-day.over { border-color: var(--accent-strong); border-style: dashed; background: var(--accent-soft); }
+.db-cal .ev { cursor: pointer; }
+.db-cal .ev[draggable="true"] { cursor: grab; }
+.db-undated { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+.db-undated .db-chip { cursor: pointer; }
+.db-card.dragging, .db-cal .ev.dragging { opacity: .4; }
+/* popovers and the row page */
+.db-opt-pop { display: grid; gap: 6px; }
+.db-opt-pop .mlist { max-height: 260px; overflow: auto; }
+.db-types { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.db-prop-pop { display: grid; gap: 8px; }
+.db-prop-pop .pop-row select { flex: 1; border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 5px 6px; font-size: 13.5px; min-width: 0; }
+.db-prop-pop .pop-row > .w-sub { width: 58px; flex: none; }
+.db-opts { display: grid; gap: 4px; }
+.db-opt-row { display: flex; gap: 6px; align-items: center; }
+.db-opt-row .field { padding: 4px 8px; font-size: 13px; }
+.db-opt-row .mini-x { opacity: .6; }
+.db-row-page { display: grid; gap: 12px; }
+.db-row-title { font-family: var(--font-display); font-size: 26px; font-weight: 650; border: 0; outline: none; background: transparent; color: var(--fg); padding: 2px 0; width: 100%; }
+.db-row-title::placeholder { color: var(--faint); }
+.db-form { display: grid; gap: 2px; }
+.db-frow { display: grid; grid-template-columns: 150px 1fr; align-items: start; gap: 8px; border-radius: 8px; }
+.db-frow:hover { background: color-mix(in srgb, var(--hover) 50%, transparent); }
+.db-flbl { display: flex; align-items: center; gap: 6px; padding: 7px 4px; font-size: 13.5px; color: var(--muted); font-weight: 700; min-width: 0; }
+.db-flbl span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.db-fval { min-width: 0; }
+.db-notes { width: 100%; resize: vertical; font: inherit; line-height: 1.5; }
+@media (max-width: 560px) { .db-frow { grid-template-columns: 1fr; gap: 0; } .db-flbl { padding-bottom: 0; } .db-search { width: 110px; } }
+
+/* ---------- Everyday life + goals ---------- */
+.l-field { width: 100%; }
+textarea.l-field { resize: vertical; line-height: 1.5; }
+/* grocery */
+.l-groups { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); align-items: start; }
+.l-group { display: grid; gap: 6px; min-width: 0; }
+.l-gh { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.l-gh b { flex: 1; font-family: var(--font-display); font-weight: 650; }
+.l-gitem { cursor: default; align-items: center; }
+.l-gitem .chk { margin-top: 0; }
+.l-qty { font-size: 12px; font-weight: 800; color: var(--accent-ink); background: var(--accent-soft); border-radius: 99px; padding: 1px 8px; min-width: 18px; outline: none; white-space: nowrap; max-width: 90px; overflow: hidden; }
+.l-qty:empty { background: transparent; padding: 1px 4px; }
+.l-qty:empty::before { content: attr(data-ph); color: var(--faint); font-weight: 600; opacity: 0; }
+.l-gitem:hover .l-qty:empty::before, .l-qty:empty:focus::before { opacity: 1; }
+.l-cart { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.l-cart-h { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--muted); padding: 2px 0; }
+.l-cart-h .toggle-btn { width: 20px; height: 20px; display: inline-grid; place-items: center; }
+.l-cart .qlist { margin-top: 6px; opacity: .75; }
+/* meals */
+.l-meals-wrap { overflow-x: auto; }
+.l-meals { display: grid; grid-template-columns: 84px repeat(7, minmax(60px, 1fr)); gap: 5px; min-width: 540px; }
+.l-mh { text-align: center; display: grid; gap: 0; font-size: 12px; color: var(--faint); padding-bottom: 2px; }
+.l-mh b { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; font-weight: 800; }
+.l-mh span { font-family: var(--font-display); font-size: 16px; font-weight: 650; color: var(--fg); }
+.l-mh.today span { color: var(--accent-ink); }
+.l-mrow { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.l-mrow b { font-weight: 700; }
+.l-mcell { min-height: 58px; border-radius: calc(var(--r) * .55); background: var(--bg); border: 1px solid transparent; padding: 6px 7px; text-align: left; display: flex; flex-direction: column; justify-content: space-between; gap: 4px; font-size: 12.5px; line-height: 1.3; min-width: 0; }
+.l-mcell:hover { border-color: var(--accent); }
+.l-mcell.today { background: color-mix(in srgb, var(--accent-soft) 60%, var(--bg)); }
+.l-mcell.has { background: var(--card); box-shadow: var(--shadow-sm); border-color: var(--line); }
+.l-mt { font-weight: 700; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; word-break: break-word; }
+.l-mplus { color: var(--faint); font-size: 18px; margin: auto; opacity: 0; transition: opacity .15s; }
+.l-mcell:hover .l-mplus, .l-mcell:focus-visible .l-mplus { opacity: 1; }
+.l-ming { font-size: 11px; color: var(--faint); font-weight: 700; }
+.l-mlist { display: none; gap: 6px; }
+.l-mday { display: grid; grid-template-columns: 54px 1fr; gap: 8px; align-items: start; padding: 6px; border-radius: calc(var(--r) * .6); background: var(--bg); }
+.l-mday.today { background: color-mix(in srgb, var(--accent-soft) 60%, var(--bg)); }
+.l-mdh { display: grid; font-size: 12px; color: var(--faint); padding-top: 3px; }
+.l-mdh b { font-family: var(--font-display); font-size: 14px; color: var(--fg); }
+.l-mday.today .l-mdh b { color: var(--accent-ink); }
+.l-mdmeals { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.l-mchip { display: inline-flex; gap: 4px; align-items: center; max-width: 100%; padding: 3px 9px 3px 6px; border-radius: 99px; font-size: 12.5px; color: var(--faint); border: 1px dashed var(--line); }
+.l-mchip.has { color: var(--fg); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-sm); font-weight: 700; }
+.l-mchip:hover { border-color: var(--accent); }
+.l-mct { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+@container (max-width: 520px) { .l-meals-wrap { display: none; } .l-mlist { display: grid; } }
+.l-ing-ro { white-space: pre-wrap; font: inherit; font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+/* goals */
+.l-goals { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.l-goal { position: relative; border-radius: calc(var(--r) * .9); padding: 12px; background: color-mix(in srgb, var(--gc) 32%, var(--card)); border: 1px solid color-mix(in srgb, var(--gc) 70%, var(--line)); display: grid; gap: 9px; min-width: 0; overflow: visible; }
+.l-goal.done { background: color-mix(in srgb, var(--gc) 55%, var(--card)); }
+.l-ghead { display: flex; align-items: flex-start; gap: 8px; }
+.l-ghead .hico { font-size: 22px; width: 34px; height: 34px; background: var(--card); box-shadow: var(--shadow-sm); }
+.l-gtitle { font-family: var(--font-display); font-weight: 650; font-size: 16px; display: block; padding: 0 2px; }
+.l-gmeta { margin-top: 1px; }
+.l-gpct { font-family: var(--font-display); font-size: 18px; font-variant-numeric: tabular-nums; }
+.l-bar { height: 10px; border-radius: 99px; background: color-mix(in srgb, var(--card) 75%, transparent); overflow: hidden; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg) 6%, transparent); }
+.l-bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, color-mix(in srgb, var(--gc) 100%, #000 18%), color-mix(in srgb, var(--accent-strong) 70%, var(--gc))); transition: width .5s cubic-bezier(.3,1.4,.5,1); }
+.l-gctl { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.l-gctl .nav-btn { background: var(--card); box-shadow: var(--shadow-sm); font-weight: 800; }
+.l-gval { max-width: 84px; flex: 0 1 84px; text-align: center; background: var(--card); padding: 5px 6px; }
+.l-steps { display: grid; gap: 4px; }
+.l-step { display: flex; align-items: flex-start; gap: 4px; font-size: 14px; }
+.l-step .chk { width: 17px; height: 17px; margin-top: 2px; border-radius: 5px; }
+.l-burst { position: absolute; top: 40%; font-size: 18px; pointer-events: none; animation: lBurst 1.2s ease-out forwards; z-index: 3; }
+@keyframes lBurst { 0% { transform: translate(0, 0) scale(.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(1.1); opacity: 0; } }
+/* countdowns */
+.l-cds { display: grid; gap: 8px; }
+.l-cd { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: calc(var(--r) * .8); background: color-mix(in srgb, var(--gc) 28%, var(--card)); border: 1px solid color-mix(in srgb, var(--gc) 60%, var(--line)); }
+.l-cd.past { opacity: .55; filter: saturate(.4); }
+.l-cd.today { box-shadow: 0 0 0 2px var(--accent-strong); }
+.l-cdico { font-size: 22px; width: 36px; height: 36px; background: var(--card); box-shadow: var(--shadow-sm); flex: none; }
+.l-cd .ied { font-weight: 700; display: inline-block; }
+.l-cdchip { flex: none; min-width: 64px; text-align: center; background: var(--card); border-radius: calc(var(--r) * .6); padding: 4px 8px; box-shadow: var(--shadow-sm); display: grid; line-height: 1.1; }
+.l-cdchip b { font-family: var(--font-display); font-size: 20px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.l-cd.today .l-cdchip b { font-size: 14px; }
+.l-cdchip small { font-size: 11px; color: var(--faint); font-weight: 700; }
+/* wellness */
+.l-well { display: grid; gap: 14px; }
+.l-wsec { display: grid; gap: 8px; }
+.l-wh { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.l-wh b { font-family: var(--font-display); font-weight: 650; }
+.l-cups { display: flex; flex-wrap: wrap; gap: 6px; }
+.l-cup { width: 30px; height: 38px; border-radius: 4px 4px 10px 10px; border: 2px solid hsl(205 70% 72%); background: hsl(205 90% 97%); position: relative; overflow: hidden; transition: transform .15s; }
+.l-cup:hover:not(:disabled) { transform: translateY(-2px); }
+.l-cupfill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: linear-gradient(180deg, hsl(200 90% 78%), hsl(205 85% 66%)); transition: height .35s cubic-bezier(.3,1.4,.5,1); }
+.l-cup.on .l-cupfill { height: 82%; }
+.l-cup.extra { border-style: dashed; }
+.l-cup.add { border-style: dashed; color: hsl(205 60% 55%); font-weight: 800; background: transparent; }
+.l-sleep { max-width: 90px; flex: 0 1 90px; text-align: center; }
+.l-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.l-chart { background: var(--bg); border-radius: calc(var(--r) * .7); padding: 8px 10px; }
+.l-ch { font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.l-bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; height: 84px; }
+.l-bcol { display: grid; grid-template-rows: 1fr auto; gap: 3px; text-align: center; font-size: 10.5px; color: var(--faint); font-weight: 700; min-width: 0; }
+.l-bcol.cur span { color: var(--accent-ink); }
+.l-btrack { position: relative; border-radius: 6px; background: color-mix(in srgb, var(--line) 50%, transparent); overflow: hidden; }
+.l-bfill { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 6px 6px 4px 4px; transition: height .4s; }
+.water .l-bfill { background: hsl(205 70% 78%); } .water .l-bfill.met { background: hsl(205 80% 62%); }
+.sleep .l-bfill { background: hsl(262 55% 82%); } .sleep .l-bfill.met { background: hsl(262 55% 66%); }
+.l-bgoal { position: absolute; left: 0; right: 0; height: 0; border-top: 1.5px dashed color-mix(in srgb, var(--fg) 30%, transparent); }
+/* journal */
+.l-prompt { display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border-radius: calc(var(--r) * .8); background: var(--accent-soft); color: var(--accent-ink); font-size: 15px; margin-bottom: 10px; }
+.l-prompt i { font-family: var(--font-display); font-style: normal; font-weight: 600; }
+.l-jbody { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 240px); gap: 12px; align-items: start; }
+@container (max-width: 520px) { .l-jbody { grid-template-columns: 1fr; } }
+.l-jmain { display: grid; gap: 8px; min-width: 0; }
+.l-jmoods { display: flex; flex-wrap: wrap; gap: 3px; }
+.l-jmood { width: 32px; height: 32px; border-radius: 10px; font-size: 18px; filter: grayscale(.7); opacity: .65; transition: transform .15s, filter .15s; }
+.l-jmood:hover:not(:disabled), .l-jmood.on { filter: none; opacity: 1; transform: scale(1.12); }
+.l-jmood.on { background: var(--accent-soft); }
+.l-jtext { min-height: 130px; font-size: 15px; background: var(--card); }
+.l-grat { display: grid; gap: 6px; background: var(--bg); padding: 10px; border-radius: calc(var(--r) * .7); }
+.l-grat b { font-family: var(--font-display); font-weight: 650; font-size: 14px; }
+.l-grat .field { background: var(--card); padding: 6px 9px; font-size: 13.5px; }
+.l-jpast { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; }
+.l-jchip { font-size: 12.5px; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: var(--bg); color: var(--muted); }
+.l-jchip:hover { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* ---------- Media blocks: bookmark, image, file, embed ---------- */
+.fl-empty { display: grid; gap: 8px; padding: 14px; margin: 6px 0; border: 1.5px dashed var(--line); border-radius: calc(var(--r) * .8); background: color-mix(in srgb, var(--card) 70%, transparent); color: var(--muted); font-size: 13.5px; }
+.fl-drop.over { border-color: var(--accent-strong); background: var(--accent-soft); }
+.fl-hint { font-weight: 800; color: var(--fg); font-size: 14px; }
+.fl-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.fl-row > .field { flex: 1; min-width: 160px; }
+.fl-row label.btn { cursor: pointer; }
+.fl-status { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; color: var(--muted); font-weight: 700; }
+.fl-status.err { color: var(--danger); }
+.fl-tools { display: flex; gap: 6px; align-items: center; justify-content: flex-end; margin-top: 4px; flex-wrap: wrap; }
+.fl-tools .mini-x { opacity: .7; }
+.fl-seg button { padding: 3px 10px; font-size: 12px; }
+/* bookmark */
+.fl-bookmark { margin: 6px 0; }
+.fl-card { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: calc(var(--r) * .8); overflow: hidden; background: var(--card); color: var(--fg); text-decoration: none; box-shadow: var(--shadow-sm); transition: border-color .15s, transform .15s; min-height: 92px; }
+.fl-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.fl-card-txt { flex: 1; min-width: 0; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.fl-card-t { font-weight: 800; font-size: 14.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fl-card-d { font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.fl-card-u { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--faint); min-width: 0; }
+.fl-card-u span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fl-fav { width: 16px; height: 16px; border-radius: 4px; flex: none; font-size: 12px; line-height: 16px; object-fit: contain; }
+.fl-card-img { flex: 0 0 min(34%, 220px); background: var(--hover); }
+.fl-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@container (max-width: 380px) { .fl-card-img { display: none; } }
+/* image */
+.fl-fig { margin: 8px 0; display: grid; gap: 4px; }
+.fl-fig.w-s { width: min(100%, 320px); } .fl-fig.w-m { width: min(100%, 560px); } .fl-fig.w-f { width: 100%; }
+.fl-imgwrap { border-radius: calc(var(--r) * .8); overflow: hidden; cursor: zoom-in; background: var(--hover); min-height: 60px; line-height: 0; }
+.fl-imgwrap.loading { min-height: 160px; animation: flPulse 1.2s ease-in-out infinite; }
+@keyframes flPulse { 50% { opacity: .55; } }
+.fl-img { width: auto; max-width: 100%; height: auto; display: block; margin: 0 auto; }
+.fl-cap { font-size: 13px; color: var(--muted); text-align: center; outline: none; min-height: 1.4em; padding: 0 4px; border-radius: 6px; }
+.fl-cap:empty::before { content: attr(data-ph); color: var(--faint); }
+.fl-cap:focus { background: var(--hover); }
+.fl-bigwrap { display: grid; place-items: center; }
+.fl-big { max-width: 100%; max-height: 75vh; border-radius: calc(var(--r) * .6); }
+/* file */
+.fl-file { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 6px 0; border: 1px solid var(--line); border-radius: calc(var(--r) * .8); background: var(--card); box-shadow: var(--shadow-sm); }
+.fl-ficon { font-size: 26px; flex: none; }
+.fl-fname { flex: 1; min-width: 0; display: grid; text-align: left; gap: 1px; }
+.fl-fname b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fl-fname small { color: var(--faint); font-size: 12px; }
+.fl-fname:hover b { color: var(--accent-ink); text-decoration: underline; }
+/* embed */
+.emb { margin: 8px 0; }
+.emb-box { border-radius: calc(var(--r) * .8); overflow: hidden; border: 1px solid var(--line); background: var(--hover); line-height: 0; }
+.emb-frame { width: 100%; border: 0; display: block; resize: vertical; }
+.emb-spotify { border: 0; background: transparent; }
+.emb .fl-tools a.pill-btn { text-decoration: none; }
+/* password vault */
+.w-vault .vault-note { display: grid; gap: 4px; padding: 12px 14px; border-radius: calc(var(--r) * .7); background: var(--bg); font-size: 13.5px; color: var(--muted); }
+.w-vault .vault-note b { color: var(--fg); }
+.vault-lock { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 18px 10px; }
+.vault-lock p { margin: 0; max-width: 340px; }
+.vault-big { font-size: 40px; line-height: 1; }
+.vault-list { display: grid; gap: 6px; margin: 10px 0 6px; }
+.vault-row { display: grid; grid-template-columns: 32px minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 7px 8px; border-radius: calc(var(--r) * .6); background: var(--bg); border: 1px solid transparent; }
+.vault-row:hover { border-color: var(--line); }
+.vault-emo { font-size: 20px; text-align: center; }
+.vault-main { display: grid; text-align: left; min-width: 0; gap: 1px; }
+.vault-main b, .vault-main small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vault-main small { color: var(--faint); font-size: 12px; }
+.vault-main:hover b { color: var(--accent-ink); }
+.vault-pwcell { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.vault-pwtxt { font-family: var(--font-mono); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.vault-pwcell .mini-x, .vault-acts .mini-x { opacity: .75; }
+.vault-acts { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.vault-acts .pill-btn { white-space: nowrap; }
+@container (max-width: 440px) { .vault-row { grid-template-columns: 30px minmax(0, 1fr) auto; } .vault-pwcell { display: none; } }
+@container (max-width: 340px) { .vault-row { grid-template-columns: 30px minmax(0, 1fr); } .vault-acts { grid-column: 1 / -1; justify-content: flex-start; } }
+.vault-form { display: grid; gap: 10px; }
+.vault-pw { position: relative; display: flex; }
+.vault-pw .field { flex: 1; padding-right: 40px; font-family: var(--font-mono); }
+.vault-eye { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); opacity: .8 !important; width: 28px; height: 28px; }
+.vault-meter-row { display: flex; align-items: center; gap: 10px; margin-top: -4px; }
+.vault-meter { flex: 0 0 120px; height: 6px; border-radius: 99px; background: var(--hover); overflow: hidden; }
+.vault-meter i { display: block; height: 100%; width: 0; border-radius: 99px; background: var(--danger); transition: width .2s, background .2s; }
+.vault-meter[data-s="2"] i { background: #e9a23b; } .vault-meter[data-s="3"] i { background: #7bbf5a; } .vault-meter[data-s="4"] i { background: #2f9e6a; }
+.vault-ack { display: flex; gap: 8px; align-items: flex-start; font-size: 13.5px; font-weight: 700; padding: 10px; border-radius: 10px; background: color-mix(in srgb, var(--danger) 9%, var(--card)); }
+.vault-ack input { margin-top: 2px; accent-color: var(--accent-strong); }
+.vault-gen input[type=range] { accent-color: var(--accent-strong); width: 110px; }
+
 /* ---------- Stickers ---------- */
 .stickers { position: absolute; inset: 0; pointer-events: none; z-index: 5; overflow: hidden; }
 .stk { position: absolute; transform: translate(-50%, -50%) rotate(var(--rot)); font-size: var(--sz); line-height: 1; user-select: none; filter: drop-shadow(0 3px 2px hsl(0 0% 0% / .15)); }
@@ -1046,6 +1371,11 @@ const ITEMS = [
   { t: 'code', n: 'Code', d: 'Monospaced snippet', i: '</>' },
   { t: 'divider', n: 'Divider', d: 'Separate sections', i: '—', k: 'line hr' },
   { t: 'subpage', n: 'Page', d: 'Nest a page inside this one', i: '📄', k: 'subpage child' },
+  { t: 'bookmark', n: 'Bookmark', d: 'Save a link as a preview card', i: '🔖', g: 'Media', k: 'link url web preview card' },
+  { t: 'image', n: 'Image', d: 'Upload a picture or paste an image link', i: '🖼️', k: 'photo picture upload img' },
+  { t: 'file', n: 'File', d: 'Attach a PDF, doc or any file', i: '📎', k: 'upload attachment pdf document' },
+  { t: 'embed', n: 'Embed', d: 'YouTube, Maps, Google Docs, Canva, Figma…', i: '🎬', k: 'video youtube vimeo loom spotify map google docs sheets slides canva figma iframe' },
+  { t: 'vault', n: 'Password vault', d: 'Encrypted logins, on private pages only', i: '🔐', k: 'password vault secret login passwords encrypted' },
   { t: 'cols2', n: '2 columns', d: 'Put blocks side by side', i: '▯▯', g: 'Layout', k: 'columns layout side split' },
   { t: 'cols3', n: '3 columns', d: 'Three side-by-side areas', i: '▯▯▯', k: 'columns layout side split' },
   { t: 'cols4', n: '4 columns', d: 'Four side-by-side areas', i: '▯▯▯▯', k: 'columns layout side split' },
@@ -1054,8 +1384,20 @@ const ITEMS = [
   { t: 'kanban', n: 'Kanban board', d: 'Cards in status columns', i: '▥', k: 'board columns project' },
   { t: 'calendar', n: 'Calendar', d: 'Month, week or day view. Link Google, Outlook or Apple', i: '▦', k: 'month week day events date schedule time block google outlook icloud' },
   { t: 'week', n: 'Weekly planner', d: 'Plan each day of the week', i: '7', k: 'week planner days' },
+  { t: 'db', n: 'Database', d: 'A table with your own columns, plus board, gallery and calendar views', i: '▤', g: 'Databases', k: 'database table notion columns properties board gallery' },
+  { t: 'db:recipes', n: 'Recipe box', d: 'Recipes with cuisine, prep time and tags', i: '🍳', k: 'database recipes cooking food dishes' },
+  { t: 'db:reading', n: 'Reading & watch list', d: 'Books, movies and shows by status', i: '📚', k: 'database books movies shows reading list watch' },
+  { t: 'db:bills', n: 'Bills', d: 'Amounts, due dates and paid ticks', i: '🧾', k: 'database bills payments due money' },
+  { t: 'db:budget', n: 'Budget tracker', d: 'Income and expenses by category', i: '💰', k: 'database budget expenses money spending finance' },
+  { t: 'db:birthdays', n: 'Birthdays & contacts', d: 'People, birthdays and gift ideas', i: '🎂', k: 'database birthdays contacts people gifts' },
   { t: 'habit', n: 'Habit tracker', d: 'Tick off habits each day', i: '◎', g: 'Trackers', k: 'streak routine' },
-  { t: 'mood', n: 'Mood tracker', d: 'One face per day', i: '☺', k: 'feelings journal' },
+  { t: 'mood', n: 'Mood tracker', d: 'One face per day', i: '☺', k: 'feelings emotions' },
+  { t: 'grocery', n: 'Grocery list', d: 'Shopping list sorted by aisle', i: '🛒', g: 'Everyday life', k: 'shopping groceries market list buy errands' },
+  { t: 'meals', n: 'Meal planner', d: 'Plan the week’s meals, send ingredients to groceries', i: '🍲', k: 'food menu cook recipes dinner lunch breakfast week' },
+  { t: 'countdown', n: 'Countdowns', d: 'Days until birthdays, trips and paydays', i: '⏳', k: 'birthday anniversary event days until timer date' },
+  { t: 'wellness', n: 'Water & sleep', d: 'Glasses of water and hours of sleep', i: '💧', k: 'health water hydration sleep wellbeing tracker' },
+  { t: 'journal', n: 'Journal', d: 'A daily prompt, gratitude and notes', i: '📔', k: 'diary gratitude reflection prompts writing' },
+  { t: 'goals', n: 'Goals', d: 'Progress bars and milestones', i: '🎯', g: 'Goals', k: 'goal target progress milestone okr savings resolution' },
   { t: 'pomodoro', n: 'Pomodoro timer', d: 'Focus sprints with breaks', i: '◔', k: 'timer focus tomato' },
   { t: 'dragon', n: 'Dragon den', d: 'Your team dragon. Pet it, feed it, watch it grow', i: '🐉', k: 'dragon pet mascot buddy egg cute' },
   { t: 'ask', n: 'Ask AI', d: 'A ChatGPT or Gemini chat box on this page', i: '✦', g: 'AI', k: 'ai chatgpt gemini assistant chat' },
@@ -1095,6 +1437,7 @@ const pendingLocal = k => saveTimers.has(k) || inflight.has(k);
 function markDirty(scope, id, delay = 650) {
   const p = S.pages[scope].get(id); if (!p) return;
   p.updatedAt = Date.now(); if (S.uid) p.updatedBy = S.uid;
+  histChange(scope, id);
   const k = keyOf(scope, id);
   clearTimeout(saveTimers.get(k));
   saveTimers.set(k, setTimeout(() => { saveTimers.delete(k); flush(scope, id); }, delay));
@@ -1244,7 +1587,12 @@ const TEMPLATES = [
   { id: 'weekly', n: 'Weekly planner', i: '🗓️', d: 'Seven-day plan with a habit tracker', make: () => ({ title: 'This week', icon: '🗓️', cover: 'sea', blocks: [wk('week'), mk('h2', 'Habits'), wk('habit'), mk('h2', 'Notes'), mk('text', '')] }) },
   { id: 'project', n: 'Project board', i: '🧩', d: 'Kanban board and project notes', make: () => ({ title: 'Project board', icon: '🧩', cover: 'lilac', blocks: [mk('h2', 'Goal'), mk('text', ''), wk('kanban'), mk('h2', 'Notes'), mk('bullet', '')] }) },
   { id: 'journal', n: 'Daily journal', i: '🌸', d: 'Mood, gratitude and a focus timer', make: () => ({ title: 'Journal', icon: '🌸', cover: 'gingham', blocks: [mk('h2', 'How I feel'), wk('mood'), mk('h2', 'Grateful for'), mk('bullet', ''), mk('h2', 'Focus time'), wk('pomodoro')] }) },
+  { id: 'homelife', n: 'Home & life', i: '🏡', d: 'Groceries, meal plan and countdowns', make: () => ({ title: 'Home & life', icon: '🏡', cover: 'butter', wide: true, blocks: [{ id: uid('b'), type: 'columns', data: { cols: [{ id: uid('col'), w: 1, blocks: [wk('grocery'), wk('countdown')] }, { id: uid('col'), w: 1.9, blocks: [wk('meals')] }] } }, mk('text', '')] }) },
+  { id: 'wellbeing', n: 'Goals & wellbeing', i: '🌱', d: 'Goals, water & sleep, and a journal', make: () => ({ title: 'Goals & wellbeing', icon: '🌱', cover: 'mint', blocks: [wk('goals'), { id: uid('b'), type: 'columns', data: { cols: [{ id: uid('col'), w: 1, blocks: [wk('wellness')] }, { id: uid('col'), w: 1.3, blocks: [wk('journal')] }] } }, mk('text', '')] }) },
   { id: 'calendar', n: 'Calendar', i: '📅', d: 'Month, week and day views for your events', make: () => ({ title: 'Calendar', icon: '📅', cover: 'butter', blocks: [wk('calendar'), mk('text', '')] }) },
+  { id: 'recipes', n: 'Recipe box', i: '🍳', d: 'Your recipes as a photo gallery', make: () => ({ title: 'Recipe box', icon: '🍳', cover: 'butter', blocks: [{ id: uid('b'), type: 'db', data: dbTemplate('recipes') }, mk('text', '')] }) },
+  { id: 'reading', n: 'Reading list', i: '📚', d: 'Books, movies and shows to enjoy', make: () => ({ title: 'Reading & watch list', icon: '📚', cover: 'lilac', blocks: [{ id: uid('b'), type: 'db', data: dbTemplate('reading') }, mk('text', '')] }) },
+  { id: 'money', n: 'Bills & budget', i: '💰', d: 'Bills with due dates and a spending tracker', make: () => ({ title: 'Bills & budget', icon: '💰', cover: 'mint', wide: true, blocks: [mk('h2', 'Bills'), { id: uid('b'), type: 'db', data: dbTemplate('bills') }, mk('h2', 'Spending'), { id: uid('b'), type: 'db', data: dbTemplate('budget') }, mk('text', '')] }) },
 ];
 function defData(t) {
   switch (t) {
@@ -1254,12 +1602,24 @@ function defData(t) {
     case 'kanban': return { title: 'Board', columns: [{ id: uid('c'), name: 'To do', color: 'pink', cards: [] }, { id: uid('c'), name: 'Doing', color: 'butter', cards: [] }, { id: uid('c'), name: 'Done', color: 'mint', cards: [] }] };
     case 'calendar': return { title: 'Calendar', events: [] };
     case 'week': return { title: 'Weekly planner', items: {} };
+    case 'db': return dbTemplate('blank');
     case 'habit': return { title: 'Habit tracker', habits: [] };
     case 'mood': return { title: 'Mood tracker', moods: {} };
+    case 'grocery': return { title: 'Grocery list', items: [] };
+    case 'meals': return { title: 'Meal planner', days: {} };
+    case 'goals': return { title: 'Goals', goals: [] };
+    case 'countdown': return { title: 'Countdowns', events: [] };
+    case 'wellness': return { title: 'Water & sleep', goal: 8, sleepGoal: 8, water: {}, sleep: {} };
+    case 'journal': return { title: 'Journal', entries: {} };
     case 'pomodoro': return { title: 'Focus timer', work: 25, short: 5, long: 15, sessions: {} };
     case 'dragon': return { title: 'Dragon den' };
     case 'divider': return { style: 'line' };
     case 'subpage': return { pageId: null };
+    case 'bookmark': return {};
+    case 'image': return { width: 'f' };
+    case 'file': return {};
+    case 'embed': return {};
+    case 'vault': return { title: 'Password vault' };
     default: return undefined;
   }
 }
@@ -1278,8 +1638,10 @@ function setHash() { if (!S.current) return; const hsh = '#' + (S.current.scope 
 function openPage(scope, id) {
   if (!S.pages[scope].has(id)) return;
   if (S.current && S.current.id !== id) { stopStickers(); for (const tid of Object.keys(T)) stopTimer(tid); }
+  if (S.current && S.current.id !== id) vaultLockAll(); // leaving a page locks any open password vault
   if (!S.current || S.current.id !== id) clearSel();
   S.current = { scope, id }; S.remotePending = false;
+  histBaseline(scope, id);
   for (const a of ancestors(scope, id)) S.exp.add(keyOf(scope, a[0]));
   setHash(); renderSidebar(); renderPage(); closeDrawer();
   $('#main').scrollTop = 0;
@@ -1342,6 +1704,7 @@ function pageMenu(anchor, scope, id) {
     { n: 'Add a page inside', i: '+', act: () => newPage(scope, id) },
     { n: 'Duplicate', i: '⧉', act: () => duplicatePage(scope, id) },
     { n: 'Move to ' + to, i: to === 'Private' ? '🔒' : '👥', act: () => movePage(scope, id) },
+    { n: 'Page history', i: '🕘', act: () => historyModal(scope, id) },
     'sep',
     { n: 'Delete', i: '🗑', danger: true, act: () => deletePage(scope, id) },
   ]));
@@ -1359,11 +1722,14 @@ function renderTopbar() {
   }
   crumbs.append(h('span', { class: 'crumb last' }, h('span', { text: p.icon || '📄' }), h('span', { class: 't', text: p.title || 'Untitled' })));
   acts.append(
+    S.ro ? '' : h('button', { class: 'icon-btn undo-btn', id: 'undoBtn', 'aria-label': 'Undo', title: 'Undo (⌘Z)', onmousedown: e => e.preventDefault(), onclick: undo }, '↶'),
+    S.ro ? '' : h('button', { class: 'icon-btn undo-btn', id: 'redoBtn', 'aria-label': 'Redo', title: 'Redo (⌘⇧Z)', onmousedown: e => e.preventDefault(), onclick: redo }, '↷'),
     h('button', { class: 'tb-btn' + ($('#agentPanel.open') ? ' on' : ''), onclick: toggleAgent, title: 'Ask AI (Ctrl J)' }, h('span', { class: 'gi', text: '✦' }), h('span', { class: 'lbl', text: 'Ask AI' })),
     h('button', { class: 'tb-btn' + (p.wide ? ' on' : ''), onclick: () => { p.wide = !p.wide; curDirty(100); renderPage(); }, title: 'Use the whole screen width', 'aria-pressed': String(!!p.wide) }, h('span', { class: 'gi', text: '⇔' }), h('span', { class: 'lbl', text: 'Full width' })),
     h('button', { class: 'tb-btn' + (S.stickerMode ? ' on' : ''), onclick: toggleStickers, title: 'Add and move stickers' }, h('span', { class: 'gi', text: '✦' }), h('span', { class: 'lbl', text: 'Stickers' })),
     h('button', { class: 'tb-btn', onclick: e => pageStyleMenu(e.currentTarget), title: 'Page style' }, h('span', { class: 'gi', text: '◐' }), h('span', { class: 'lbl', text: 'Style' })),
     h('button', { class: 'icon-btn', 'aria-label': 'Page options', onclick: e => pageMenu(e.currentTarget, scope, id) }, '⋯'));
+  updateUndoBtns();
 }
 
 /* ================= page render ================= */
@@ -1581,9 +1947,21 @@ function content(b, n) {
     case 'matrix': return wMatrix(b);
     case 'kanban': return wKanban(b);
     case 'calendar': return wCalendar(b);
+    case 'bookmark': return wBookmark(b);
+    case 'image': return wImage(b);
+    case 'file': return wFile(b);
+    case 'embed': return wEmbed(b);
+    case 'vault': return wVault(b);
     case 'week': return wWeek(b);
+    case 'db': return wDb(b);
     case 'habit': return wHabit(b);
     case 'mood': return wMood(b);
+    case 'grocery': return wLGrocery(b);
+    case 'meals': return wLMeals(b);
+    case 'goals': return wLGoals(b);
+    case 'countdown': return wLCountdown(b);
+    case 'wellness': return wLWellness(b);
+    case 'journal': return wLJournal(b);
     case 'pomodoro': return wPomo(b);
     case 'dragon': return wDragon(b);
     default: b.type = 'text'; return edEl(b, '', "Type '/' for blocks");
@@ -1629,6 +2007,7 @@ function setCaret(el, off) {
 }
 function rangeOf(el, a, b) { const r = document.createRange(); const p1 = findPos(el, a), p2 = findPos(el, b); r.setStart(p1.node, p1.off); r.setEnd(p2.node, p2.off); return r; }
 function turnInto(b, type) {
+  if (typeof type === 'string' && type.startsWith('db:')) { if (arr(b.children).length) { const L0 = locate(b.id); if (L0) L0.list.splice(L0.i + 1, 0, ...b.children); delete b.children; } b.type = 'db'; b.data = dbTemplate(type.slice(3)); delete b.text; delete b.checked; delete b.color; return; }
   if (!NEST.includes(type) && arr(b.children).length) { const L = locate(b.id); if (L) L.list.splice(L.i + 1, 0, ...b.children); delete b.children; }
   const wasText = TEXTLIKE.includes(b.type);
   if (TEXTLIKE.includes(type)) {
@@ -1642,6 +2021,7 @@ function turnInto(b, type) {
   }
 }
 function placeType(blockId, type, forceAfter) {
+  pushUndo('insert');
   // Used by slash and insert menus. An empty text block is transformed; otherwise the new block goes after it.
   const p = cur(); const L = locate(blockId); if (!L) return; const b = L.b;
   const emptyText = !forceAfter && b.type === 'text' && !plain(b.text).trim();
@@ -1814,7 +2194,7 @@ pageEl.addEventListener('paste', e => {
   let after = c.b.id;
   for (const ln of lines) { const nb = { id: uid('b'), type: ['bullet', 'numbered', 'todo'].includes(c.b.type) ? c.b.type : 'text', text: esc(ln) }; insertAfterRaw(after, nb); after = nb.id; }
   renderBlocks(); curDirty(); focusBlock(after, 'end');
-  if (snap) { snap.at = Date.now(); if (lines.length >= 4) toastUndo(`Pasted ${lines.length + 1} lines`); }
+  if (snap) { lastPaste = { id: S.current.id, at: Date.now() }; histClose(S.current.scope, S.current.id); if (lines.length >= 4) toastUndo(`Pasted ${lines.length + 1} lines`); }
 });
 pageEl.addEventListener('focusout', () => {
   setTimeout(() => {
@@ -2025,6 +2405,7 @@ pageEl.addEventListener('drop', e => {
   const D = DRAG; endDrag(); moveBlock(D.id, D.drop);
 });
 function moveBlock(id, drop) {
+  pushUndo('move');
   const from = locate(id); if (!from || drop.id === id) return;
   const moving = from.b;
   from.list.splice(from.i, 1);
@@ -2955,7 +3336,7 @@ function pomoSettings(anchor, b) {
 
 /* ================= AI chat (ChatGPT or Gemini, through your Supabase function) ================= */
 const PROVIDERS = { openai: 'ChatGPT', gemini: 'Gemini' };
-const AI = { provider: 'openai', trialLeft: null, monthUsed: 0, monthLimit: 0, paidUntil: null, interval: null };
+const AI = { name: 'Pugad AI', avatar: 'sparkle', persona: '', provider: 'openai', trialLeft: null, monthUsed: 0, monthLimit: 0, paidUntil: null, interval: null };
 const AG = { panel: null, chats: {} };
 const SUGGEST = ['Sort my tasks into the matrix', 'Summarise this page', 'Turn this page into a to-do list', 'Draft a friendly payment reminder for a customer'];
 function inlineMd(s) {
@@ -2997,6 +3378,13 @@ function pageText(p, max = 12000) {
       case 'week': { const ks = Object.keys(obj(d.items)).sort().slice(-14); lines.push('[Weekly planner]'); for (const k of ks) lines.push(`  ${k}: ${arr(d.items[k]).map(i => (i.done ? '(done) ' : '') + str(i.text)).join('; ')}`); break; }
       case 'calendar': lines.push(`[Calendar] ${arr(d.events).slice(-40).map(e => `${str(e.date)}${e.start ? ' ' + str(e.start) + '-' + str(e.end) : ''} ${str(e.text)}${e.done ? ' (done)' : ''}`).join('; ')}`); break;
       case 'habit': lines.push(`[Habit tracker] ${arr(d.habits).map(x => str(x.name)).join('; ')}`); break;
+      case 'vault': break; // never send passwords to the AI
+      case 'bookmark': if (d.url) lines.push(`[Bookmark] ${str(d.title)} ${str(d.url)}`); break;
+      case 'image': if (d.caption) lines.push(`[Image] ${str(d.caption)}`); break;
+      case 'file': if (d.name) lines.push(`[File] ${str(d.name)}`); break;
+      case 'embed': if (d.url) lines.push(`[Embed] ${str(d.url)}`); break;
+      case 'grocery': case 'meals': case 'goals': case 'countdown': case 'wellness': case 'journal': lifePageText(b, lines); break;
+      case 'db': { lines.push(`[Database "${str(d.title)}"] columns: Title${arr(d.props).map(p => ', ' + str(p.name)).join('')}`); const dd = { props: arr(d.props) }; for (const r of arr(d.rows).slice(0, 80)) lines.push('  - ' + dbRowText(dd, { title: str(r.title), cells: obj(r.cells) }) + (str(r.notes).trim() ? ` (notes: ${str(r.notes).slice(0, 200)})` : '')); break; }
       case 'ask': case 'mood': case 'pomodoro': case 'divider': case 'dragon': break;
       case 'subpage': { const f = findPage(str(d.pageId)); if (f) lines.push(`[Subpage: ${f.page.title || 'Untitled'}]`); break; }
       default: if (b.text) lines.push(plain(b.text));
@@ -3012,7 +3400,7 @@ function aiBadgeText() {
   if (isPaid()) return `${pv} · ${Math.max(0, AI.monthLimit - AI.monthUsed)} messages left this month`;
   return AI.trialLeft == null ? pv : `${pv} · ${AI.trialLeft} free message${AI.trialLeft === 1 ? '' : 's'} left`;
 }
-function updateAiBadge() { $$('.ai-badge').forEach(el => { el.textContent = aiBadgeText(); }); }
+function updateAiBadge() { $$('.ai-badge').forEach(el => { el.textContent = aiBadgeText(); }); $$('.ai-name').forEach(el => { el.textContent = aiTitleText(); }); }
 async function askAI(messages) {
   const { data, error } = await SB.functions.invoke('ask-ai', { body: { workspaceId: W, messages: messages.slice(-16), context: pageText(cur(), 6000) } });
   if (error) {
@@ -3064,7 +3452,7 @@ function makeChat(id, compact) {
   const el = h('div', { class: 'chat' + (compact ? ' compact' : '') }, log, h('div', { class: 'chat-bar' }, ta, send));
   const scroll = () => { log.scrollTop = log.scrollHeight; };
   const empty = () => log.replaceChildren(h('div', { class: 'chat-empty' },
-    h('div', { class: 'chat-hi', text: 'Hi! I can sort your tasks into the matrix, summarise this page and draft messages for you.' }),
+    h('div', { class: 'chat-hi', text: `Hi! I'm ${aiName()}. I can sort your tasks into the matrix, summarise this page and draft messages for you.` }),
     h('div', { class: 'chips' }, SUGGEST.map((q, i) => h('button', { class: 'tpl-chip', onclick: () => { ta.value = q; go(i === 0); } }, q)))));
   empty();
   const finish = () => { st.busy = false; send.textContent = 'Send'; };
@@ -3075,7 +3463,7 @@ function makeChat(id, compact) {
     st.run++; finish();
     const t = log.querySelector('.msg.thinking'); if (t) { t.classList.remove('thinking'); t.querySelector('.bt').textContent = 'Stopped.'; }
   };
-  const bubble = (role, text) => { const b = h('div', { class: 'msg ' + role }, h('div', { class: 'bt' })); if (text) b.firstChild.textContent = text; return b; };
+  const bubble = (role, text) => { const b = h('div', { class: 'msg ' + role }, h('div', { class: 'bt' })); if (text) b.firstChild.textContent = text; if (role === 'assistant') { b.classList.add('has-av'); b.append(aiAvatarEl()); } return b; };
   async function go(forceSort) {
     const q = ta.value.trim(); if (!q || st.busy || !SB) return;
     if (!st.hist.length) log.replaceChildren();
@@ -3121,7 +3509,7 @@ function toggleAgent() {
   if (!panel) {
     AG.panel = makeChat('panel', false);
     panel = h('aside', { id: 'agentPanel', class: 'themed', 'aria-label': 'Ask AI' },
-      h('div', { class: 'ap-head' }, h('div', { style: 'flex:1;min-width:0;display:grid' }, h('b', { text: '✦ Ask AI' }), h('span', { class: 'ai-badge', text: aiBadgeText() })),
+      h('div', { class: 'ap-head' }, h('div', { style: 'flex:1;min-width:0;display:grid' }, h('b', { class: 'ai-name', text: aiTitleText() }), h('span', { class: 'ai-badge', text: aiBadgeText() })),
         h('button', { class: 'pill-btn', onclick: () => AG.panel.reset() }, 'New chat'), h('button', { class: 'icon-btn', 'aria-label': 'Close', onclick: toggleAgent }, '×')),
       AG.panel.el);
     document.body.append(panel); panel.getBoundingClientRect();
@@ -3560,6 +3948,1550 @@ function fillDen(info) {
     h('div', { class: 'w-sub', style: 'font-size:12px', text: 'Grows when anyone ticks off a task (+1), a habit (+1) or finishes a focus session (+3). Up to 40 XP per person a day.' }));
 }
 
+/* ---------- Databases: tables with typed properties and Table / Board / Gallery / Calendar views ---------- */
+const DB_TYPES = [['text', 'Text', 'Aa'], ['number', 'Number', '#'], ['select', 'Select', '◉'], ['multi', 'Multi-select', '☰'], ['date', 'Date', '📅'], ['checkbox', 'Checkbox', '☑'], ['person', 'Person', '👤'], ['url', 'Link', '🔗'], ['email', 'Email', '✉'], ['phone', 'Phone', '☎']];
+const DB_TYPE = Object.fromEntries(DB_TYPES.map(([k, n, i]) => [k, { n, i }]));
+const DB_VIEWS = [['table', 'Table', '▤'], ['board', 'Board', '▥'], ['gallery', 'Gallery', '▦'], ['calendar', 'Calendar', '📅']];
+const DB_FMT = [['plain', 'Number'], ['peso', '₱ Peso'], ['dollar', '$ Dollar'], ['pound', '£ Pound'], ['euro', '€ Euro'], ['percent', '% Percent']];
+const DB_SYM = { peso: '₱', dollar: '$', pound: '£', euro: '€' };
+const dbOpt = (name, i, color) => ({ id: uid('o'), name, color: color || COLORS[i % 6] });
+const dbProp = (name, type, extra = {}) => ({ id: uid('p'), name, type, ...extra });
+const dbView = (type, name, extra = {}) => ({ id: uid('v'), type, name: name || DB_VIEWS.find(v => v[0] === type)[1], ...extra });
+function dbTemplate(kind) {
+  const P = {}; const opts = (arr2, colors) => arr2.map((n, i) => dbOpt(n, i, colors && colors[i]));
+  const row = (title, cells = {}) => ({ id: uid('r'), title, cells, notes: '', createdAt: Date.now() });
+  const optId = (p, name) => (p.options.find(o => o.name === name) || {}).id;
+  switch (kind) {
+    case 'recipes': {
+      P.c = dbProp('Cuisine', 'select', { options: opts(['Filipino', 'Italian', 'Japanese', 'Mexican', 'Baking', 'Other']) });
+      P.t = dbProp('Prep time', 'number', { fmt: 'plain', unit: 'min' });
+      P.l = dbProp('Link', 'url'); P.g = dbProp('Tags', 'multi', { options: opts(['Quick', 'Healthy', 'Comfort', 'Dessert', 'For guests'], ['mint', 'sky', 'peach', 'pink', 'lilac']) });
+      return { title: 'Recipe box', props: [P.c, P.t, P.g, P.l], views: [dbView('gallery', 'Recipes'), dbView('table', 'All')],
+        rows: [row('Chicken adobo', { [P.c.id]: optId(P.c, 'Filipino'), [P.t.id]: 45, [P.g.id]: [optId(P.g, 'Comfort')] }), row('Banana bread', { [P.c.id]: optId(P.c, 'Baking'), [P.t.id]: 70, [P.g.id]: [optId(P.g, 'Dessert')] })] };
+    }
+    case 'reading': {
+      P.s = dbProp('Status', 'select', { options: opts(['Want', 'In progress', 'Done'], ['gray', 'butter', 'mint']) });
+      P.y = dbProp('Type', 'select', { options: opts(['Book', 'Movie', 'Show', 'Podcast'], ['lilac', 'sky', 'peach', 'pink']) });
+      P.r = dbProp('Rating', 'select', { options: opts(['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'], ['butter', 'butter', 'butter', 'butter', 'butter']) });
+      return { title: 'Reading & watch list', props: [P.s, P.y, P.r], views: [dbView('board', 'Board', { groupBy: P.s.id }), dbView('table', 'All')],
+        rows: [row('Atomic Habits', { [P.s.id]: optId(P.s, 'In progress'), [P.y.id]: optId(P.y, 'Book') }), row('Spirited Away', { [P.s.id]: optId(P.s, 'Want'), [P.y.id]: optId(P.y, 'Movie') })] };
+    }
+    case 'bills': {
+      P.a = dbProp('Amount', 'number', { fmt: 'peso', agg: 'sum' }); P.d = dbProp('Due', 'date'); P.p = dbProp('Paid', 'checkbox');
+      P.r = dbProp('Repeats', 'select', { options: opts(['Monthly', 'Yearly', 'Once'], ['sky', 'lilac', 'gray']) });
+      P.c = dbProp('Category', 'select', { options: opts(['Rent', 'Utilities', 'Internet', 'Phone', 'Subscriptions', 'Other']) });
+      const due = n => iso(addDays(new Date(), n));
+      return { title: 'Bills', props: [P.a, P.d, P.p, P.r, P.c], views: [dbView('table', 'All bills', { sort: { prop: P.d.id, dir: 1 } }), dbView('calendar', 'Due dates', { dateProp: P.d.id })],
+        rows: [row('Electricity', { [P.a.id]: 2500, [P.d.id]: due(5), [P.r.id]: optId(P.r, 'Monthly'), [P.c.id]: optId(P.c, 'Utilities') }), row('Internet', { [P.a.id]: 1699, [P.d.id]: due(12), [P.r.id]: optId(P.r, 'Monthly'), [P.c.id]: optId(P.c, 'Internet') })] };
+    }
+    case 'budget': {
+      P.a = dbProp('Amount', 'number', { fmt: 'peso', agg: 'sum' }); P.d = dbProp('Date', 'date');
+      P.c = dbProp('Category', 'select', { options: opts(['Food', 'Transport', 'Home', 'Fun', 'Other'], ['peach', 'sky', 'mint', 'pink', 'gray']) });
+      P.t = dbProp('Type', 'select', { options: opts(['Expense', 'Income'], ['pink', 'mint']) });
+      return { title: 'Budget', props: [P.a, P.d, P.c, P.t], views: [dbView('table', 'All', { sort: { prop: P.d.id, dir: -1 } }), dbView('board', 'By category', { groupBy: P.c.id })],
+        rows: [row('Groceries', { [P.a.id]: 1850, [P.d.id]: todayIso(), [P.c.id]: optId(P.c, 'Food'), [P.t.id]: optId(P.t, 'Expense') })] };
+    }
+    case 'birthdays': {
+      P.b = dbProp('Birthday', 'date', { yearly: true }); P.p = dbProp('Phone', 'phone'); P.e = dbProp('Email', 'email'); P.g = dbProp('Gift ideas', 'text');
+      return { title: 'Birthdays & contacts', props: [P.b, P.p, P.e, P.g], views: [dbView('table', 'Contacts'), dbView('calendar', 'Birthdays', { dateProp: P.b.id })], rows: [] };
+    }
+    default: {
+      P.s = dbProp('Status', 'select', { options: opts(['Not started', 'In progress', 'Done'], ['gray', 'butter', 'mint']) }); P.d = dbProp('Date', 'date');
+      return { title: 'Database', props: [P.s, P.d], views: [dbView('table', 'Table'), dbView('board', 'Board', { groupBy: P.s.id })], rows: [] };
+    }
+  }
+}
+function dbNorm(b) {
+  const d = b.data = obj(b.data);
+  d.props = arr(d.props).filter(p => p && typeof p === 'object').map(p => { p.id = str(p.id) || uid('p'); if (!DB_TYPE[p.type]) p.type = 'text'; p.name = str(p.name); if (p.type === 'select' || p.type === 'multi') p.options = arr(p.options).filter(o => o && o.id).map(o => ({ ...o, color: okColor(o.color), name: str(o.name) })); return p; });
+  d.rows = arr(d.rows).filter(r => r && typeof r === 'object').map(r => { r.id = str(r.id) || uid('r'); r.title = str(r.title); r.cells = obj(r.cells); r.notes = str(r.notes); return r; });
+  d.views = arr(d.views).filter(v => v && DB_VIEWS.some(x => x[0] === v.type)); if (!d.views.length) d.views = [dbView('table', 'Table')];
+  d.views.forEach(v => { v.id = str(v.id) || uid('v'); v.name = str(v.name) || DB_VIEWS.find(x => x[0] === v.type)[1]; });
+  return d;
+}
+function dbActive(b, d) {
+  const vs = VS[b.id] = VS[b.id] || {};
+  if (!vs.view) vs.view = lsGet('buhat.dbview.' + b.id) || '';
+  let v = d.views.find(x => x.id === vs.view); if (!v) { v = d.views[0]; vs.view = v.id; }
+  return v;
+}
+function dbSetView(b, id) { (VS[b.id] = VS[b.id] || {}).view = id; lsSet('buhat.dbview.' + b.id, id); rerender(b); }
+
+/* people (workspace members) for Person properties */
+const DBP = { list: null, p: null };
+function dbPeople() {
+  if (DBP.list) return Promise.resolve(DBP.list);
+  if (DBP.p) return DBP.p;
+  DBP.p = (async () => {
+    try {
+      if (!SB || !W) return (DBP.list = []);
+      const { data: mem } = await SB.from('members').select('user_id').eq('workspace_id', W);
+      const ids = [...new Set(arr(mem).map(m => m.user_id).filter(Boolean))];
+      const { data: profs } = ids.length ? await SB.from('profiles').select('id, display_name, email').in('id', ids) : { data: [] };
+      const pm = Object.fromEntries(arr(profs).map(p => [p.id, p]));
+      DBP.list = ids.map(id => ({ id, name: (pm[id] && (pm[id].display_name || str(pm[id].email).split('@')[0])) || 'Member' }));
+    } catch (e) { DBP.list = []; }
+    return DBP.list;
+  })();
+  return DBP.p;
+}
+const dbPersonName = id => { const p = DBP.list && DBP.list.find(x => x.id === id); return p ? p.name : id === S.uid ? (S.meName || 'You') : S.names.get(id) || 'Member'; };
+
+/* values */
+function dbFmt(p, v) {
+  if (v === '' || v == null) return '';
+  if (p.type === 'number') {
+    const n = Number(v); if (!Number.isFinite(n)) return '';
+    const s = n.toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: DB_SYM[p.fmt] && !Number.isInteger(n) ? 2 : 0 });
+    return p.fmt === 'percent' ? s + '%' : DB_SYM[p.fmt] ? DB_SYM[p.fmt] + s : s + (p.unit ? ' ' + p.unit : '');
+  }
+  if (p.type === 'date') { if (!/^\d{4}-\d{2}-\d{2}$/.test(str(v))) return ''; const dt = parseIso(v); return dt.toLocaleDateString('en-GB', p.yearly ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' }); }
+  return str(v);
+}
+function dbCellText(d, p, v) {
+  if (v === '' || v == null) return '';
+  switch (p.type) {
+    case 'select': return str((arr(p.options).find(o => o.id === v) || {}).name);
+    case 'multi': return arr(v).map(id => str((arr(p.options).find(o => o.id === id) || {}).name)).filter(Boolean).join(', ');
+    case 'checkbox': return v ? 'Yes' : '';
+    case 'person': return arr(v).map(dbPersonName).join(', ');
+    default: return dbFmt(p, v);
+  }
+}
+function dbRowText(d, r) { return [str(r.title) || 'Untitled', ...d.props.map(p => { const t = dbCellText(d, p, r.cells[p.id]); return t ? `${p.name}: ${t}` : ''; }).filter(Boolean)].join(' · '); }
+function dbSortVal(d, r, pid) {
+  if (pid === 'title') return str(r.title).toLowerCase() || null;
+  const p = d.props.find(x => x.id === pid); if (!p) return null; const v = r.cells[pid];
+  if (v === '' || v == null) return null;
+  switch (p.type) {
+    case 'number': return Number.isFinite(Number(v)) ? Number(v) : null;
+    case 'checkbox': return v ? 1 : 0;
+    case 'select': { const i = arr(p.options).findIndex(o => o.id === v); return i < 0 ? null : i; }
+    case 'multi': { const i = arr(p.options).findIndex(o => o.id === arr(v)[0]); return i < 0 ? null : i; }
+    case 'date': return p.yearly ? str(v).slice(5) : str(v);
+    default: return dbCellText(d, p, v).toLowerCase() || null;
+  }
+}
+function dbRows(b, d, v) {
+  const q = str((VS[b.id] || {}).q).trim().toLowerCase();
+  let rows = q ? d.rows.filter(r => dbRowText(d, r).toLowerCase().includes(q) || str(r.notes).toLowerCase().includes(q)) : d.rows.slice();
+  const s = obj(v.sort);
+  if (s.prop && (s.prop === 'title' || d.props.some(p => p.id === s.prop))) {
+    const dir = s.dir === -1 ? -1 : 1;
+    rows = rows.map((r, i) => ({ r, i, k: dbSortVal(d, r, s.prop) })).sort((a, z) => (a.k == null) - (z.k == null) || (a.k == null ? 0 : (a.k < z.k ? -1 : a.k > z.k ? 1 : 0) * dir) || a.i - z.i).map(x => x.r);
+  }
+  return rows;
+}
+function dbConvert(d, p, to) {
+  const from = p.type; if (from === to) return;
+  const optsBy = new Map(arr(p.options).map(o => [o.id, o.name]));
+  if ((to === 'select' || to === 'multi') && from !== 'select' && from !== 'multi') p.options = [];
+  for (const r of d.rows) {
+    const v = r.cells[p.id]; if (v === '' || v == null) continue;
+    let text = from === 'select' ? str(optsBy.get(v)) : from === 'multi' ? arr(v).map(id => str(optsBy.get(id))).filter(Boolean).join(', ') : from === 'person' ? arr(v).map(dbPersonName).join(', ') : from === 'checkbox' ? (v ? 'Yes' : '') : str(v);
+    let nv = null;
+    switch (to) {
+      case 'number': { const n = Number(String(text).replace(/[^\d.\-]/g, '')); nv = text !== '' && Number.isFinite(n) ? n : null; break; }
+      case 'checkbox': nv = from === 'checkbox' ? !!v : /^(yes|true|1|x|done|✓)$/i.test(text.trim()) || null; break;
+      case 'date': nv = /^\d{4}-\d{2}-\d{2}$/.test(text) ? text : null; break;
+      case 'select': case 'multi': {
+        if (from === 'select' || from === 'multi') { const ids = from === 'select' ? [v] : arr(v); nv = to === 'multi' ? ids : ids[0] || null; break; }
+        const names = to === 'multi' ? text.split(',').map(s => s.trim()).filter(Boolean) : [text.trim()].filter(Boolean);
+        const ids = names.map(n => { let o = p.options.find(x => x.name.toLowerCase() === n.toLowerCase()); if (!o) { o = dbOpt(n.slice(0, 60), p.options.length); p.options.push(o); } return o.id; });
+        nv = to === 'multi' ? ids : ids[0] || null; break;
+      }
+      case 'person': nv = from === 'person' ? v : null; break;
+      default: nv = text || null;
+    }
+    if (nv == null || (Array.isArray(nv) && !nv.length)) delete r.cells[p.id]; else r.cells[p.id] = nv;
+  }
+  p.type = to;
+  if (to !== 'select' && to !== 'multi') delete p.options;
+  if (to !== 'number') { delete p.fmt; delete p.agg; delete p.unit; }
+  if (to !== 'date') delete p.yearly;
+}
+function dbSafeHref(p, v) {
+  v = str(v).trim(); if (!v) return null;
+  if (p.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'mailto:' + v : null;
+  if (p.type === 'phone') return /^[+\d][\d\s().-]{3,}$/.test(v) ? 'tel:' + v.replace(/[^\d+]/g, '') : null;
+  if (p.type === 'url') { const u = /^https?:\/\//i.test(v) ? v : 'https://' + v; try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : null; } catch (e) { return null; } }
+  return null;
+}
+const dbIsImg = v => /^https:\/\/\S+\.(png|jpe?g|gif|webp|avif)(\?\S*)?$/i.test(str(v).trim());
+const dbChip = (o, small) => h('span', { class: 'db-chip bg-' + okColor(o.color) + (small ? ' sm' : ''), text: o.name || 'Untitled' });
+
+/* one property value: a cell in the table, or a field in the row page */
+function dbCell(b, d, r, p, ctx = {}) {
+  const v = r.cells[p.id];
+  const set = (val, re = true) => {
+    if (val === '' || val == null || val === false || (Array.isArray(val) && !val.length)) delete r.cells[p.id]; else r.cells[p.id] = val;
+    if (re) { commit(b); if (ctx.refresh) ctx.refresh(); } else curDirty();
+  };
+  const empty = (txt = '') => h('span', { class: 'db-empty', text: txt });
+  switch (p.type) {
+    case 'checkbox': return h('div', { class: 'db-cb' }, chk(!!v, () => set(!v || null), p.name));
+    case 'text': case 'url': case 'email': case 'phone': case 'number': {
+      const isNum = p.type === 'number';
+      const ed = editableText(isNum ? dbFmt(p, v) : str(v), val => {
+        if (isNum) { const t = val.trim(); const n = Number(t.replace(/[,₱$£€%\s]|min$/g, '')); set(t === '' ? null : Number.isFinite(n) ? n : r.cells[p.id], false); if (ctx.onNum) ctx.onNum(); }
+        else set(val.slice(0, 2000) || null, false);
+      }, 'ied db-ed' + (isNum ? ' dbnum' : ''));
+      ed.setAttribute('aria-label', p.name);
+      if (ctx.form) ed.dataset.ph = 'Empty';
+      if (isNum) {
+        ed.addEventListener('focus', () => { const cv = r.cells[p.id]; ed.textContent = cv == null ? '' : String(cv); });
+        ed.addEventListener('blur', () => { ed.textContent = dbFmt(p, r.cells[p.id]); });
+      }
+      const wrap = h('div', { class: 'db-txt' }, ed);
+      const href = dbSafeHref(p, v);
+      if (href) wrap.append(h('a', { class: 'db-go', href, target: p.type === 'url' ? '_blank' : null, rel: 'noopener noreferrer', title: 'Open', 'aria-label': 'Open ' + p.name, onclick: e => e.stopPropagation() }, '↗'));
+      if (!S.ro) wrap.addEventListener('click', e => { if (e.target === wrap) { ed.focus(); const s = getSelection(); s.selectAllChildren(ed); s.collapseToEnd(); } });
+      return wrap;
+    }
+    case 'date': {
+      const txt = dbFmt(p, v);
+      let cls = 'db-pick';
+      if (txt && !p.yearly && str(v) < todayIso() && d.props.some(x => x.type === 'checkbox' && !r.cells[x.id])) cls += ' overdue';
+      return h('button', { class: cls, disabled: S.ro ? true : null, onclick: e => { e.stopPropagation(); dbDatePop(e.currentTarget, v, nv => set(nv)); } }, txt || empty(ctx.form ? 'Empty' : ''));
+    }
+    case 'select': case 'multi': {
+      const ids = p.type === 'multi' ? arr(v) : v ? [v] : [];
+      const chips = ids.map(id => arr(p.options).find(o => o.id === id)).filter(Boolean).map(o => dbChip(o));
+      return h('button', { class: 'db-pick chips', disabled: S.ro ? true : null, onclick: e => { e.stopPropagation(); dbOptionPop(e.currentTarget, b, d, p, r, ctx); } }, chips.length ? chips : empty(ctx.form ? 'Empty' : ''));
+    }
+    case 'person': {
+      const ids = arr(v);
+      if (ids.length && !DBP.list) dbPeople().then(() => { if (ctx.refresh) ctx.refresh(); else { const nb = blockById(b.id); if (nb) rerender(nb); } });
+      return h('button', { class: 'db-pick chips', disabled: S.ro ? true : null, onclick: e => { e.stopPropagation(); dbPersonPop(e.currentTarget, b, d, p, r, ctx); } },
+        ids.length ? ids.map(id => { const n = dbPersonName(id); return h('span', { class: 'db-person' }, h('span', { class: 'avatar', text: n.slice(0, 1).toUpperCase() }), h('span', { text: n })); }) : empty(ctx.form ? 'Empty' : ''));
+    }
+  }
+  return empty();
+}
+function dbDatePop(anchor, v, onSet) {
+  if (S.ro) return;
+  const inp = h('input', { class: 'field', type: 'date', value: /^\d{4}-\d{2}-\d{2}$/.test(str(v)) ? v : '', 'aria-label': 'Date' });
+  inp.addEventListener('change', () => { if (/^\d{4}-\d{2}-\d{2}$/.test(inp.value)) { closePop(); onSet(inp.value); } });
+  openPop(anchor, h('div', { style: 'display:grid;gap:8px;width:240px' }, inp,
+    h('div', { class: 'dg-row', style: 'display:flex;gap:6px;flex-wrap:wrap' },
+      h('button', { class: 'pill-btn', onclick: () => { closePop(); onSet(todayIso()); } }, 'Today'),
+      h('button', { class: 'pill-btn', onclick: () => { closePop(); onSet(iso(addDays(new Date(), 1))); } }, 'Tomorrow'),
+      h('button', { class: 'pill-btn', onclick: () => { closePop(); onSet(iso(addDays(new Date(), 7))); } }, 'Next week'),
+      v ? h('button', { class: 'pill-btn', onclick: () => { closePop(); onSet(null); } }, 'Clear') : '')));
+  setTimeout(() => inp.focus(), 10);
+}
+function dbOptionPop(anchor, b, d, p, r, ctx = {}) {
+  if (S.ro) return;
+  const multi = p.type === 'multi'; p.options = arr(p.options);
+  const box = h('div', { class: 'db-opt-pop' });
+  const inp = h('input', { class: 'field', placeholder: multi ? 'Search or add tags' : 'Search or add an option', 'aria-label': 'Option', maxlength: '60' });
+  const list = h('div', { class: 'mlist' });
+  const cur0 = () => (multi ? arr(r.cells[p.id]) : r.cells[p.id] ? [r.cells[p.id]] : []);
+  const apply = ids => { if (ids.length) r.cells[p.id] = multi ? ids : ids[0]; else delete r.cells[p.id]; commit(b); if (ctx.refresh) ctx.refresh(); };
+  const pick = o => { const c = cur0(); if (multi) apply(c.includes(o.id) ? c.filter(x => x !== o.id) : [...c, o.id]); else { closePop(); apply(c[0] === o.id ? [] : [o.id]); } if (multi) draw(); };
+  const add = name => { name = name.trim().slice(0, 60); if (!name) return; let o = p.options.find(x => x.name.toLowerCase() === name.toLowerCase()); if (!o) { o = dbOpt(name, p.options.length); p.options.push(o); } inp.value = ''; if (!cur0().includes(o.id)) pick(o); else draw(); };
+  const draw = () => {
+    const q = inp.value.trim().toLowerCase(); const c = cur0();
+    list.replaceChildren();
+    const shown = p.options.filter(o => !q || o.name.toLowerCase().includes(q));
+    for (const o of shown) list.append(h('button', { class: 'mi small', onclick: () => pick(o) }, h('span', { class: 'mic', text: c.includes(o.id) ? '✓' : '' }), dbChip(o)));
+    if (q && !p.options.some(o => o.name.toLowerCase() === q)) list.append(h('button', { class: 'mi small', onclick: () => add(inp.value) }, h('span', { class: 'mic', text: '+' }), h('span', { text: 'Create ' }), dbChip({ name: inp.value.trim(), color: COLORS[p.options.length % 6] })));
+    if (!shown.length && !q) list.append(h('div', { class: 'mempty', text: 'Type to create the first option' }));
+    if (c.length) list.append(h('div', { class: 'msep' }), h('button', { class: 'mi small', onclick: () => { closePop(); apply([]); } }, h('span', { class: 'mic', text: '×' }), 'Clear'));
+  };
+  inp.addEventListener('input', draw);
+  inp.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); const q = inp.value.trim().toLowerCase(); const ex = p.options.find(o => o.name.toLowerCase() === q) || (q && p.options.find(o => o.name.toLowerCase().includes(q))); if (ex) { inp.value = ''; pick(ex); } else add(inp.value); } });
+  box.append(inp, list); draw();
+  openPop(anchor, box, { width: 260 });
+  setTimeout(() => inp.focus(), 10);
+}
+function dbPersonPop(anchor, b, d, p, r, ctx = {}) {
+  if (S.ro) return;
+  const list = h('div', { class: 'mlist' }, h('div', { class: 'mempty', text: 'Loading people…' }));
+  openPop(anchor, h('div', { style: 'width:240px' }, h('div', { class: 'pop-title', text: p.name || 'Person' }), list));
+  dbPeople().then(people => {
+    const draw = () => {
+      const c = arr(r.cells[p.id]); list.replaceChildren();
+      if (!people.length) list.append(h('div', { class: 'mempty', text: 'No teammates found' }));
+      for (const m of people) list.append(h('button', { class: 'mi small', onclick: () => { const n = c.includes(m.id) ? c.filter(x => x !== m.id) : [...c, m.id]; if (n.length) r.cells[p.id] = n; else delete r.cells[p.id]; commit(b); if (ctx.refresh) ctx.refresh(); draw(); } },
+        h('span', { class: 'mic', text: c.includes(m.id) ? '✓' : '' }), h('span', { class: 'avatar', style: 'width:22px;height:22px;font-size:11px', text: m.name.slice(0, 1).toUpperCase() }), h('span', { text: m.name + (m.id === S.uid ? ' (you)' : '') })));
+    };
+    draw();
+  });
+}
+
+/* property settings */
+function dbAddPropPop(anchor, b, d) {
+  if (S.ro) return;
+  const name = h('input', { class: 'field', placeholder: 'Property name', 'aria-label': 'Property name', maxlength: '60' });
+  const grid = h('div', { class: 'db-types' }, DB_TYPES.map(([k, n, i]) => h('button', { class: 'mi small', onclick: () => {
+    const p = dbProp(name.value.trim() || n, k); if (k === 'select' || k === 'multi') p.options = []; if (k === 'number') p.fmt = 'plain';
+    d.props.push(p); closePop(); commit(b);
+  } }, h('span', { class: 'mic', text: i }), h('span', { text: n }))));
+  name.addEventListener('keydown', e => e.stopPropagation());
+  openPop(anchor, h('div', { style: 'width:260px;display:grid;gap:6px' }, h('div', { class: 'pop-title', text: 'New property' }), name, h('div', { class: 'mgroup', text: 'Type' }), grid));
+  setTimeout(() => name.focus(), 10);
+}
+function dbPropMenu(anchor, b, d, p, v) {
+  const sortItems = pid => [{ n: 'Sort A → Z', i: '↑', act: () => { v.sort = { prop: pid, dir: 1 }; commit(b); } }, { n: 'Sort Z → A', i: '↓', act: () => { v.sort = { prop: pid, dir: -1 }; commit(b); } }, ...(obj(v.sort).prop ? [{ n: 'Remove sort', i: '×', act: () => { delete v.sort; commit(b); } }] : [])];
+  if (!p) { openPop(anchor, menuList([{ group: 'Title' }, ...sortItems('title')])); return; }
+  if (S.ro) { openPop(anchor, menuList([{ group: p.name }, ...sortItems(p.id)])); return; }
+  const box = h('div', { class: 'db-prop-pop' });
+  const name = h('input', { class: 'field', value: p.name, 'aria-label': 'Property name', maxlength: '60' });
+  name.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); closePop(); } });
+  name.addEventListener('change', () => { p.name = name.value.trim() || p.name; commit(b); });
+  const type = h('select', { 'aria-label': 'Property type' }, DB_TYPES.map(([k, n, i]) => h('option', { value: k, selected: p.type === k ? true : null }, `${i}  ${n}`)));
+  type.addEventListener('change', () => { dbConvert(d, p, type.value); if (type.value === 'number') p.fmt = 'plain'; closePop(); commit(b); dbPropMenu(anchor.isConnected ? anchor : document.body, b, d, p, v); });
+  box.append(h('div', { class: 'pop-row' }, name), h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', text: 'Type' }), type));
+  if (p.type === 'number') {
+    const fmt = h('select', { 'aria-label': 'Number format' }, DB_FMT.map(([k, n]) => h('option', { value: k, selected: (p.fmt || 'plain') === k ? true : null }, n)));
+    fmt.addEventListener('change', () => { p.fmt = fmt.value; commit(b); });
+    const agg = h('select', { 'aria-label': 'Total at the bottom' }, [['none', 'No total'], ['sum', 'Sum'], ['avg', 'Average'], ['count', 'Count filled']].map(([k, n]) => h('option', { value: k, selected: (p.agg || 'none') === k ? true : null }, n)));
+    agg.addEventListener('change', () => { p.agg = agg.value; commit(b); });
+    box.append(h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', text: 'Format' }), fmt), h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', text: 'Total' }), agg));
+  }
+  if (p.type === 'date') {
+    const yr = h('input', { type: 'checkbox', checked: p.yearly ? true : null }); yr.addEventListener('change', () => { p.yearly = yr.checked || undefined; if (!yr.checked) delete p.yearly; commit(b); });
+    box.append(h('label', { class: 'switch small', style: 'padding:4px 2px' }, yr, 'Repeats every year (birthdays)'));
+  }
+  if (p.type === 'select' || p.type === 'multi') {
+    const ol = h('div', { class: 'db-opts' });
+    const drawO = () => {
+      ol.replaceChildren(...p.options.map(o => {
+        const nm = h('input', { class: 'field', value: o.name, 'aria-label': 'Option name', maxlength: '60' });
+        nm.addEventListener('keydown', e => e.stopPropagation());
+        nm.addEventListener('change', () => { o.name = nm.value.trim() || o.name; commit(b); });
+        return h('div', { class: 'db-opt-row' },
+          h('button', { class: 'sw', style: `width:18px;height:18px;flex:none;background:${COLOR_HEX[okColor(o.color)]}`, title: 'Change colour', 'aria-label': 'Change colour', onclick: e => { const i = COLORS.indexOf(o.color); o.color = COLORS[(i + 1) % COLORS.length]; e.currentTarget.style.background = COLOR_HEX[o.color]; commit(b); } }),
+          nm, mini('Delete option', () => { p.options = p.options.filter(x => x !== o); for (const r of d.rows) { const cv = r.cells[p.id]; if (cv === o.id) delete r.cells[p.id]; else if (Array.isArray(cv)) { r.cells[p.id] = cv.filter(x => x !== o.id); if (!r.cells[p.id].length) delete r.cells[p.id]; } } commit(b); drawO(); }));
+      }), h('button', { class: 'pill-btn', onclick: () => { p.options.push(dbOpt('Option ' + (p.options.length + 1), p.options.length)); commit(b); drawO(); } }, '+ Add option'));
+    };
+    drawO();
+    box.append(h('div', { class: 'mgroup', text: 'Options' }), ol);
+  }
+  const i = d.props.indexOf(p);
+  box.append(h('div', { class: 'msep' }), menuList([
+    ...sortItems(p.id),
+    'sep',
+    ...(i > 0 ? [{ n: 'Move left', i: '←', act: () => { d.props.splice(i, 1); d.props.splice(i - 1, 0, p); commit(b); } }] : []),
+    ...(i < d.props.length - 1 ? [{ n: 'Move right', i: '→', act: () => { d.props.splice(i, 1); d.props.splice(i + 1, 0, p); commit(b); } }] : []),
+    { n: 'Duplicate property', i: '⧉', act: () => { const c = clone(p); c.id = uid('p'); c.name = p.name + ' copy'; d.props.splice(i + 1, 0, c); for (const r of d.rows) if (r.cells[p.id] != null) r.cells[c.id] = clone(r.cells[p.id]); commit(b); } },
+    { n: 'Delete property', i: '🗑', danger: true, act: () => confirmModal(`Delete “${p.name || 'property'}”?`, 'Its values in every row are deleted too.', 'Delete', () => { d.props = d.props.filter(x => x !== p); for (const r of d.rows) delete r.cells[p.id]; for (const vw of d.views) { if (obj(vw.sort).prop === p.id) delete vw.sort; if (vw.groupBy === p.id) delete vw.groupBy; if (vw.dateProp === p.id) delete vw.dateProp; } commit(b); }) },
+  ]));
+  openPop(anchor, box, { width: 280 });
+}
+
+/* views */
+function dbAddViewPop(anchor, b, d) {
+  openPop(anchor, menuList([{ group: 'Add a view' }, ...DB_VIEWS.map(([k, n, i]) => ({ n, i, act: () => {
+    const vw = dbView(k, n);
+    if (k === 'board') vw.groupBy = dbEnsureProp(d, 'select', 'Status').id;
+    if (k === 'calendar') vw.dateProp = dbEnsureProp(d, 'date', 'Date').id;
+    d.views.push(vw); commit(b); dbSetView(b, vw.id);
+  } }))]));
+}
+function dbEnsureProp(d, type, name) {
+  let p = d.props.find(x => x.type === type);
+  if (!p) { p = dbProp(name, type); if (type === 'select') p.options = [dbOpt('Not started', 6, 'gray'), dbOpt('In progress', 2, 'butter'), dbOpt('Done', 3, 'mint')]; d.props.push(p); }
+  return p;
+}
+function dbViewPop(anchor, b, d, v) {
+  const box = h('div', { class: 'db-prop-pop' });
+  if (!S.ro) {
+    const nm = h('input', { class: 'field', value: v.name, 'aria-label': 'View name', maxlength: '40' });
+    nm.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); closePop(); } });
+    nm.addEventListener('change', () => { v.name = nm.value.trim() || v.name; commit(b); });
+    box.append(h('div', { class: 'pop-row' }, nm));
+  }
+  const sel = (label, val, opts, on) => { const s = h('select', { 'aria-label': label, disabled: S.ro ? true : null }, opts.map(([k, n]) => h('option', { value: k, selected: val === k ? true : null }, n))); s.addEventListener('change', () => on(s.value)); return h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', text: label }), s); };
+  box.append(sel('Layout', v.type, DB_VIEWS.map(([k, n]) => [k, n]), val => { v.type = val; if (val === 'board' && !v.groupBy) v.groupBy = dbEnsureProp(d, 'select', 'Status').id; if (val === 'calendar' && !v.dateProp) v.dateProp = dbEnsureProp(d, 'date', 'Date').id; closePop(); commit(b); }));
+  if (v.type === 'board') box.append(sel('Group by', v.groupBy, d.props.filter(p => p.type === 'select').map(p => [p.id, p.name]), val => { v.groupBy = val; closePop(); commit(b); }));
+  if (v.type === 'calendar') box.append(sel('Date', v.dateProp, d.props.filter(p => p.type === 'date').map(p => [p.id, p.name]), val => { v.dateProp = val; closePop(); commit(b); }));
+  const s = obj(v.sort);
+  box.append(sel('Sort by', s.prop || '', [['', 'Manual order'], ['title', 'Title'], ...d.props.map(p => [p.id, p.name])], val => { if (val) v.sort = { prop: val, dir: s.dir || 1 }; else delete v.sort; commit(b); }));
+  if (s.prop) box.append(sel('Order', String(s.dir === -1 ? -1 : 1), [['1', 'Ascending'], ['-1', 'Descending']], val => { v.sort = { prop: s.prop, dir: Number(val) }; commit(b); }));
+  if (!S.ro) box.append(h('div', { class: 'msep' }), menuList([
+    { n: 'Duplicate view', i: '⧉', act: () => { const c = clone(v); c.id = uid('v'); c.name = v.name + ' copy'; d.views.splice(d.views.indexOf(v) + 1, 0, c); commit(b); dbSetView(b, c.id); } },
+    ...(d.views.length > 1 ? [{ n: 'Delete view', i: '🗑', danger: true, act: () => { d.views = d.views.filter(x => x !== v); commit(b); dbSetView(b, d.views[0].id); } }] : []),
+  ]));
+  openPop(anchor, box, { width: 270 });
+}
+
+/* new rows and the row page */
+function dbNewRow(b, d, cells = {}, focus = 'title') {
+  const r = { id: uid('r'), title: '', cells, notes: '', createdAt: Date.now() };
+  d.rows.push(r); commit(b);
+  if (focus === 'modal') dbOpenRow(b, r.id, true);
+  else requestAnimationFrame(() => { const el = document.querySelector(`.w-db[data-bid="${CSS.escape(b.id)}"] [data-rid="${CSS.escape(r.id)}"] .db-title-ed`); if (el) el.focus(); });
+  return r;
+}
+function dbOpenRow(b0, rid, focusTitle) {
+  const b = blockById(b0.id) || b0; const d = dbNorm(b); const r = d.rows.find(x => x.id === rid); if (!r) return;
+  const title = h('input', { class: 'db-row-title', value: r.title, placeholder: 'Untitled', 'aria-label': 'Title', maxlength: '300', readonly: S.ro ? true : null });
+  title.addEventListener('input', () => { r.title = title.value; curDirty(); });
+  title.addEventListener('change', () => commit(b));
+  title.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); title.blur(); } });
+  const form = h('div', { class: 'db-form' });
+  for (const p of d.props) {
+    const slot = h('div', { class: 'db-fval' });
+    const fill = () => { const cur2 = (blockById(b.id) || b).data; const rr = arr(cur2.rows).find(x => x.id === rid) || r; slot.replaceChildren(dbCell(blockById(b.id) || b, cur2, rr, p, { form: true, refresh: fill })); };
+    fill();
+    form.append(h('div', { class: 'db-frow' }, h('div', { class: 'db-flbl' }, h('span', { class: 'db-ti', text: DB_TYPE[p.type].i }), h('span', { text: p.name || 'Untitled' })), slot));
+  }
+  const notes = h('textarea', { class: 'field db-notes', placeholder: 'Notes, steps, ingredients…', 'aria-label': 'Notes', rows: '6', readonly: S.ro ? true : null });
+  notes.value = r.notes;
+  notes.addEventListener('input', () => { r.notes = notes.value.slice(0, 20000); curDirty(); });
+  notes.addEventListener('change', () => commit(b));
+  notes.addEventListener('keydown', e => e.stopPropagation());
+  const body = h('div', { class: 'db-row-page' }, title, form, h('div', { class: 'mgroup', text: 'Notes' }), notes,
+    S.ro ? '' : h('div', { class: 'btns', style: 'justify-content:space-between' },
+      h('div', { class: 'btns' },
+        h('button', { class: 'btn ghost', onclick: () => { const c = clone(r); c.id = uid('r'); c.title = (r.title || 'Untitled') + ' (copy)'; c.createdAt = Date.now(); d.rows.splice(d.rows.indexOf(r) + 1, 0, c); closeModal(); commit(b); dbOpenRow(b, c.id); } }, 'Duplicate'),
+        h('button', { class: 'btn ghost', onclick: () => { closeModal(); pushUndo('delete'); d.rows = d.rows.filter(x => x !== r); commit(b); toastUndo('Row deleted'); } }, 'Delete')),
+      h('button', { class: 'btn', onclick: () => { commit(b); closeModal(); } }, 'Done')));
+  openModal(d.title || 'Database', body, true);
+  if (focusTitle && !S.ro) setTimeout(() => title.focus(), 20);
+}
+function dbRowMenu(anchor, b, d, r) {
+  openPop(anchor, menuList([
+    { n: 'Open', i: '↗', act: () => dbOpenRow(b, r.id) },
+    ...(S.ro ? [] : [
+      { n: 'Duplicate', i: '⧉', act: () => { const c = clone(r); c.id = uid('r'); c.createdAt = Date.now(); d.rows.splice(d.rows.indexOf(r) + 1, 0, c); commit(b); } },
+      { n: 'Delete', i: '🗑', danger: true, act: () => { pushUndo('delete'); d.rows = d.rows.filter(x => x !== r); commit(b); toastUndo('Row deleted'); } }]),
+  ]));
+}
+
+/* the block */
+function wDb(b) {
+  const d = dbNorm(b); const v = dbActive(b, d);
+  const vs = VS[b.id];
+  const el = h('div', { class: 'w w-db', 'data-bid': b.id });
+  const search = h('input', { class: 'db-search', type: 'search', placeholder: 'Search', 'aria-label': 'Search this database', value: str(vs.q) });
+  const body = h('div', { class: 'db-body' });
+  const draw = () => { const rows = dbRows(b, d, v); body.replaceChildren(v.type === 'board' ? dbBoard(b, d, v, rows) : v.type === 'gallery' ? dbGallery(b, d, v, rows) : v.type === 'calendar' ? dbCalendar(b, d, v, rows) : dbTable(b, d, v, rows)); };
+  search.addEventListener('input', () => { vs.q = search.value; draw(); });
+  search.addEventListener('keydown', e => e.stopPropagation());
+  el.append(wHead(b, d, [h('span', { class: 'w-sub', text: `${d.rows.length} row${d.rows.length === 1 ? '' : 's'}` }), search,
+    S.ro ? '' : h('button', { class: 'pill-btn', onclick: () => dbNewRow(b, d, {}, v.type === 'table' ? 'title' : 'modal') }, '+ New')]));
+  const tabs = h('div', { class: 'db-tabs', role: 'tablist', 'aria-label': 'Views' });
+  for (const vw of d.views) {
+    const on = vw.id === v.id; const vt = DB_VIEWS.find(x => x[0] === vw.type);
+    tabs.append(h('button', { class: 'db-tab' + (on ? ' on' : ''), role: 'tab', 'aria-selected': String(on), onclick: e => { if (on) dbViewPop(e.currentTarget, b, d, vw); else dbSetView(b, vw.id); }, title: on ? 'View settings' : 'Switch view' },
+      h('span', { class: 'db-ti', text: vt[2] }), h('span', { text: vw.name }), on ? h('span', { class: 'db-caret', text: '▾' }) : ''));
+  }
+  if (!S.ro) tabs.append(h('button', { class: 'db-tab add', title: 'Add a view', 'aria-label': 'Add a view', onclick: e => dbAddViewPop(e.currentTarget, b, d) }, '+'));
+  if (obj(v.sort).prop) { const sp = v.sort.prop === 'title' ? 'Title' : (d.props.find(p => p.id === v.sort.prop) || {}).name; if (sp) tabs.append(h('span', { class: 'db-sortnote', text: `Sorted by ${sp} ${v.sort.dir === -1 ? '↓' : '↑'}` })); }
+  el.append(tabs, body);
+  draw();
+  if (d.props.some(p => p.type === 'person') && !DBP.list) dbPeople().then(() => { const nb = blockById(b.id); if (nb && blockElById(b.id)) rerender(nb); });
+  return el;
+}
+function dbTable(b, d, v, rows) {
+  const wrap = h('div', { class: 'db-scroll' });
+  const t = h('table', { class: 'db-table' });
+  const s = obj(v.sort); const arrow = pid => (s.prop === pid ? (s.dir === -1 ? ' ↓' : ' ↑') : '');
+  const head = h('tr', {}, h('th', { class: 'db-title', scope: 'col' }, h('button', { class: 'db-th', onclick: e => dbPropMenu(e.currentTarget, b, d, null, v) }, h('span', { class: 'db-ti', text: 'Aa' }), h('span', { text: 'Title' + arrow('title') }))));
+  for (const p of d.props) head.append(h('th', { scope: 'col', class: 't-' + p.type }, h('button', { class: 'db-th', onclick: e => dbPropMenu(e.currentTarget, b, d, p, v) }, h('span', { class: 'db-ti', text: DB_TYPE[p.type].i }), h('span', { text: (p.name || 'Untitled') + arrow(p.id) }))));
+  if (!S.ro) head.append(h('th', { class: 'db-addcol' }, h('button', { class: 'db-th', title: 'Add a property', 'aria-label': 'Add a property', onclick: e => dbAddPropPop(e.currentTarget, b, d) }, '+')));
+  t.append(h('thead', {}, head));
+  const tb = h('tbody', {});
+  const foots = {};
+  const footVal = p => {
+    const vals = d.rows.map(r => r.cells[p.id]).filter(x => x !== '' && x != null && Number.isFinite(Number(x))).map(Number);
+    if (p.agg === 'sum') return 'Sum ' + dbFmt({ ...p, unit: p.unit }, vals.reduce((a, z) => a + z, 0));
+    if (p.agg === 'avg') return vals.length ? 'Avg ' + dbFmt(p, Math.round(vals.reduce((a, z) => a + z, 0) / vals.length * 100) / 100) : 'Avg –';
+    if (p.agg === 'count') return `${vals.length} filled`;
+    return '';
+  };
+  for (const r of rows) {
+    const ttl = editableText(r.title, val => { r.title = val.slice(0, 300); curDirty(); }, 'ied db-title-ed');
+    ttl.setAttribute('aria-label', 'Title'); ttl.dataset.ph = 'Untitled';
+    const tr = h('tr', { 'data-rid': r.id },
+      h('td', { class: 'db-title' }, h('div', { class: 'db-tcell' }, ttl,
+        h('button', { class: 'db-open', title: 'Open as a page', 'aria-label': 'Open row', onclick: () => dbOpenRow(b, r.id) }, '↗ Open'),
+        mini('Row options', e => dbRowMenu(e.currentTarget, b, d, r), '⋯'))));
+    for (const p of d.props) tr.append(h('td', { class: 't-' + p.type }, dbCell(b, d, r, p, { onNum: () => { if (foots[p.id]) foots[p.id].textContent = footVal(p); } })));
+    if (!S.ro) tr.append(h('td', { class: 'db-addcol' }));
+    tb.append(tr);
+  }
+  if (!rows.length) tb.append(h('tr', {}, h('td', { class: 'db-none', colspan: String(d.props.length + 2), text: str((VS[b.id] || {}).q) ? 'No rows match your search.' : 'No rows yet.' })));
+  t.append(tb);
+  const hasAgg = d.props.some(p => p.type === 'number' && p.agg && p.agg !== 'none');
+  const ft = h('tr', {}, h('td', { class: 'db-title' }, S.ro ? h('span', { class: 'db-count', text: `${rows.length} row${rows.length === 1 ? '' : 's'}` }) : h('button', { class: 'db-newrow', onclick: () => dbNewRow(b, d) }, '+ New')));
+  for (const p of d.props) {
+    const td = h('td', { class: 't-' + p.type });
+    if (p.type === 'number') { const f = h('button', { class: 'db-agg', title: 'Change the total', disabled: S.ro ? true : null, onclick: () => { const order = ['none', 'sum', 'avg', 'count']; p.agg = order[(order.indexOf(p.agg || 'none') + 1) % order.length]; commit(b); } }, footVal(p) || (S.ro ? '' : 'Total')); if (!footVal(p)) f.classList.add('ghost'); foots[p.id] = f; td.append(f); }
+    ft.append(td);
+  }
+  if (!S.ro) ft.append(h('td', { class: 'db-addcol' }));
+  if (!S.ro || hasAgg) t.append(h('tfoot', {}, ft));
+  wrap.append(t);
+  return wrap;
+}
+function dbCardProps(d, r, skip) {
+  const out = [];
+  for (const p of d.props) {
+    if (p.id === skip || out.length >= 3) continue;
+    const val = r.cells[p.id]; if (val === '' || val == null || (Array.isArray(val) && !val.length)) continue;
+    if (p.type === 'select' || p.type === 'multi') { const ids = p.type === 'multi' ? arr(val) : [val]; const os = ids.map(id => arr(p.options).find(o => o.id === id)).filter(Boolean); if (os.length) out.push(h('div', { class: 'db-cp' }, os.map(o => dbChip(o, true)))); }
+    else if (p.type === 'checkbox') out.push(h('div', { class: 'db-cp', text: '☑ ' + p.name }));
+    else if (p.type === 'url' && dbIsImg(val)) continue;
+    else { const t = dbCellText(d, p, val); if (t) out.push(h('div', { class: 'db-cp' }, h('span', { class: 'db-cpn', text: p.name + ' ' }), h('span', { text: t }))); }
+  }
+  return out;
+}
+function dbRowDrag(el, b, r) {
+  if (S.ro) return;
+  el.draggable = true;
+  el.addEventListener('dragstart', e => { e.stopPropagation(); DRAG = { kind: 'dbrow', bid: b.id, rid: r.id }; el.classList.add('dragging'); try { e.dataTransfer.setData('text/plain', ''); e.dataTransfer.effectAllowed = 'move'; } catch (er) {} });
+}
+const dbOwnDrag = b => !!DRAG && DRAG.kind === 'dbrow' && DRAG.bid === b.id;
+function dbBoard(b, d, v, rows) {
+  const gp = d.props.find(p => p.id === v.groupBy && p.type === 'select') || d.props.find(p => p.type === 'select');
+  if (!gp) return h('div', { class: 'db-none' }, h('p', { text: 'A board groups cards by a Select property.' }), S.ro ? '' : h('button', { class: 'pill-btn', onclick: () => { v.groupBy = dbEnsureProp(d, 'select', 'Status').id; commit(b); } }, 'Add a Status property'));
+  if (v.groupBy !== gp.id && !S.ro) v.groupBy = gp.id;
+  const groups = [...arr(gp.options), { id: '', name: 'No ' + (gp.name || 'value'), color: 'gray', none: true }];
+  const kb = h('div', { class: 'kb db-board' });
+  for (const g of groups) {
+    const known = new Set(arr(gp.options).map(o => o.id));
+    const inG = rows.filter(r => (known.has(r.cells[gp.id]) ? r.cells[gp.id] : '') === g.id);
+    if (g.none && !inG.length) continue;
+    const cards = h('div', { class: 'kcards' });
+    for (const r of inG) {
+      const c = h('div', { class: 'kcard db-card', 'data-rid': r.id, role: 'button', tabindex: '0', onclick: () => dbOpenRow(b, r.id), onkeydown: e => { if (e.key === 'Enter') dbOpenRow(b, r.id); } },
+        h('div', { class: 'db-ct', text: r.title || 'Untitled' }), ...dbCardProps(d, r, gp.id));
+      dbRowDrag(c, b, r);
+      cards.append(c);
+    }
+    const col = h('div', { class: 'kcol' },
+      h('div', { class: 'kh' }, dbChip(g), h('span', { class: 'kcount', text: String(inG.length) })),
+      cards, S.ro ? '' : h('button', { class: 'db-newcard', onclick: () => dbNewRow(b, d, g.id ? { [gp.id]: g.id } : {}, 'modal') }, '+ New'));
+    col.addEventListener('dragover', e => {
+      if (!dbOwnDrag(b)) return; e.preventDefault(); e.stopPropagation(); col.classList.add('over');
+      $$('.kcard', col).forEach(x => x.classList.remove('drop-before'));
+      const tg = $$('.kcard', col).find(x => { const rr = x.getBoundingClientRect(); return e.clientY < rr.top + rr.height / 2; }); if (tg) tg.classList.add('drop-before');
+    });
+    col.addEventListener('dragleave', e => { if (!col.contains(e.relatedTarget)) { col.classList.remove('over'); $$('.kcard', col).forEach(x => x.classList.remove('drop-before')); } });
+    col.addEventListener('drop', e => {
+      if (!dbOwnDrag(b)) return; e.preventDefault(); e.stopPropagation();
+      const before = $('.kcard.drop-before', col); const D = DRAG; endDrag();
+      const r = d.rows.find(x => x.id === D.rid); if (!r) return;
+      if (g.id) r.cells[gp.id] = g.id; else delete r.cells[gp.id];
+      d.rows = d.rows.filter(x => x !== r);
+      const bi = before ? d.rows.findIndex(x => x.id === before.dataset.rid) : -1;
+      if (bi >= 0) d.rows.splice(bi, 0, r); else d.rows.push(r);
+      commit(b);
+    });
+    kb.append(col);
+  }
+  if (!S.ro) kb.append(h('button', { class: 'kadd-col', onclick: () => { gp.options.push(dbOpt('New group', gp.options.length)); commit(b); } }, '+ Add group'));
+  return kb;
+}
+function dbGallery(b, d, v, rows) {
+  const g = h('div', { class: 'db-gal' });
+  const sel = d.props.find(p => p.type === 'select');
+  for (const r of rows) {
+    const imgP = d.props.find(p => p.type === 'url' && dbIsImg(r.cells[p.id]));
+    const opt = sel && arr(sel.options).find(o => o.id === r.cells[sel.id]);
+    const cover = imgP ? h('div', { class: 'db-gcover' }, h('img', { src: str(r.cells[imgP.id]).trim(), alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }))
+      : h('div', { class: 'db-gcover bg-' + okColor(opt ? opt.color : COLORS[Math.abs([...str(r.title)].reduce((n, ch) => n + ch.charCodeAt(0), 0)) % 6]) }, h('span', { text: [...(str(r.title).trim() || '·')][0].toUpperCase() }));
+    const card = h('div', { class: 'db-gcard', role: 'button', tabindex: '0', 'data-rid': r.id, onclick: () => dbOpenRow(b, r.id), onkeydown: e => { if (e.key === 'Enter') dbOpenRow(b, r.id); } },
+      cover, h('div', { class: 'db-gbody' }, h('div', { class: 'db-ct', text: r.title || 'Untitled' }), ...dbCardProps(d, r)));
+    g.append(card);
+  }
+  if (!S.ro) g.append(h('button', { class: 'db-gcard add', onclick: () => dbNewRow(b, d, {}, 'modal') }, h('span', { text: '+ New' })));
+  if (!rows.length && S.ro) g.append(h('div', { class: 'db-none', text: 'No rows yet.' }));
+  return g;
+}
+function dbCalendar(b, d, v, rows) {
+  const dp = d.props.find(p => p.id === v.dateProp && p.type === 'date') || d.props.find(p => p.type === 'date');
+  if (!dp) return h('div', { class: 'db-none' }, h('p', { text: 'A calendar view needs a Date property.' }), S.ro ? '' : h('button', { class: 'pill-btn', onclick: () => { v.dateProp = dbEnsureProp(d, 'date', 'Date').id; commit(b); } }, 'Add a Date property'));
+  const vs = VS[b.id]; const now = new Date();
+  if (vs.calY == null) { vs.calY = now.getFullYear(); vs.calM = now.getMonth(); }
+  const first = new Date(vs.calY, vs.calM, 1);
+  const go = n => { const x = new Date(vs.calY, vs.calM + n, 1); vs.calY = x.getFullYear(); vs.calM = x.getMonth(); rerender(b); };
+  const sel = d.props.find(p => p.type === 'select');
+  const wrap = h('div', { class: 'db-cal' },
+    h('div', { class: 'cal-nav' }, h('button', { class: 'nav-btn', 'aria-label': 'Previous month', onclick: () => go(-1) }, '‹'),
+      h('b', { class: 'cal-lbl', text: first.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) }),
+      h('button', { class: 'nav-btn', 'aria-label': 'Next month', onclick: () => go(1) }, '›'),
+      h('button', { class: 'pill-btn', onclick: () => { vs.calY = now.getFullYear(); vs.calM = now.getMonth(); rerender(b); } }, 'Today'),
+      h('span', { class: 'w-sub', text: `on ${dp.name}${dp.yearly ? ' · every year' : ''}` })));
+  const grid = h('div', { class: 'cal-grid' });
+  for (const dn of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']) grid.append(h('div', { class: 'cal-dow', text: dn }));
+  const start = mondayOf(first); const t = todayIso();
+  const keyFor = r => { const val = str(r.cells[dp.id]); if (!/^\d{4}-\d{2}-\d{2}$/.test(val)) return null; return dp.yearly ? val.slice(5) : val; };
+  const by = new Map(); for (const r of rows) { const k = keyFor(r); if (k) { if (!by.has(k)) by.set(k, []); by.get(k).push(r); } }
+  for (let i = 0; i < 42; i++) {
+    const day = addDays(start, i); const k = iso(day);
+    if (i >= 35 && day.getMonth() !== vs.calM) break;
+    const list = by.get(dp.yearly ? k.slice(5) : k) || [];
+    const cell = h('div', { class: 'cal-day' + (day.getMonth() !== vs.calM ? ' out' : '') + (k === t ? ' today' : ''), role: 'button', tabindex: '0', 'aria-label': day.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + (list.length ? `, ${list.length}` : '') },
+      h('span', { class: 'cal-num', text: String(day.getDate()) }));
+    for (const r of list.slice(0, 3)) {
+      const o = sel && arr(sel.options).find(x => x.id === r.cells[sel.id]);
+      const chip = h('button', { class: 'ev bg-' + okColor(o ? o.color : 'sky'), onclick: e => { e.stopPropagation(); dbOpenRow(b, r.id); } }, h('span', { class: 'ev-n', text: (dp.yearly ? '🎂 ' : '') + (r.title || 'Untitled') }));
+      dbRowDrag(chip, b, r);
+      cell.append(chip);
+    }
+    if (list.length > 3) cell.append(h('button', { class: 'ev-more', onclick: e => { e.stopPropagation(); openPop(e.currentTarget, h('div', { class: 'day-list', style: 'width:240px' }, list.map(r => h('button', { class: 'mi small', onclick: () => { closePop(); dbOpenRow(b, r.id); } }, h('span', { text: r.title || 'Untitled' }))))); } }, `+${list.length - 3} more`));
+    const add = () => { if (S.ro) return; dbNewRow(b, d, { [dp.id]: k }, 'modal'); };
+    cell.addEventListener('click', add);
+    cell.addEventListener('keydown', e => { if (e.target === cell && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); add(); } });
+    cell.addEventListener('dragover', e => { if (!dbOwnDrag(b)) return; e.preventDefault(); e.stopPropagation(); cell.classList.add('over'); });
+    cell.addEventListener('dragleave', e => { if (!cell.contains(e.relatedTarget)) cell.classList.remove('over'); });
+    cell.addEventListener('drop', e => { if (!dbOwnDrag(b)) return; e.preventDefault(); e.stopPropagation(); const D = DRAG; endDrag(); const r = d.rows.find(x => x.id === D.rid); if (!r) return; r.cells[dp.id] = k; commit(b); });
+    grid.append(cell);
+  }
+  wrap.append(grid);
+  const undated = rows.filter(r => !keyFor(r));
+  if (undated.length) wrap.append(h('div', { class: 'db-undated' }, h('span', { class: 'w-sub', text: `No ${dp.name.toLowerCase() || 'date'} yet:` }), undated.slice(0, 12).map(r => { const c = h('button', { class: 'db-chip bg-gray', text: r.title || 'Untitled', onclick: () => dbOpenRow(b, r.id) }); dbRowDrag(c, b, r); return c; })));
+  return wrap;
+}
+
+/* ================= Everyday life + goals blocks ================= */
+const LIFE_CATS = ['Produce', 'Dairy', 'Meat & fish', 'Bakery', 'Pantry', 'Frozen', 'Drinks', 'Household', 'Other'];
+const LIFE_CAT_ICON = { 'Produce': '🥬', 'Dairy': '🥛', 'Meat & fish': '🍗', 'Bakery': '🥖', 'Pantry': '🥫', 'Frozen': '🧊', 'Drinks': '🧃', 'Household': '🧻', 'Other': '🛒' };
+const LIFE_CAT_WORDS = {
+  'Produce': 'apple banana mango orange lemon lime calamansi grape berry strawberry tomato onion garlic ginger potato carrot lettuce cabbage spinach kangkong pechay broccoli pepper chili cucumber eggplant squash avocado herb basil cilantro parsley mushroom corn fruit veg vegetable salad celery papaya pineapple melon',
+  'Dairy': 'milk cheese butter yogurt yoghurt cream egg eggs margarine kesong',
+  'Meat & fish': 'chicken beef pork fish salmon tuna shrimp prawn bacon ham sausage longganisa tocino mince meat lamb turkey squid tilapia bangus crab',
+  'Bakery': 'bread pandesal loaf bun buns cake croissant bagel tortilla wrap muffin pastry ensaymada',
+  'Pantry': 'rice pasta noodle noodles flour sugar salt oil vinegar soy sauce ketchup mayo mayonnaise cereal oats beans lentils spice spices pepper honey jam peanut coffee tea canned can sardines corned stock cube baking',
+  'Frozen': 'frozen ice cream icecream nuggets fries dumplings',
+  'Drinks': 'water juice soda coke beer wine sprite milk tea kombucha softdrink',
+  'Household': 'soap shampoo conditioner toothpaste toothbrush detergent tissue toilet paper napkin dishwashing sponge trash bag bags foil cling bleach cleaner battery batteries diaper diapers wipes',
+};
+function lifeGuessCat(text) {
+  const words = str(text).toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+  for (const c of ['Frozen', 'Household', 'Meat & fish', 'Dairy', 'Bakery', 'Produce', 'Drinks', 'Pantry']) {
+    const list = LIFE_CAT_WORDS[c].split(' ');
+    if (words.some(w => list.includes(w) || list.includes(w.replace(/s$/, '')) || list.includes(w.replace(/es$/, '')))) return c;
+  }
+  return 'Other';
+}
+function lifeParseItem(v) {
+  // "2 kg rice", "rice x2", "eggs (12)" → name + qty
+  let s = str(v).trim(), qty = '';
+  let m = /^(\d+(?:[.,]\d+)?\s*(?:kg|g|l|ml|pcs|pc|packs?|bottles?|cans?|dozen|doz|x)?)\s+(.+)$/i.exec(s);
+  if (m) { qty = m[1].trim(); s = m[2]; }
+  else if ((m = /^(.+?)\s*(?:x\s*(\d+)|\((\d+[^)]*)\))$/i.exec(s))) { s = m[1]; qty = m[2] || m[3]; }
+  return { name: s.slice(0, 200), qty: str(qty).slice(0, 30) };
+}
+function lifeField(val, ph, onChange, opts = {}) {
+  const inp = h(opts.area ? 'textarea' : 'input', { class: 'field l-field' + (opts.cls ? ' ' + opts.cls : ''), placeholder: ph, 'aria-label': opts.label || ph, maxlength: String(opts.max || 300), type: opts.type || null, rows: opts.rows || null, disabled: S.ro ? true : null });
+  inp.value = val == null ? '' : String(val);
+  inp.addEventListener('input', () => onChange(inp.value));
+  inp.addEventListener('keydown', e => { e.stopPropagation(); if (!opts.area && e.key === 'Enter') { e.preventDefault(); inp.blur(); } });
+  return inp;
+}
+
+/* ---------- Grocery & shopping list ---------- */
+function wLGrocery(b) {
+  const d = b.data = obj(b.data); d.items = arr(d.items).filter(x => x && typeof x === 'object');
+  const vs = VS[b.id] = VS[b.id] || { cart: false };
+  const el = h('div', { class: 'w w-grocery' });
+  const left = d.items.filter(x => !x.got), got = d.items.filter(x => x.got);
+  el.append(wHead(b, d, [h('span', { class: 'w-sub', text: left.length ? `${left.length} to buy` : d.items.length ? 'All in the cart 🛒' : 'Empty list' }),
+    S.ro || !d.items.length ? '' : h('button', { class: 'pill-btn', title: 'More', onclick: e => openPop(e.currentTarget, menuList([
+      { n: 'Clear bought items', i: '🧹', act: () => { if (!got.length) return toast('Nothing in the cart yet.'); pushUndo('clear'); d.items = d.items.filter(x => !x.got); commit(b); toastUndo(`Cleared ${got.length} item${got.length === 1 ? '' : 's'}`); } },
+      { n: 'Uncheck all (shop again)', i: '↺', act: () => { d.items.forEach(x => { x.got = false; }); commit(b); } },
+      'sep',
+      { n: 'Delete everything', i: '🗑', danger: true, act: () => { pushUndo('clear'); d.items = []; commit(b); toastUndo('List emptied'); } },
+    ])) }, '⋯')]));
+  const row = it => {
+    const name = editableText(str(it.name), v => { it.name = v; curDirty(); });
+    if (it.got) name.classList.add('done-text');
+    const qty = h('span', { class: 'l-qty', contenteditable: S.ro ? 'false' : 'plaintext-only', role: 'textbox', 'aria-label': 'Quantity', 'data-ph': 'qty', spellcheck: 'false' });
+    qty.textContent = str(it.qty);
+    qty.addEventListener('input', () => { it.qty = qty.textContent.slice(0, 30); curDirty(); });
+    qty.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); qty.blur(); } });
+    return h('div', { class: 'item l-gitem' },
+      chk(it.got, () => { it.got = !it.got; commit(b); }, 'Bought'),
+      h('span', { style: 'flex:1;min-width:0' }, name), qty,
+      S.ro ? '' : mini('Move or delete', e => openPop(e.currentTarget, menuList([{ group: 'Aisle' }, ...LIFE_CATS.map(c => ({ n: c, i: c === it.cat ? '✓' : LIFE_CAT_ICON[c], act: () => { it.cat = c; commit(b); } })), 'sep', { n: 'Delete', i: '🗑', danger: true, act: () => { d.items = d.items.filter(x => x !== it); commit(b); } }])), '⋯'));
+  };
+  const groups = h('div', { class: 'l-groups' });
+  for (const c of LIFE_CATS) {
+    const its = left.filter(x => (LIFE_CATS.includes(x.cat) ? x.cat : 'Other') === c);
+    if (!its.length) continue;
+    groups.append(h('div', { class: 'l-group' }, h('div', { class: 'l-gh' }, h('span', { text: LIFE_CAT_ICON[c] }), h('b', { text: c }), h('span', { class: 'w-sub', text: String(its.length) })), h('div', { class: 'qlist' }, its.map(row))));
+  }
+  if (!d.items.length) groups.append(h('div', { class: 'ib-empty', text: 'Type what you need, like “2 kg rice” or “eggs x12”. It sorts itself by aisle.' }));
+  el.append(groups);
+  if (got.length) {
+    const open = vs.cart;
+    el.append(h('div', { class: 'l-cart' + (open ? ' open' : '') },
+      h('button', { class: 'l-cart-h', 'aria-expanded': String(open), onclick: () => { vs.cart = !vs.cart; rerender(b); } }, h('span', { class: 'toggle-btn' + (open ? ' open' : ''), text: '▶' }), `In the cart (${got.length})`),
+      open ? h('div', { class: 'qlist' }, got.map(row)) : ''));
+  }
+  const inId = 'gr-' + b.id;
+  if (!S.ro) el.append(h('div', { style: 'margin-top:10px' }, addInput('Add an item, e.g. 2 kg rice', v => {
+    for (const part of v.split(/\s*,\s*/).filter(Boolean)) { const p = lifeParseItem(part); d.items.push({ id: uid('g'), name: p.name, qty: p.qty, cat: lifeGuessCat(p.name), got: false }); }
+    commit(b); refocus(inId);
+  }, inId)));
+  return el;
+}
+function lifeAddToGrocery(names, page) {
+  // Adds names to the first grocery list on the page (making one if needed). Returns how many were new.
+  const p = page || cur(); if (!p) return 0;
+  let g = allBlocks(p).find(x => x.type === 'grocery');
+  if (!g) { g = { id: uid('b'), type: 'grocery', data: defData('grocery') }; p.blocks.push(g, { id: uid('b'), type: 'text', text: '' }); }
+  g.data = obj(g.data); g.data.items = arr(g.data.items);
+  const have = new Set(g.data.items.filter(x => !x.got).map(x => str(x.name).trim().toLowerCase()));
+  let n = 0;
+  for (const raw of names) {
+    const it = lifeParseItem(raw); const key = it.name.trim().toLowerCase(); if (!key || have.has(key)) continue;
+    have.add(key);
+    const old = g.data.items.find(x => x.got && str(x.name).trim().toLowerCase() === key);
+    if (old) { old.got = false; old.qty = it.qty || old.qty; } else g.data.items.push({ id: uid('g'), name: it.name, qty: it.qty, cat: lifeGuessCat(it.name), got: false });
+    n++;
+  }
+  return n;
+}
+
+/* ---------- Weekly meal planner ---------- */
+const LIFE_MEALS = [['b', 'Breakfast', '🍳'], ['l', 'Lunch', '🍱'], ['d', 'Dinner', '🍲'], ['s', 'Snack', '🍪']];
+function wLMeals(b) {
+  const d = b.data = obj(b.data); d.days = obj(d.days);
+  const vs = VS[b.id] = VS[b.id] || { off: 0 };
+  const mon = addDays(mondayOf(new Date()), vs.off * 7);
+  const t = todayIso();
+  const el = h('div', { class: 'w w-meals' });
+  const lbl = vs.off === 0 ? 'This week' : 'Week of ' + mon.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const weekKeys = [...Array(7)].map((_, i) => iso(addDays(mon, i)));
+  const ingredients = () => { const out = []; for (const k of weekKeys) for (const [m] of LIFE_MEALS) { const c = obj(obj(d.days[k])[m]); out.push(...str(c.ing).split('\n').map(s => s.trim()).filter(Boolean)); } return out; };
+  el.append(wHead(b, d, [
+    h('button', { class: 'nav-btn', 'aria-label': 'Previous week', onclick: () => { vs.off--; rerender(b); } }, '‹'),
+    h('b', { text: lbl, style: 'min-width:110px;text-align:center;font-family:var(--font-display)' }),
+    h('button', { class: 'nav-btn', 'aria-label': 'Next week', onclick: () => { vs.off++; rerender(b); } }, '›'),
+    vs.off ? h('button', { class: 'pill-btn', onclick: () => { vs.off = 0; rerender(b); } }, 'This week') : '',
+    S.ro ? '' : h('button', { class: 'pill-btn', title: 'Send this week’s ingredients to your grocery list', onclick: () => {
+      const list = ingredients();
+      if (!list.length) return toast('Add ingredients to a meal first: click a meal, then list what it needs.');
+      const p = cur(); const had = !!allBlocks(p).find(x => x.type === 'grocery');
+      const n = lifeAddToGrocery(list, p);
+      if (!had) renderBlocks(); else { const g = allBlocks(p).find(x => x.type === 'grocery'); rerender(g); }
+      curDirty();
+      toast(n ? `Added ${n} item${n === 1 ? '' : 's'} to your grocery list 🛒` : 'Everything is already on your grocery list.');
+    } }, '🛒 Add to grocery list')]));
+  const grid = h('div', { class: 'l-meals' });
+  grid.append(h('div', { class: 'l-mh l-corner' }));
+  for (let i = 0; i < 7; i++) { const dd = addDays(mon, i); grid.append(h('div', { class: 'l-mh' + (weekKeys[i] === t ? ' today' : '') }, h('b', { text: dd.toLocaleDateString('en-GB', { weekday: 'short' }) }), h('span', { text: String(dd.getDate()) }))); }
+  for (const [m, name, ic] of LIFE_MEALS) {
+    grid.append(h('div', { class: 'l-mrow' }, h('span', { text: ic }), h('b', { text: name })));
+    for (const k of weekKeys) {
+      const c = obj(obj(d.days[k])[m]);
+      const has = str(c.text).trim();
+      const nIng = str(c.ing).split('\n').filter(s => s.trim()).length;
+      grid.append(h('button', { class: 'l-mcell' + (has ? ' has' : '') + (k === t ? ' today' : ''), 'aria-label': `${name} on ${parseIso(k).toLocaleDateString('en-GB', { weekday: 'long' })}${has ? ': ' + has : ''}`, onclick: e => lifeMealPop(e.currentTarget, b, d, k, m, name) },
+        has ? h('span', { class: 'l-mt', text: has }) : h('span', { class: 'l-mplus', text: S.ro ? '' : '+' }),
+        nIng ? h('span', { class: 'l-ming', text: `🧺 ${nIng}` }) : ''));
+    }
+  }
+  el.append(h('div', { class: 'l-meals-wrap' }, grid));
+  // Narrow spaces (a column, a phone): one card per day instead of the grid.
+  const list = h('div', { class: 'l-mlist' });
+  weekKeys.forEach((k, i) => {
+    const dd = addDays(mon, i); const day = obj(d.days[k]);
+    list.append(h('div', { class: 'l-mday' + (k === t ? ' today' : '') }, h('div', { class: 'l-mdh' }, h('b', { text: dd.toLocaleDateString('en-GB', { weekday: 'short' }) }), h('span', { text: dd.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) })),
+      h('div', { class: 'l-mdmeals' }, LIFE_MEALS.map(([m, name, ic]) => { const c = obj(day[m]); const has = str(c.text).trim(); return h('button', { class: 'l-mchip' + (has ? ' has' : ''), title: name, 'aria-label': `${name} on ${dd.toLocaleDateString('en-GB', { weekday: 'long' })}${has ? ': ' + has : ''}`, onclick: e => lifeMealPop(e.currentTarget, b, d, k, m, name) }, h('span', { text: ic }), h('span', { class: 'l-mct', text: has || (S.ro ? '—' : name) })); }))));
+  });
+  el.append(list);
+  return el;
+}
+function lifeMealPop(anchor, b, d, k, m, name) {
+  const c = obj(obj(d.days[k])[m]);
+  const save = () => {
+    const day = d.days[k] = obj(d.days[k]);
+    const nt = txt.value.trim(), ni = ing.value.trim();
+    if (nt || ni) day[m] = { text: nt.slice(0, 200), ing: ni.slice(0, 2000) }; else delete day[m];
+    if (!Object.keys(day).length) delete d.days[k];
+    closePop(); commit(b);
+  };
+  if (S.ro) { openPop(anchor, h('div', { style: 'width:260px' }, h('div', { class: 'pop-title', text: `${name} · ${parseIso(k).toLocaleDateString('en-GB', { weekday: 'long' })}` }), h('div', { text: str(c.text) || 'Nothing planned' }), c.ing ? h('pre', { class: 'l-ing-ro', text: str(c.ing) }) : '')); return; }
+  const txt = h('input', { class: 'field', placeholder: 'What’s cooking? e.g. Chicken adobo', 'aria-label': 'Meal', maxlength: '200', value: str(c.text) });
+  const ing = h('textarea', { class: 'field', rows: '4', placeholder: 'Ingredients (one per line)\n1 kg chicken\nsoy sauce\ngarlic', 'aria-label': 'Ingredients', style: 'resize:vertical' });
+  ing.value = str(c.ing);
+  txt.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); save(); } });
+  openPop(anchor, h('div', { style: 'width:290px;display:grid;gap:8px' },
+    h('div', { class: 'pop-title', text: `${name} · ${parseIso(k).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}` }),
+    txt, ing,
+    h('div', { class: 'pop-row', style: 'justify-content:flex-end' },
+      c.text || c.ing ? h('button', { class: 'btn ghost', onclick: () => { txt.value = ''; ing.value = ''; save(); } }, 'Clear') : '',
+      h('button', { class: 'btn', onclick: save }, 'Save'))));
+  setTimeout(() => txt.focus(), 10);
+}
+
+/* ---------- Goals ---------- */
+function lifePct(g) {
+  if (g.kind === 'steps') { const ms = arr(g.steps); return ms.length ? ms.filter(x => x.done).length / ms.length : 0; }
+  const tg = num(g.target, 0); return tg > 0 ? Math.max(0, Math.min(1, num(g.current) / tg)) : 0;
+}
+function lifeAmt(g, v) { const u = str(g.unit).trim(); const n = num(v).toLocaleString(); if (!u) return n; return /^[^\p{L}\d]{1,3}$/u.test(u) ? u + n : n + ' ' + u; }
+function lifeDaysLeft(k) { if (!/^\d{4}-\d{2}-\d{2}$/.test(str(k))) return null; return Math.round((parseIso(k) - dayStart(new Date())) / 864e5); }
+function lifeCelebrate(el) {
+  if (!el) return;
+  for (let i = 0; i < 14; i++) {
+    const s = h('span', { class: 'l-burst', text: ['🎉', '✨', '🌟', '💖', '🎊'][i % 5] });
+    s.style.setProperty('--dx', (Math.random() * 180 - 90).toFixed(0) + 'px'); s.style.setProperty('--dy', (-40 - Math.random() * 80).toFixed(0) + 'px'); s.style.left = (20 + Math.random() * 60) + '%';
+    el.append(s); setTimeout(() => s.remove(), 1300);
+  }
+}
+function wLGoals(b) {
+  const d = b.data = obj(b.data); d.goals = arr(d.goals).filter(x => x && typeof x === 'object');
+  const el = h('div', { class: 'w w-goals' });
+  const doneN = d.goals.filter(g => lifePct(g) >= 1).length;
+  el.append(wHead(b, d, [h('span', { class: 'w-sub', text: d.goals.length ? `${doneN} of ${d.goals.length} reached` : '' })]));
+  const list = h('div', { class: 'l-goals' });
+  const setVal = (g, card, v) => {
+    const before = lifePct(g);
+    g.current = Math.max(0, Math.round(v * 100) / 100);
+    commit(b);
+    if (before < 1 && lifePct(g) >= 1) { const nc = blockElById(b.id)?.querySelector(`[data-gid="${CSS.escape(g.id)}"]`); lifeCelebrate(nc); toast(`Goal reached: ${g.title || 'Goal'} 🎉`); dragonDone('task'); }
+  };
+  for (const g of d.goals) {
+    g.color = okColor(g.color || 'mint');
+    const pct = lifePct(g); const left = lifeDaysLeft(g.due);
+    const card = h('div', { class: 'l-goal' + (pct >= 1 ? ' done' : ''), 'data-gid': g.id, style: `--gc:var(--c-${g.color})` });
+    const title = editableText(str(g.title), v => { g.title = v; curDirty(); }, 'ied l-gtitle');
+    card.append(h('div', { class: 'l-ghead' },
+      h('button', { class: 'hico', 'aria-label': 'Change goal icon', onclick: e => { if (!S.ro) emojiPop(e.currentTarget, em => { g.emoji = em; commit(b); }); } }, str(g.emoji) || '🎯'),
+      h('div', { style: 'flex:1;min-width:0' }, title,
+        h('div', { class: 'w-sub l-gmeta', text: [g.kind === 'steps' ? `${arr(g.steps).filter(x => x.done).length}/${arr(g.steps).length} steps` : `${lifeAmt(g, g.current)} / ${lifeAmt(g, g.target)}`, left == null ? '' : pct >= 1 ? 'Done 🎉' : left > 1 ? `${left} days left` : left === 1 ? 'Due tomorrow' : left === 0 ? 'Due today' : `${-left} day${left === -1 ? '' : 's'} overdue`].filter(Boolean).join(' · ') })),
+      h('b', { class: 'l-gpct', text: Math.round(pct * 100) + '%' }),
+      S.ro ? '' : mini('Goal settings', e => lifeGoalPop(e.currentTarget, b, d, g), '⋯')));
+    card.append(h('div', { class: 'l-bar' }, h('i', { style: `width:${Math.round(pct * 100)}%` })));
+    if (g.kind === 'steps') {
+      const ul = h('div', { class: 'l-steps' });
+      for (const st of arr(g.steps)) {
+        const t2 = editableText(str(st.text), v => { st.text = v; curDirty(); });
+        if (st.done) t2.classList.add('done-text');
+        ul.append(h('div', { class: 'l-step' }, chk(st.done, () => {
+          const before = lifePct(g); st.done = !st.done; commit(b);
+          if (st.done && before < 1 && lifePct(g) >= 1) { lifeCelebrate(blockElById(b.id)?.querySelector(`[data-gid="${CSS.escape(g.id)}"]`)); toast(`Goal reached: ${g.title || 'Goal'} 🎉`); }
+        }, 'Step done'), h('span', { style: 'flex:1;min-width:0' }, t2), S.ro ? '' : mini('Delete step', () => { g.steps = arr(g.steps).filter(x => x !== st); commit(b); })));
+      }
+      if (!S.ro) { const sid = 'gs-' + g.id; ul.append(addInput('Add a step', v => { g.steps = arr(g.steps); g.steps.push({ id: uid('s'), text: v, done: false }); commit(b); refocus(sid); }, sid)); }
+      card.append(ul);
+    } else if (!S.ro) {
+      const stepBy = Math.max(0.01, num(g.step, 1));
+      const val = h('input', { class: 'field l-gval', type: 'number', min: '0', step: 'any', 'aria-label': 'Current value', value: String(num(g.current)) });
+      val.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); val.blur(); } });
+      val.addEventListener('change', () => setVal(g, card, num(val.value)));
+      card.append(h('div', { class: 'l-gctl' },
+        h('button', { class: 'nav-btn', 'aria-label': 'Minus', onclick: () => setVal(g, card, num(g.current) - stepBy) }, '−'),
+        val, h('span', { class: 'w-sub', text: `/ ${lifeAmt(g, g.target)}` }),
+        h('button', { class: 'nav-btn l-plus', 'aria-label': 'Plus', onclick: () => setVal(g, card, num(g.current) + stepBy) }, '+')));
+    }
+    list.append(card);
+  }
+  if (!d.goals.length) list.append(h('div', { class: 'ib-empty', text: 'Add a goal like “Save ₱20,000”, “Read 12 books” or “Launch Pugad”. Use a number to count up, or steps to tick off.' }));
+  el.append(list);
+  if (!S.ro) el.append(h('div', { class: 'btns', style: 'margin-top:10px' },
+    h('button', { class: 'pill-btn', onclick: () => { const g = { id: uid('gl'), title: 'New goal', emoji: '🎯', color: COLORS[d.goals.length % 6], kind: 'number', current: 0, target: 10, unit: '', step: 1 }; d.goals.push(g); commit(b); setTimeout(() => { const t = blockElById(b.id)?.querySelector(`[data-gid="${CSS.escape(g.id)}"] .l-gtitle`); if (t) { t.focus(); const r = document.createRange(); r.selectNodeContents(t); getSelection().removeAllRanges(); getSelection().addRange(r); } }, 30); } }, '+ Number goal'),
+    h('button', { class: 'pill-btn', onclick: () => { d.goals.push({ id: uid('gl'), title: 'New goal', emoji: '🪜', color: COLORS[d.goals.length % 6], kind: 'steps', steps: [] }); commit(b); } }, '+ Goal with steps')));
+  return el;
+}
+function lifeGoalPop(anchor, b, d, g) {
+  const tgt = h('input', { class: 'field', type: 'number', min: '0', step: 'any', value: String(num(g.target, 10)), 'aria-label': 'Target' });
+  const unit = h('input', { class: 'field', placeholder: 'unit, e.g. books, ₱, km', maxlength: '20', value: str(g.unit), 'aria-label': 'Unit' });
+  const step = h('input', { class: 'field', type: 'number', min: '0.01', step: 'any', value: String(num(g.step, 1)), 'aria-label': 'Plus/minus step', style: 'max-width:90px' });
+  const due = h('input', { class: 'field', type: 'date', value: str(g.due), 'aria-label': 'Due date' });
+  let color = g.color;
+  const sw = h('div', { class: 'swatches' });
+  const drawSw = () => sw.replaceChildren(...COLORS.map(c => h('button', { class: 'sw' + (c === color ? ' on' : ''), style: `background:${COLOR_HEX[c]}`, 'aria-label': c, onclick: () => { color = c; drawSw(); } })));
+  drawSw();
+  const save = () => {
+    if (g.kind !== 'steps') { g.target = Math.max(0, num(tgt.value, 10)); g.unit = unit.value.trim(); g.step = Math.max(0.01, num(step.value, 1)); }
+    g.due = due.value || ''; if (!g.due) delete g.due; g.color = color; closePop(); commit(b);
+  };
+  openPop(anchor, h('div', { style: 'width:290px;display:grid;gap:8px' },
+    h('div', { class: 'pop-title', text: 'Goal settings' }),
+    g.kind === 'steps' ? '' : h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', style: 'width:52px', text: 'Target' }), tgt, unit),
+    g.kind === 'steps' ? '' : h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', style: 'width:52px', text: 'Step' }), step, h('span', { class: 'w-sub', text: 'per + / − tap' })),
+    h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', style: 'width:52px', text: 'Due' }), due),
+    sw,
+    h('div', { class: 'pop-row', style: 'justify-content:space-between' },
+      h('button', { class: 'btn ghost', onclick: () => { closePop(); confirmModal('Delete this goal?', 'This can be undone with the Undo button right after.', 'Delete', () => { pushUndo('delete'); d.goals = d.goals.filter(x => x !== g); commit(b); toastUndo('Goal deleted'); }); } }, 'Delete'),
+      h('button', { class: 'btn', onclick: save }, 'Save'))));
+}
+
+/* ---------- Countdowns ---------- */
+function lifeNextDate(ev) {
+  // For yearly events, the next time it comes round (today counts). Otherwise the date itself.
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(str(ev.date))) return null;
+  const dt = parseIso(ev.date);
+  if (!ev.yearly) return dt;
+  const t = dayStart(new Date());
+  let n = new Date(t.getFullYear(), dt.getMonth(), dt.getDate());
+  if (n < t) n = new Date(t.getFullYear() + 1, dt.getMonth(), dt.getDate());
+  return n;
+}
+function wLCountdown(b) {
+  const d = b.data = obj(b.data); d.events = arr(d.events).filter(x => x && typeof x === 'object');
+  const el = h('div', { class: 'w w-countdown' });
+  el.append(wHead(b, d));
+  const t = dayStart(new Date());
+  const rows = d.events.map(ev => { const nx = lifeNextDate(ev); return { ev, nx, days: nx ? Math.round((nx - t) / 864e5) : null }; })
+    .sort((a, c) => (a.days == null) - (c.days == null) || ((a.days < 0) - (c.days < 0)) || (a.days < 0 ? c.days - a.days : a.days - c.days));
+  const list = h('div', { class: 'l-cds' });
+  for (const { ev, nx, days } of rows) {
+    const past = days != null && days < 0, today = days === 0;
+    const years = ev.yearly && nx ? nx.getFullYear() - parseIso(ev.date).getFullYear() : 0;
+    list.append(h('div', { class: 'l-cd' + (past ? ' past' : '') + (today ? ' today' : ''), style: `--gc:var(--c-${okColor(ev.color || 'pink')})` },
+      h('button', { class: 'hico l-cdico', 'aria-label': 'Change icon', onclick: e => { if (!S.ro) emojiPop(e.currentTarget, em => { ev.emoji = em; commit(b); }); } }, str(ev.emoji) || '📅'),
+      h('div', { style: 'flex:1;min-width:0' },
+        editableText(str(ev.name), v => { ev.name = v; curDirty(); }),
+        h('div', { class: 'w-sub', text: nx ? nx.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: nx.getFullYear() !== t.getFullYear() ? 'numeric' : undefined }) + (ev.yearly ? ` · every year${years > 0 && ev.showAge ? ` · turns ${years}` : ''}` : '') : 'Pick a date' })),
+      h('div', { class: 'l-cdchip' }, days == null ? h('span', { text: '—' }) : today ? h('b', { text: 'Today! 🎉' }) : past ? [h('b', { text: String(-days) }), h('small', { text: -days === 1 ? 'day ago' : 'days ago' })] : [h('b', { text: String(days) }), h('small', { text: days === 1 ? 'day' : 'days' })]),
+      S.ro ? '' : mini('Edit countdown', e => lifeCdPop(e.currentTarget, b, d, ev), '⋯')));
+  }
+  if (!d.events.length) list.append(h('div', { class: 'ib-empty', text: 'Count down to birthdays, trips, paydays and launches.' }));
+  el.append(list);
+  if (!S.ro) el.append(h('div', { style: 'margin-top:10px' }, h('button', { class: 'pill-btn', onclick: e => lifeCdPop(e.currentTarget, b, d, null) }, '+ Add countdown')));
+  return el;
+}
+function lifeCdPop(anchor, b, d, ev) {
+  const isNew = !ev;
+  const name = h('input', { class: 'field', placeholder: 'e.g. Bryan’s birthday', maxlength: '120', value: ev ? str(ev.name) : '', 'aria-label': 'Name' });
+  const date = h('input', { class: 'field', type: 'date', value: ev ? str(ev.date) : iso(addDays(new Date(), 7)), 'aria-label': 'Date' });
+  const yearly = h('input', { type: 'checkbox', checked: ev && ev.yearly ? true : null });
+  const age = h('input', { type: 'checkbox', checked: ev && ev.showAge ? true : null });
+  let color = ev ? okColor(ev.color) : COLORS[d.events.length % 6];
+  const sw = h('div', { class: 'swatches' });
+  const drawSw = () => sw.replaceChildren(...COLORS.map(c => h('button', { class: 'sw' + (c === color ? ' on' : ''), style: `background:${COLOR_HEX[c]}`, 'aria-label': c, onclick: () => { color = c; drawSw(); } })));
+  drawSw();
+  const save = () => {
+    const v = name.value.trim(); if (!v) { name.focus(); return; }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date.value)) { date.focus(); return; }
+    const target = ev || { id: uid('cd'), emoji: /birth|bday/i.test(v) ? '🎂' : /trip|flight|travel|holiday/i.test(v) ? '✈️' : /pay/i.test(v) ? '💰' : /wedding|anniv/i.test(v) ? '💍' : '📅' };
+    Object.assign(target, { name: v.slice(0, 120), date: date.value, yearly: yearly.checked, showAge: age.checked, color });
+    if (isNew) d.events.push(target);
+    closePop(); commit(b);
+  };
+  name.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); save(); } });
+  openPop(anchor, h('div', { style: 'width:290px;display:grid;gap:8px' },
+    h('div', { class: 'pop-title', text: isNew ? 'New countdown' : 'Edit countdown' }), name, date,
+    h('label', { class: 'switch small' }, yearly, 'Repeats every year (birthdays, anniversaries)'),
+    h('label', { class: 'switch small' }, age, 'Show the age / years'),
+    sw,
+    h('div', { class: 'pop-row', style: 'justify-content:flex-end' },
+      isNew ? '' : h('button', { class: 'btn ghost', onclick: () => { d.events = d.events.filter(x => x !== ev); closePop(); commit(b); } }, 'Delete'),
+      h('button', { class: 'btn', onclick: save }, isNew ? 'Add' : 'Save'))));
+  setTimeout(() => name.focus(), 10);
+}
+
+/* ---------- Water & sleep ---------- */
+function wLWellness(b) {
+  const d = b.data = obj(b.data); d.water = obj(d.water); d.sleep = obj(d.sleep);
+  const goal = Math.max(1, Math.min(20, Math.round(num(d.goal, 8))));
+  const sleepGoal = Math.max(1, Math.min(14, num(d.sleepGoal, 8)));
+  const vs = VS[b.id] = VS[b.id] || { off: 0 };
+  const day = addDays(new Date(), vs.off); const k = iso(day); const isToday = vs.off === 0;
+  const el = h('div', { class: 'w w-wellness' });
+  el.append(wHead(b, d, [
+    h('button', { class: 'nav-btn', 'aria-label': 'Previous day', onclick: () => { vs.off--; rerender(b); } }, '‹'),
+    h('b', { text: isToday ? 'Today' : vs.off === -1 ? 'Yesterday' : day.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }), style: 'min-width:92px;text-align:center;font-family:var(--font-display)' }),
+    h('button', { class: 'nav-btn', 'aria-label': 'Next day', disabled: isToday ? true : null, style: isToday ? 'opacity:.3' : '', onclick: () => { if (vs.off < 0) { vs.off++; rerender(b); } } }, '›'),
+    S.ro ? '' : mini('Goals', e => {
+      const wg = h('input', { class: 'field', type: 'number', min: '1', max: '20', value: String(goal), 'aria-label': 'Glasses of water per day' });
+      const sg = h('input', { class: 'field', type: 'number', min: '1', max: '14', step: '0.5', value: String(sleepGoal), 'aria-label': 'Hours of sleep' });
+      openPop(e.currentTarget, h('div', { style: 'width:250px;display:grid;gap:8px' }, h('div', { class: 'pop-title', text: 'Daily goals' }),
+        h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', style: 'flex:1', text: '💧 Glasses of water' }), wg),
+        h('div', { class: 'pop-row' }, h('span', { class: 'w-sub', style: 'flex:1', text: '😴 Hours of sleep' }), sg),
+        h('div', { class: 'pop-row', style: 'justify-content:flex-end' }, h('button', { class: 'btn', onclick: () => { d.goal = Math.max(1, Math.min(20, Math.round(num(wg.value, 8)))); d.sleepGoal = Math.max(1, Math.min(14, num(sg.value, 8))); closePop(); commit(b); } }, 'Save'))));
+    }, '⚙')]));
+  const cups = num(d.water[k]);
+  const cupRow = h('div', { class: 'l-cups', role: 'group', 'aria-label': `Water: ${cups} of ${goal} glasses` });
+  for (let i = 0; i < Math.max(goal, cups); i++) {
+    const on = i < cups;
+    cupRow.append(h('button', { class: 'l-cup' + (on ? ' on' : '') + (i >= goal ? ' extra' : ''), 'aria-label': `Glass ${i + 1}${on ? ', drunk' : ''}`, disabled: S.ro ? true : null, onclick: () => {
+      const was = num(d.water[k]); const nv = i + 1 === was ? i : i + 1;
+      if (nv) d.water[k] = nv; else delete d.water[k];
+      commit(b);
+      if (was < goal && nv >= goal) { toast('Water goal reached 💧✨'); dragonDone('habit'); }
+    } }, h('span', { class: 'l-cupfill' })));
+  }
+  if (!S.ro) cupRow.append(h('button', { class: 'l-cup add', 'aria-label': 'Add a glass', title: 'Extra glass', onclick: () => { const was = num(d.water[k]); d.water[k] = was + 1; commit(b); if (was < goal && was + 1 >= goal) { toast('Water goal reached 💧✨'); dragonDone('habit'); } } }, '+'));
+  let streak = 0; { let x = new Date(); if (num(d.water[iso(x)]) < goal) x = addDays(x, -1); while (num(d.water[iso(x)]) >= goal && streak < 999) { streak++; x = addDays(x, -1); } }
+  const sl = d.sleep[k];
+  const sleepIn = h('input', { class: 'field l-sleep', type: 'number', min: '0', max: '24', step: '0.5', placeholder: '—', 'aria-label': 'Hours slept', value: sl == null ? '' : String(sl), disabled: S.ro ? true : null });
+  sleepIn.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); sleepIn.blur(); } });
+  sleepIn.addEventListener('change', () => { const v = sleepIn.value.trim(); if (v === '') delete d.sleep[k]; else d.sleep[k] = Math.max(0, Math.min(24, Math.round(num(v) * 2) / 2)); commit(b); });
+  const chart = (label, src, max, goalV, fmt, cls) => {
+    const days = [...Array(7)].map((_, i) => addDays(day, i - 6));
+    const top = Math.max(max, ...days.map(x => num(src[iso(x)])));
+    return h('div', { class: 'l-chart ' + cls }, h('div', { class: 'l-ch', text: label }),
+      h('div', { class: 'l-bars' }, days.map(x => { const v = num(src[iso(x)]); return h('div', { class: 'l-bcol' + (iso(x) === k ? ' cur' : ''), title: `${x.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' })}: ${fmt(v)}` },
+        h('div', { class: 'l-btrack' }, h('div', { class: 'l-bfill' + (v >= goalV ? ' met' : ''), style: `height:${top ? Math.round(v / top * 100) : 0}%` }), h('div', { class: 'l-bgoal', style: `bottom:${Math.round(goalV / top * 100)}%` })),
+        h('span', { text: x.toLocaleDateString('en-GB', { weekday: 'narrow' }) })); })));
+  };
+  el.append(h('div', { class: 'l-well' },
+    h('div', { class: 'l-wsec' }, h('div', { class: 'l-wh' }, h('b', { text: '💧 Water' }), h('span', { class: 'w-sub', text: `${cups} / ${goal} glasses${streak ? ` · 🔥 ${streak}-day streak` : ''}` })), cupRow),
+    h('div', { class: 'l-wsec' }, h('div', { class: 'l-wh' }, h('b', { text: '😴 Sleep' }), h('span', { class: 'w-sub', text: `goal ${sleepGoal} h` })), h('div', { class: 'pop-row' }, sleepIn, h('span', { class: 'w-sub', text: isToday ? 'hours last night' : 'hours that night' }))),
+    h('div', { class: 'l-charts' }, chart('Water, last 7 days', d.water, goal, goal, v => `${v} glasses`, 'water'), chart('Sleep, last 7 days', d.sleep, sleepGoal, sleepGoal, v => `${v} h`, 'sleep'))));
+  return el;
+}
+
+/* ---------- Journal ---------- */
+const LIFE_PROMPTS = [
+  'What made you smile today?', 'What is one small win from today?', 'Who are you grateful for right now, and why?', 'What is something you are looking forward to?',
+  'What did you learn today?', 'What drained your energy today, and what restored it?', 'Describe a moment today you want to remember.', 'What would make tomorrow great?',
+  'What is one kind thing you did, or someone did for you?', 'Where did you feel most like yourself today?', 'What is on your mind that you can let go of?', 'What are you proud of this week?',
+  'What is a challenge you handled better than before?', 'What does rest look like for you this week?', 'Which place made you feel calm recently?', 'What is a habit you want to grow?',
+  'What made you laugh recently?', 'What is something beautiful you noticed today?', 'What do you need more of right now?', 'What do you need less of right now?',
+  'Write a short thank-you note to your past self.', 'What would you tell a friend who had your day?', 'What is one thing you can do tomorrow to care for yourself?', 'What surprised you today?',
+  'What is a small luxury you enjoyed lately?', 'Who would you like to reconnect with?', 'What is a goal that excites you, and why?', 'What song, book or show matched your mood today?',
+  'What is something you forgave yourself for?', 'Describe your perfect slow morning.', 'What did you do today that future you will thank you for?', 'What are three things in your home you love?',
+  'When did you feel brave recently?', 'What is a worry, and what is one step to shrink it?', 'What made today different from yesterday?', 'Which of your strengths showed up today?',
+  'What tasted good today?', 'What would you like to remember about this season of life?', 'What boundary helped you this week?', 'What are you curious about lately?',
+];
+function lifePrompt(k) { let hsh = 0; for (const ch of str(k)) hsh = (hsh * 31 + ch.charCodeAt(0)) >>> 0; return LIFE_PROMPTS[hsh % LIFE_PROMPTS.length]; }
+const LIFE_MOODS = ['😄', '🙂', '😐', '😕', '😣', '🥰', '😴', '🤒'];
+function wLJournal(b) {
+  const d = b.data = obj(b.data); d.entries = obj(d.entries);
+  const vs = VS[b.id] = VS[b.id] || { k: todayIso() };
+  const k = vs.k; const day = parseIso(k); const isToday = k === todayIso();
+  const e0 = obj(d.entries[k]);
+  const ensure = () => (d.entries[k] = obj(d.entries[k]));
+  const tidy = () => { const e = d.entries[k]; if (e && !str(e.text).trim() && !arr(e.grat).some(x => str(x).trim()) && !e.mood) delete d.entries[k]; };
+  const go = n => { vs.k = iso(addDays(day, n)); rerender(b); };
+  const el = h('div', { class: 'w w-journal' });
+  el.append(wHead(b, d, [
+    h('button', { class: 'nav-btn', 'aria-label': 'Previous day', onclick: () => go(-1) }, '‹'),
+    h('b', { text: isToday ? 'Today' : day.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }), style: 'min-width:96px;text-align:center;font-family:var(--font-display)' }),
+    h('button', { class: 'nav-btn', 'aria-label': 'Next day', disabled: isToday ? true : null, style: isToday ? 'opacity:.3' : '', onclick: () => { if (!isToday) go(1); } }, '›'),
+    isToday ? '' : h('button', { class: 'pill-btn', onclick: () => { vs.k = todayIso(); rerender(b); } }, 'Today')]));
+  el.append(h('div', { class: 'l-prompt' }, h('span', { text: '✨' }), h('i', { text: lifePrompt(k) })));
+  const moods = h('div', { class: 'l-jmoods', role: 'group', 'aria-label': 'Mood' }, LIFE_MOODS.map(m => h('button', { class: 'l-jmood' + (e0.mood === m ? ' on' : ''), 'aria-label': 'Mood ' + m, 'aria-pressed': String(e0.mood === m), disabled: S.ro ? true : null, onclick: () => { const e = ensure(); if (e.mood === m) delete e.mood; else e.mood = m; tidy(); commit(b); } }, m)));
+  const grat = h('div', { class: 'l-grat' }, h('b', { text: 'Three good things' }), [0, 1, 2].map(i => lifeField(arr(e0.grat)[i] || '', `${i + 1}.`, v => { const e = ensure(); e.grat = arr(e.grat); e.grat[i] = v.slice(0, 200); tidy(); curDirty(); }, { label: `Good thing ${i + 1}`, max: 200 })));
+  const text = lifeField(str(e0.text), 'Write freely… only people with access to this page can read it.', v => { const e = ensure(); e.text = v.slice(0, 20000); tidy(); curDirty(); }, { area: true, rows: 6, max: 20000, label: 'Journal entry', cls: 'l-jtext' });
+  const auto = () => { text.style.height = 'auto'; text.style.height = Math.min(600, Math.max(130, text.scrollHeight + 2)) + 'px'; };
+  text.addEventListener('input', auto); requestAnimationFrame(auto);
+  el.append(h('div', { class: 'l-jbody' }, h('div', { class: 'l-jmain' }, moods, text), grat));
+  const past = Object.keys(d.entries).filter(x => x !== k && /^\d{4}-\d{2}-\d{2}$/.test(x)).sort().reverse().slice(0, 30);
+  if (past.length) el.append(h('div', { class: 'l-jpast' }, h('span', { class: 'w-sub', text: 'Past entries' }),
+    past.map(x => h('button', { class: 'l-jchip', onclick: () => { vs.k = x; rerender(b); } }, `${obj(d.entries[x]).mood || '📝'} ${parseIso(x).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`))));
+  return el;
+}
+
+/* ---------- AI context for these blocks ---------- */
+function lifePageText(b, lines) {
+  const d = obj(b.data);
+  switch (b.type) {
+    case 'grocery': { const its = arr(d.items); lines.push(`[Grocery list] To buy: ${its.filter(x => !x.got).map(x => (x.qty ? x.qty + ' ' : '') + str(x.name)).join('; ') || '(nothing)'}${its.some(x => x.got) ? ` | Bought: ${its.filter(x => x.got).map(x => str(x.name)).join('; ')}` : ''}`); break; }
+    case 'meals': { lines.push('[Meal planner]'); const ks = Object.keys(obj(d.days)).sort().slice(-14); for (const k of ks) { const day = obj(d.days[k]); const parts = LIFE_MEALS.filter(([m]) => obj(day[m]).text).map(([m, n]) => `${n}: ${str(obj(day[m]).text)}`); if (parts.length) lines.push(`  ${k}: ${parts.join('; ')}`); } break; }
+    case 'goals': lines.push(`[Goals] ${arr(d.goals).map(g => `${str(g.title)} (${Math.round(lifePct(g) * 100)}%${g.due ? ', due ' + g.due : ''})`).join('; ') || '(none)'}`); break;
+    case 'countdown': lines.push(`[Countdowns] ${arr(d.events).map(ev => { const nx = lifeNextDate(ev); return `${str(ev.name)}: ${nx ? iso(nx) : '?'}`; }).join('; ') || '(none)'}`); break;
+    case 'wellness': { const days = [...Array(7)].map((_, i) => iso(addDays(new Date(), i - 6))); lines.push(`[Water & sleep, last 7 days] ${days.map(k => `${k}: ${num(obj(d.water)[k])} glasses, ${obj(d.sleep)[k] ?? '?'} h sleep`).join('; ')}`); break; }
+    case 'journal': lines.push(`[Journal: ${Object.keys(obj(d.entries)).length} entries, kept private from the AI]`); break;
+  }
+}
+
+/* ================= Media blocks: bookmark, image, file, embed ================= */
+const FL_MAX = 50 * 1024 * 1024;
+const flSignCache = new Map(); // path|download → { url, exp }
+const flBusy = new Map();      // block id → status text while uploading / fetching
+function flNormUrl(raw) {
+  let s = str(raw).trim(); if (!s) return null;
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(s)) s = 'https://' + s;
+  try { const u = new URL(s); return /^https?:$/.test(u.protocol) && u.hostname.includes('.') ? u : null; } catch (e) { return null; }
+}
+const flHttps = u => typeof u === 'string' && u.length < 2000 && /^https:\/\/[^\s"'<>\\]+$/.test(u);
+function flSize(n) { n = num(n); return n < 1024 ? n + ' B' : n < 1048576 ? (n / 1024).toFixed(n < 10240 ? 1 : 0) + ' KB' : (n / 1048576).toFixed(1) + ' MB'; }
+function flExt(name) { const m = /\.([a-z0-9]{1,8})$/i.exec(str(name)); return m ? m[1].toLowerCase() : ''; }
+async function flSigned(path, download) {
+  const k = path + '|' + (download || ''); const c = flSignCache.get(k);
+  if (c && c.exp > Date.now() + 60e3) return c.url;
+  if (!SB) throw new Error('Sign in to see files.');
+  const { data, error } = await SB.storage.from('files').createSignedUrl(path, 3600, download ? { download } : undefined);
+  if (error || !data) throw new Error(/not found/i.test(error && error.message || '') ? 'This file was removed.' : "Couldn't open this file.");
+  flSignCache.set(k, { url: data.signedUrl, exp: Date.now() + 3600e3 });
+  return data.signedUrl;
+}
+async function flUpload(file, isImage) {
+  if (!SB || !W) throw new Error('Sign in to upload files.');
+  if (!file) throw new Error('Pick a file first.');
+  if (file.size > FL_MAX) throw new Error(`That file is ${flSize(file.size)}. The limit is 50 MB.`);
+  let blob = file, ext = flExt(file.name) || 'bin', type = file.type || 'application/octet-stream';
+  if (isImage) {
+    if (!/^image\//.test(file.type)) throw new Error('Pick an image file (JPG, PNG, WebP or GIF).');
+    const keep = (file.type === 'image/gif' && file.size < 4.5e6) || (/image\/(png|webp)/.test(file.type) && file.size < 1.5e6);
+    if (!keep) { blob = await shrinkImage(file, 2400, 0.86); ext = 'jpg'; type = 'image/jpeg'; }
+    else ext = file.type === 'image/gif' ? 'gif' : file.type === 'image/png' ? 'png' : 'webp';
+  }
+  const path = `${W}/${uid('f')}.${ext.replace(/[^a-z0-9]/g, '') || 'bin'}`;
+  const { error } = await SB.storage.from('files').upload(path, blob, { contentType: type, upsert: false });
+  if (error) throw new Error(/bucket|not found/i.test(error.message) ? 'File uploads are not switched on yet. Run files.sql in Supabase first.' : /row-level|policy|unauthor/i.test(error.message) ? "You don't have permission to upload here." : /size|large/i.test(error.message) ? 'That file is too big.' : error.message);
+  return { path, size: blob.size, mime: type };
+}
+function flDropZone(el, onFile) {
+  el.addEventListener('dragover', e => { if (S.ro || !e.dataTransfer || ![...e.dataTransfer.types].includes('Files')) return; e.preventDefault(); e.stopPropagation(); el.classList.add('over'); });
+  el.addEventListener('dragleave', e => { if (!el.contains(e.relatedTarget)) el.classList.remove('over'); });
+  el.addEventListener('drop', e => { if (!e.dataTransfer || !e.dataTransfer.files.length) return; e.preventDefault(); e.stopPropagation(); el.classList.remove('over'); onFile(e.dataTransfer.files[0]); });
+}
+function flUrlForm(ph, btnLabel, onUrl) {
+  const inp = h('input', { class: 'field', placeholder: ph, 'aria-label': ph });
+  const go = () => { const v = inp.value.trim(); if (v) onUrl(v); };
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(); } e.stopPropagation(); });
+  return h('div', { class: 'fl-row' }, inp, h('button', { class: 'btn', onclick: go }, btnLabel));
+}
+function flStatus(b) {
+  const s = flBusy.get(b.id); if (!s) return '';
+  return h('div', { class: 'fl-status' + (s.err ? ' err' : '') }, h('span', { text: s.text }), s.action ? h('button', { class: 'pill-btn', onclick: s.action.fn }, s.action.label) : '');
+}
+function flSetBusy(b, text, err, action) { if (text) flBusy.set(b.id, { text, err, action }); else flBusy.delete(b.id); const nb = blockById(b.id); if (nb) rerender(nb); }
+function flFresh(b) { return blockById(b.id) || b; }
+
+/* ---------- Bookmark ---------- */
+async function bmFetch(b, raw) {
+  const u = flNormUrl(raw);
+  if (!u) { flSetBusy(b, 'That doesn’t look like a web link. Paste the full link, like https://example.com', true); return; }
+  flSetBusy(b, 'Getting the link preview…');
+  let info = {};
+  try {
+    const { data, error } = await SB.functions.invoke('link-preview', { body: { url: u.toString() } });
+    if (error) { let m = {}; try { m = await error.context.json(); } catch (e2) {} throw new Error(m.message || 'Preview unavailable'); }
+    info = obj(data);
+  } catch (e) { info = { failed: true }; }
+  const nb = flFresh(b);
+  nb.data = { url: u.toString(), title: str(info.title).slice(0, 300) || u.hostname.replace(/^www\./, ''), description: str(info.description).slice(0, 600), image: flHttps(info.image) ? info.image : '', favicon: flHttps(info.favicon) ? info.favicon : '', siteName: str(info.siteName).slice(0, 120) || u.hostname.replace(/^www\./, ''), at: Date.now(), plain: !!info.failed };
+  flBusy.delete(b.id); commit(nb);
+}
+function wBookmark(b) {
+  const d = b.data = obj(b.data);
+  const el = h('div', { class: 'fl-bookmark' });
+  const u = flNormUrl(d.url);
+  if (!u) {
+    if (S.ro) return h('div', { class: 'fl-empty', text: 'Empty bookmark' });
+    el.append(h('div', { class: 'fl-empty' }, h('div', { class: 'fl-hint', text: '🔖 Paste a link to save it as a card' }), flUrlForm('https://…', 'Add bookmark', v => bmFetch(b, v)), flStatus(b)));
+    return el;
+  }
+  const img = flHttps(d.image) ? h('img', { alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }) : null;
+  if (img) { img.src = d.image; img.onerror = () => img.parentElement && img.parentElement.remove(); }
+  const fav = flHttps(d.favicon) ? h('img', { class: 'fl-fav', alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }) : null;
+  if (fav) { fav.src = d.favicon; fav.onerror = () => fav.replaceWith(h('span', { class: 'fl-fav', text: '🔗' })); }
+  const card = h('a', { class: 'fl-card', target: '_blank', rel: 'noopener noreferrer' },
+    h('div', { class: 'fl-card-txt' },
+      h('div', { class: 'fl-card-t', text: str(d.title) || u.hostname }),
+      d.description ? h('div', { class: 'fl-card-d', text: str(d.description) }) : '',
+      h('div', { class: 'fl-card-u' }, fav || h('span', { class: 'fl-fav', text: '🔗' }), h('span', { text: (str(d.siteName) ? d.siteName + ' · ' : '') + u.hostname.replace(/^www\./, '') }))),
+    img ? h('div', { class: 'fl-card-img' }, img) : '');
+  card.href = u.toString();
+  el.append(card);
+  if (!S.ro) el.append(h('div', { class: 'fl-tools' },
+    h('button', { class: 'mini-x', title: 'Refresh preview', 'aria-label': 'Refresh preview', onclick: () => bmFetch(b, d.url) }, '↻'),
+    h('button', { class: 'mini-x', title: 'Change link', 'aria-label': 'Change link', onclick: () => { b.data = {}; commit(b); } }, '✎')));
+  el.append(flStatus(b));
+  return el;
+}
+
+/* ---------- Image ---------- */
+async function flImageUpload(b, file) {
+  try {
+    flSetBusy(b, 'Uploading…');
+    const r = await flUpload(file, true);
+    const nb = flFresh(b);
+    nb.data = { ...obj(nb.data), src: 'files', path: r.path, url: '', name: str(file.name).slice(0, 200) };
+    flBusy.delete(b.id); commit(nb);
+  } catch (e) { flSetBusy(b, e.message, true); }
+}
+function flImgView(src, caption) {
+  const img = h('img', { class: 'fl-big', alt: str(caption) || 'Image' }); img.src = src;
+  openModal(str(caption) || 'Image', h('div', { class: 'fl-bigwrap' }, img), true);
+}
+function wImage(b) {
+  const d = b.data = obj(b.data);
+  const has = (d.src === 'files' && str(d.path)) || (d.src === 'url' && flHttps(d.url));
+  if (!has) {
+    if (S.ro) return h('div', { class: 'fl-empty', text: 'Empty image' });
+    const fid = 'img-' + b.id;
+    const file = h('input', { type: 'file', accept: 'image/*', hidden: true, id: fid });
+    file.addEventListener('change', () => { if (file.files[0]) flImageUpload(b, file.files[0]); });
+    const zone = h('div', { class: 'fl-empty fl-drop' },
+      h('div', { class: 'fl-hint', text: '🖼️ Add an image' }),
+      h('div', { class: 'fl-row' }, h('label', { class: 'btn', for: fid }, 'Upload'), h('span', { class: 'w-sub', text: 'or drop a picture here' }), file),
+      flUrlForm('…or paste an image link (https://)', 'Use link', v => { const u = flNormUrl(v); if (!u || !flHttps(u.toString())) { flSetBusy(b, 'Paste a full https:// image link.', true); return; } flBusy.delete(b.id); b.data = { ...d, src: 'url', url: u.toString() }; commit(b); }),
+      flStatus(b));
+    flDropZone(zone, f => flImageUpload(b, f));
+    return zone;
+  }
+  const width = ['s', 'm', 'f'].includes(d.width) ? d.width : 'f';
+  const img = h('img', { class: 'fl-img', alt: str(d.caption) || 'Image', loading: 'lazy', referrerpolicy: 'no-referrer' });
+  const fig = h('figure', { class: 'fl-fig w-' + width });
+  const wrap = h('div', { class: 'fl-imgwrap', role: 'button', tabindex: '0', 'aria-label': 'View image larger' }, img);
+  const open = () => { if (img.src) flImgView(img.src, d.caption); };
+  wrap.addEventListener('click', open); wrap.addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
+  if (d.src === 'url') img.src = d.url;
+  else { wrap.classList.add('loading'); flSigned(d.path).then(u => { img.src = u; wrap.classList.remove('loading'); }, e => { wrap.classList.remove('loading'); wrap.replaceChildren(h('div', { class: 'fl-status err', text: e.message })); }); }
+  img.onerror = () => { if (d.src === 'files') flSignCache.delete(d.path + '|'); };
+  fig.append(wrap);
+  if (!S.ro) {
+    const cap = editableText(str(d.caption), v => { d.caption = v.slice(0, 300); curDirty(); }, 'fl-cap');
+    cap.setAttribute('data-ph', 'Add a caption');
+    fig.append(cap);
+    fig.append(h('div', { class: 'fl-tools' },
+      h('div', { class: 'seg fl-seg', role: 'group', 'aria-label': 'Image width' }, [['s', 'S'], ['m', 'M'], ['f', 'Full']].map(([k, l]) => h('button', { class: width === k ? 'on' : '', title: { s: 'Small', m: 'Medium', f: 'Full width' }[k], onclick: () => { d.width = k; commit(b); } }, l))),
+      h('button', { class: 'mini-x', title: 'Replace image', 'aria-label': 'Replace image', onclick: () => { b.data = { caption: d.caption, width: d.width }; commit(b); } }, '✎')));
+  } else if (d.caption) fig.append(h('figcaption', { class: 'fl-cap', text: str(d.caption) }));
+  return fig;
+}
+
+/* ---------- File ---------- */
+const FL_ICONS = [[/^(pdf)$/, '📕'], [/^(docx?|odt|rtf|txt|md|pages)$/, '📝'], [/^(xlsx?|csv|ods|numbers)$/, '📊'], [/^(pptx?|odp|key)$/, '📽️'], [/^(zip|rar|7z|gz|tar)$/, '🗜️'], [/^(jpe?g|png|gif|webp|heic|svg)$/, '🖼️'], [/^(mp3|wav|m4a|aac|ogg|flac)$/, '🎵'], [/^(mp4|mov|avi|mkv|webm)$/, '🎬']];
+function flIcon(name) { const e = flExt(name); const m = FL_ICONS.find(([re]) => re.test(e)); return m ? m[1] : '📄'; }
+async function flFileUpload(b, file) {
+  try {
+    flSetBusy(b, `Uploading ${str(file.name)}…`);
+    const r = await flUpload(file, false);
+    const nb = flFresh(b);
+    nb.data = { path: r.path, name: str(file.name).slice(0, 200) || 'File', size: r.size, mime: r.mime, at: Date.now() };
+    flBusy.delete(b.id); commit(nb);
+  } catch (e) { flSetBusy(b, e.message, true); }
+}
+function wFile(b) {
+  const d = b.data = obj(b.data);
+  if (!str(d.path)) {
+    if (S.ro) return h('div', { class: 'fl-empty', text: 'No file yet' });
+    const fid = 'file-' + b.id;
+    const file = h('input', { type: 'file', hidden: true, id: fid });
+    file.addEventListener('change', () => { if (file.files[0]) flFileUpload(b, file.files[0]); });
+    const zone = h('div', { class: 'fl-empty fl-drop' }, h('div', { class: 'fl-hint', text: '📎 Attach a file (up to 50 MB)' }),
+      h('div', { class: 'fl-row' }, h('label', { class: 'btn', for: fid }, 'Choose file'), h('span', { class: 'w-sub', text: 'or drop it here' }), file), flStatus(b));
+    flDropZone(zone, f => flFileUpload(b, f));
+    return zone;
+  }
+  const dl = async (asDownload) => {
+    try { const u = await flSigned(d.path, asDownload ? (str(d.name) || 'file') : ''); const a = h('a', { target: '_blank', rel: 'noopener noreferrer' }); a.href = u; document.body.append(a); a.click(); a.remove(); }
+    catch (e) { toast(e.message); }
+  };
+  return h('div', { class: 'fl-file' },
+    h('span', { class: 'fl-ficon', text: flIcon(d.name), 'aria-hidden': 'true' }),
+    h('button', { class: 'fl-fname', title: 'Open', onclick: () => dl(false) }, h('b', { text: str(d.name) || 'File' }), h('small', { text: flSize(d.size) + (d.at ? ' · added ' + timeAgo(d.at) : '') })),
+    h('button', { class: 'pill-btn', onclick: () => dl(true) }, '⬇ Download'),
+    S.ro ? '' : mini('Remove file', () => confirmModal('Remove this file?', 'It is deleted from your storage too.', 'Remove', async () => {
+      const path = d.path; b.data = {}; commit(b);
+      try { await SB.storage.from('files').remove([path]); } catch (e) {}
+    })));
+}
+
+/* ---------- Embed ---------- */
+function embConvert(raw) {
+  const u = flNormUrl(raw); if (!u || u.protocol !== 'https:' && u.protocol !== 'http:') return null;
+  const host = u.hostname.toLowerCase().replace(/^www\./, '').replace(/^m\./, '');
+  const p = u.pathname; const q = u.searchParams; let m;
+  const yt = id => /^[\w-]{6,20}$/.test(id) ? id : null;
+  const ytStart = () => { const t = q.get('t') || q.get('start'); if (!t) return ''; const mm = /^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s?)?$/.exec(t); const s = mm ? (+mm[1] || 0) * 3600 + (+mm[2] || 0) * 60 + (+mm[3] || 0) : 0; return s ? '?start=' + s : ''; };
+  // YouTube
+  if (host === 'youtube.com' || host === 'music.youtube.com' || host === 'youtube-nocookie.com') {
+    let id = null;
+    if (p === '/watch') id = yt(q.get('v') || '');
+    else if ((m = /^\/(?:shorts|embed|live|v)\/([\w-]+)/.exec(p))) id = yt(m[1]);
+    if (id) return { kind: 'youtube', label: 'YouTube', src: `https://www.youtube-nocookie.com/embed/${id}${ytStart()}`, h: 'm' };
+    if (p === '/playlist' && /^[\w-]+$/.test(q.get('list') || '')) return { kind: 'youtube', label: 'YouTube', src: `https://www.youtube-nocookie.com/embed/videoseries?list=${q.get('list')}`, h: 'm' };
+    return null;
+  }
+  if (host === 'youtu.be') { const id = yt(p.slice(1).split('/')[0]); return id ? { kind: 'youtube', label: 'YouTube', src: `https://www.youtube-nocookie.com/embed/${id}${ytStart()}`, h: 'm' } : null; }
+  // Vimeo
+  if (host === 'vimeo.com' || host === 'player.vimeo.com') {
+    m = /^\/(?:video\/)?(\d{5,12})(?:\/([0-9a-f]{6,20}))?/.exec(p);
+    if (m) { const hsh = m[2] || q.get('h'); return { kind: 'vimeo', label: 'Vimeo', src: `https://player.vimeo.com/video/${m[1]}${hsh && /^[0-9a-f]+$/.test(hsh) ? '?h=' + hsh : ''}`, h: 'm' }; }
+    return null;
+  }
+  // Loom
+  if (host === 'loom.com' && (m = /^\/(?:share|embed)\/([0-9a-f]{16,40})/.exec(p))) return { kind: 'loom', label: 'Loom', src: `https://www.loom.com/embed/${m[1]}`, h: 'm' };
+  // Spotify
+  if (host === 'open.spotify.com' && (m = /^\/(?:intl-[a-z-]+\/)?(?:embed\/)?(track|album|playlist|episode|show|artist)\/([A-Za-z0-9]{10,40})/.exec(p)))
+    return { kind: 'spotify', label: 'Spotify', src: `https://open.spotify.com/embed/${m[1]}/${m[2]}`, h: m[1] === 'track' || m[1] === 'episode' ? 'xs' : 'm' };
+  // Google Docs, Sheets, Slides, Forms, Drive
+  if (host === 'docs.google.com') {
+    if ((m = /^\/document\/d\/([\w-]{20,})/.exec(p))) return { kind: 'gdoc', label: 'Google Docs', src: `https://docs.google.com/document/d/${m[1]}/preview`, h: 'l' };
+    if ((m = /^\/spreadsheets\/d\/(e\/)?([\w-]{20,})/.exec(p))) return { kind: 'gsheet', label: 'Google Sheets', src: m[1] ? `https://docs.google.com/spreadsheets/d/e/${m[2]}/pubhtml?widget=true&headers=false` : `https://docs.google.com/spreadsheets/d/${m[2]}/preview`, h: 'l' };
+    if ((m = /^\/presentation\/d\/(e\/)?([\w-]{20,})/.exec(p))) return { kind: 'gslides', label: 'Google Slides', src: `https://docs.google.com/presentation/d/${m[1] ? 'e/' : ''}${m[2]}/embed`, h: 'm' };
+    if ((m = /^\/forms\/d\/(e\/)?([\w-]{20,})/.exec(p))) return { kind: 'gform', label: 'Google Forms', src: `https://docs.google.com/forms/d/${m[1] ? 'e/' : ''}${m[2]}/viewform?embedded=true`, h: 'l' };
+    return null;
+  }
+  if (host === 'drive.google.com' && (m = /^\/file\/d\/([\w-]{20,})/.exec(p))) return { kind: 'gdrive', label: 'Google Drive', src: `https://drive.google.com/file/d/${m[1]}/preview`, h: 'l' };
+  // Google Maps
+  if ((host === 'google.com' || /^google\.[a-z.]{2,6}$/.test(host) || host === 'maps.google.com') && (p.startsWith('/maps') || host === 'maps.google.com')) {
+    if (p.startsWith('/maps/embed') && q.get('pb')) return { kind: 'gmaps', label: 'Google Maps', src: `https://www.google.com/maps/embed?pb=${encodeURIComponent(q.get('pb'))}`, h: 'm' };
+    let query = q.get('q') || q.get('query') || '';
+    if (!query && (m = /\/maps\/(?:place|search)\/([^/]+)/.exec(p))) query = decodeURIComponent(m[1].replace(/\+/g, ' '));
+    if (!query && (m = /@(-?\d+\.\d+),(-?\d+\.\d+)/.exec(p))) query = `${m[1]},${m[2]}`;
+    if (!query && (m = /\/maps\/dir\/[^/]*\/([^/]+)/.exec(p))) query = decodeURIComponent(m[1].replace(/\+/g, ' '));
+    if (query) return { kind: 'gmaps', label: 'Google Maps', src: `https://www.google.com/maps?q=${encodeURIComponent(query.slice(0, 200))}&output=embed`, h: 'm' };
+    return null;
+  }
+  // Canva (design must be shared with “Anyone with the link”)
+  if (host === 'canva.com' && (m = /^\/design\/([A-Za-z0-9_-]{8,})(?:\/([A-Za-z0-9_-]{6,}))?\/(view|watch|edit)/.exec(p)))
+    return { kind: 'canva', label: 'Canva', src: `https://www.canva.com/design/${m[1]}/${m[2] ? m[2] + '/' : ''}view?embed`, h: 'm' };
+  // Figma
+  if (host === 'figma.com' && /^\/(file|design|proto|board|slides)\/[A-Za-z0-9]{10,}/.test(p))
+    return { kind: 'figma', label: 'Figma', src: `https://www.figma.com/embed?embed_host=pugad&url=${encodeURIComponent(u.toString())}`, h: 'l' };
+  return null;
+}
+const EMB_H = { xs: 152, s: 240, m: 400, l: 620 };
+const EMB_ALLOW = /^https:\/\/(www\.youtube-nocookie\.com|player\.vimeo\.com|www\.loom\.com|open\.spotify\.com|docs\.google\.com|drive\.google\.com|www\.google\.com|www\.canva\.com|www\.figma\.com)\//;
+function wEmbed(b) {
+  const d = b.data = obj(b.data);
+  const conv = d.url ? embConvert(d.url) : null; // re-derived every time: the saved src is never trusted
+  if (!conv || !EMB_ALLOW.test(conv.src)) {
+    if (S.ro) return h('div', { class: 'fl-empty', text: 'Empty embed' });
+    const el = h('div', { class: 'fl-empty' }, h('div', { class: 'fl-hint', text: '🎬 Embed a video, map, doc or design' }),
+      h('div', { class: 'w-sub', text: 'Works with YouTube, Vimeo, Loom, Spotify, Google Maps, Docs, Sheets, Slides, Forms and Drive, Canva and Figma.' }),
+      flUrlForm('Paste a link', 'Embed', v => {
+        const c = embConvert(v);
+        if (c) { flBusy.delete(b.id); b.data = { url: flNormUrl(v).toString(), h: c.h }; commit(b); return; }
+        if (!flNormUrl(v)) { flSetBusy(b, 'That doesn’t look like a link.', true); return; }
+        flSetBusy(b, "That site can't be embedded here.", true, { label: '🔖 Save it as a bookmark instead', fn: () => { const nb = flFresh(b); nb.type = 'bookmark'; nb.data = {}; flBusy.delete(b.id); commit(nb); bmFetch(nb, v); } });
+      }), flStatus(b));
+    return el;
+  }
+  const hk = EMB_H[d.h] ? d.h : conv.h;
+  const fr = h('iframe', { class: 'emb-frame', title: conv.label + ' embed', loading: 'lazy', referrerpolicy: 'strict-origin-when-cross-origin', allowfullscreen: true,
+    allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; gyroscope; picture-in-picture',
+    sandbox: 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-presentation' + (conv.kind === 'gform' ? ' allow-forms' : '') });
+  fr.style.height = EMB_H[hk] + 'px';
+  fr.src = conv.src;
+  const open = h('a', { class: 'pill-btn', target: '_blank', rel: 'noopener noreferrer' }, '↗ Open'); open.href = flNormUrl(d.url).toString();
+  return h('div', { class: 'emb' },
+    h('div', { class: 'emb-box emb-' + conv.kind }, fr),
+    h('div', { class: 'fl-tools' },
+      h('span', { class: 'w-sub', text: conv.label }), open,
+      S.ro ? '' : h('div', { class: 'seg fl-seg', role: 'group', 'aria-label': 'Height' }, [['s', 'S'], ['m', 'M'], ['l', 'L']].map(([k, l]) => h('button', { class: hk === k ? 'on' : '', onclick: () => { d.h = k; commit(b); } }, l))),
+      S.ro ? '' : h('button', { class: 'mini-x', title: 'Change link', 'aria-label': 'Change link', onclick: () => { b.data = {}; commit(b); } }, '✎')),
+    conv.kind === 'canva' ? h('div', { class: 'w-sub', text: 'Blank? In Canva, Share → set the link to “Anyone with the link”.' }) : '',
+    /^g(doc|sheet|slides|drive)$/.test(conv.kind) ? h('div', { class: 'w-sub', text: 'Shows to people who can open the file in Google.' }) : '');
+}
+
+/* ================= Private password vault (encrypted on this device) ================= */
+const VAULT = new Map(); // block id → { key, entries, ct, salt, last }
+const VAULT_IDLE = 5 * 60e3;
+const VAULT_ITER = 600000;
+const vaultEnc = new TextEncoder(), vaultDec = new TextDecoder();
+const vaultB64 = u8 => { let s = ''; const a = new Uint8Array(u8); for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); };
+const vaultUnB64 = s => Uint8Array.from(atob(str(s)), c => c.charCodeAt(0));
+async function vaultKey(pw, saltB64, iter) {
+  const base = await crypto.subtle.importKey('raw', vaultEnc.encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', hash: 'SHA-256', salt: vaultUnB64(saltB64), iterations: iter }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function vaultSeal(key, value) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, vaultEnc.encode(JSON.stringify(value)));
+  return { iv: vaultB64(iv), ct: vaultB64(ct) };
+}
+async function vaultOpen(key, box) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: vaultUnB64(box.iv) }, key, vaultUnB64(box.ct));
+  return JSON.parse(vaultDec.decode(pt));
+}
+function vaultScore(pw) {
+  pw = str(pw); if (!pw) return 0;
+  let s = Math.min(4, Math.floor(pw.length / 4)); const kinds = [/[a-z]/, /[A-Z]/, /\d/, /[^A-Za-z0-9]/].filter(r => r.test(pw)).length;
+  s += kinds - 1; if (/^(.)\1+$/.test(pw) || /^(password|qwerty|123456|iloveyou|admin|letmein)/i.test(pw)) s = 0;
+  return Math.max(0, Math.min(4, Math.round(s * 4 / 7)));
+}
+function vaultMeter(inp) {
+  const bar = h('div', { class: 'vault-meter' }, h('i')); const lbl = h('span', { class: 'w-sub' });
+  const upd = () => { const sc = vaultScore(inp.value); bar.dataset.s = sc; bar.firstChild.style.width = (inp.value ? 18 + sc * 20.5 : 0) + '%'; lbl.textContent = inp.value ? ['Very weak', 'Weak', 'Okay', 'Good', 'Strong'][sc] : 'Use 12+ characters. A short sentence works well.'; };
+  inp.addEventListener('input', upd); upd();
+  return h('div', { class: 'vault-meter-row' }, bar, lbl);
+}
+function vaultGen(len = 18, symbols = true) {
+  const sets = ['abcdefghijkmnopqrstuvwxyz', 'ABCDEFGHJKLMNPQRSTUVWXYZ', '23456789', symbols ? '!@#$%^&*-_=+?' : ''].filter(Boolean);
+  const all = sets.join(''); const pickR = n => { const lim = 256 - (256 % n); const b = new Uint8Array(1); do crypto.getRandomValues(b); while (b[0] >= lim); return b[0] % n; };
+  const out = sets.map(s => s[pickR(s.length)]); while (out.length < len) out.push(all[pickR(all.length)]);
+  for (let i = out.length - 1; i > 0; i--) { const j = pickR(i + 1); [out[i], out[j]] = [out[j], out[i]]; }
+  return out.join('');
+}
+function vaultPw(ph, auto, id) {
+  const inp = h('input', { class: 'field', type: 'password', placeholder: ph, 'aria-label': ph, autocomplete: auto, spellcheck: 'false', autocapitalize: 'off', id: id || null });
+  const eye = h('button', { class: 'mini-x vault-eye', type: 'button', 'aria-label': 'Show password', title: 'Show', onclick: () => { const on = inp.type === 'password'; inp.type = on ? 'text' : 'password'; eye.textContent = on ? '🙈' : '👁'; eye.setAttribute('aria-label', on ? 'Hide password' : 'Show password'); } }, '👁');
+  return { inp, el: h('div', { class: 'vault-pw' }, inp, eye) };
+}
+const vaultPrivate = () => !!S.current && S.current.scope === 'private';
+function vaultTouch(id) { const m = VAULT.get(id); if (m) m.last = Date.now(); }
+function vaultLock(id, quiet) { const m = VAULT.get(id); if (!m) return; VAULT.delete(id); const b = blockById(id); if (b && blockElById(id)) rerender(b); if (!quiet) toast('Vault locked 🔒'); }
+function vaultLockAll() { for (const id of [...VAULT.keys()]) vaultLock(id, true); }
+let vaultHiddenAt = 0, vaultTimerOn = false;
+function vaultStartTimer() {
+  if (vaultTimerOn) return; vaultTimerOn = true;
+  setInterval(() => { for (const [id, m] of [...VAULT]) if (Date.now() - m.last > VAULT_IDLE || !blockElById(id) || !vaultPrivate()) vaultLock(id, !blockElById(id)); }, 15000);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) vaultHiddenAt = Date.now(); else if (vaultHiddenAt && Date.now() - vaultHiddenAt > VAULT_IDLE) vaultLockAll(); });
+}
+async function vaultSave(b) {
+  const m = VAULT.get(b.id); if (!m) return;
+  const box = await vaultSeal(m.key, { entries: m.entries });
+  const d = b.data = obj(b.data);
+  d.iv = box.iv; d.ct = box.ct; m.ct = box.ct; m.last = Date.now();
+  commit(b);
+}
+function vaultCreate(b) {
+  const p1 = vaultPw('Master password', 'new-password'), p2 = vaultPw('Type it again', 'new-password');
+  const ok = h('input', { type: 'checkbox', id: 'vaultAck' });
+  const note = h('div', { class: 'w-sub' });
+  const btn = h('button', { class: 'btn' }, 'Create vault');
+  btn.onclick = async () => {
+    const a = p1.inp.value, c = p2.inp.value;
+    if (a.length < 10) { note.textContent = 'Use at least 10 characters.'; note.classList.add('err'); return; }
+    if (vaultScore(a) < 2) { note.textContent = 'That password is too easy to guess. Try a longer one, like a short sentence.'; note.classList.add('err'); return; }
+    if (a !== c) { note.textContent = 'The two passwords don’t match.'; note.classList.add('err'); return; }
+    if (!ok.checked) { note.textContent = 'Please tick the box to confirm you understand.'; note.classList.add('err'); return; }
+    btn.disabled = true; btn.textContent = 'Creating…';
+    try {
+      const salt = vaultB64(crypto.getRandomValues(new Uint8Array(16)));
+      const key = await vaultKey(a, salt, VAULT_ITER);
+      const check = await vaultSeal(key, 'pugad-vault-ok');
+      const nb = flFresh(b);
+      nb.data = { title: str(obj(nb.data).title) || 'Password vault', v: 1, salt, iter: VAULT_ITER, check };
+      VAULT.set(b.id, { key, entries: [], salt, last: Date.now() });
+      p1.inp.value = ''; p2.inp.value = '';
+      closeModal(); vaultStartTimer(); await vaultSave(nb);
+      toast('Vault created and unlocked 🔐');
+    } catch (e) { btn.disabled = false; btn.textContent = 'Create vault'; note.textContent = "Couldn't create the vault on this browser."; note.classList.add('err'); }
+  };
+  openModal('Create your password vault', h('div', { class: 'vault-form' },
+    h('p', { class: 'w-sub', style: 'margin:0', text: 'Your vault is locked with a master password that only you know. Passwords are encrypted on this device before saving, so nobody else can read them, not even the Pugad owner.' }),
+    p1.el, vaultMeter(p1.inp), p2.el,
+    h('label', { class: 'vault-ack', for: 'vaultAck' }, ok, h('span', { text: 'I understand: if I forget this password, nobody can recover my vault.' })),
+    note, h('div', { class: 'btns' }, btn)));
+  setTimeout(() => p1.inp.focus(), 30);
+}
+function vaultUnlock(b) {
+  const d = obj(b.data);
+  const p = vaultPw('Master password', 'current-password');
+  const note = h('div', { class: 'w-sub' });
+  const btn = h('button', { class: 'btn' }, 'Unlock');
+  const go = async () => {
+    if (!p.inp.value) return;
+    btn.disabled = true; btn.textContent = 'Unlocking…'; note.textContent = ''; note.classList.remove('err');
+    try {
+      const key = await vaultKey(p.inp.value, d.salt, num(d.iter, VAULT_ITER));
+      if ((await vaultOpen(key, d.check)) !== 'pugad-vault-ok') throw new Error('bad');
+      const body = d.ct ? await vaultOpen(key, d) : { entries: [] };
+      p.inp.value = '';
+      VAULT.set(b.id, { key, entries: arr(obj(body).entries), ct: d.ct, salt: d.salt, last: Date.now() });
+      vaultStartTimer(); closeModal(); const nb = flFresh(b); rerender(nb);
+    } catch (e) { btn.disabled = false; btn.textContent = 'Unlock'; note.textContent = 'That password is not right.'; note.classList.add('err'); p.inp.select(); }
+  };
+  btn.onclick = go; p.inp.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  openModal('Unlock your vault 🔐', h('div', { class: 'vault-form' }, p.el, note, h('div', { class: 'btns' }, btn)));
+  setTimeout(() => p.inp.focus(), 30);
+}
+function vaultChange(b) {
+  const m = VAULT.get(b.id); if (!m) return;
+  const old = vaultPw('Current master password', 'current-password'), p1 = vaultPw('New master password', 'new-password'), p2 = vaultPw('Type the new one again', 'new-password');
+  const note = h('div', { class: 'w-sub' }); const btn = h('button', { class: 'btn' }, 'Change password');
+  btn.onclick = async () => {
+    const fail = t => { note.textContent = t; note.classList.add('err'); btn.disabled = false; btn.textContent = 'Change password'; };
+    const d = obj(flFresh(b).data);
+    btn.disabled = true; btn.textContent = 'Checking…';
+    try { const k = await vaultKey(old.inp.value, d.salt, num(d.iter, VAULT_ITER)); if ((await vaultOpen(k, d.check)) !== 'pugad-vault-ok') throw 0; } catch (e) { return fail('Your current master password is not right.'); }
+    const a = p1.inp.value;
+    if (a.length < 10 || vaultScore(a) < 2) return fail('Pick a stronger new password (10+ characters).');
+    if (a !== p2.inp.value) return fail('The new passwords don’t match.');
+    const salt = vaultB64(crypto.getRandomValues(new Uint8Array(16)));
+    const key = await vaultKey(a, salt, VAULT_ITER);
+    const nb = flFresh(b);
+    nb.data = { title: str(obj(nb.data).title) || 'Password vault', v: 1, salt, iter: VAULT_ITER, check: await vaultSeal(key, 'pugad-vault-ok') };
+    m.key = key; m.salt = salt;
+    old.inp.value = p1.inp.value = p2.inp.value = '';
+    closeModal(); await vaultSave(nb); toast('Master password changed');
+  };
+  openModal('Change master password', h('div', { class: 'vault-form' }, old.el, p1.el, vaultMeter(p1.inp), p2.el, note, h('div', { class: 'btns' }, btn)));
+}
+async function vaultCopy(text, what) {
+  if (!text) return;
+  try { await navigator.clipboard.writeText(text); } catch (e) { toast('Copy is blocked in this browser.'); return; }
+  toast(`${what} copied. Pugad will try to clear it in 30 seconds.`);
+  setTimeout(async () => { try { if ((await navigator.clipboard.readText()) === text) await navigator.clipboard.writeText(''); } catch (e) {} }, 30000);
+}
+function vaultEdit(b, entry) {
+  const m = VAULT.get(b.id); if (!m) return;
+  const isNew = !entry; const e0 = entry || {};
+  const f = (ph, val, attrs = {}) => { const i = h('input', { class: 'field', placeholder: ph, 'aria-label': ph, spellcheck: 'false', autocomplete: 'off', ...attrs }); i.value = str(val); return i; };
+  const emoji = f('🔑', e0.emoji || '🔑', { maxlength: '8', style: 'width:64px;text-align:center' });
+  const name = f('Name, e.g. Gmail', e0.name, { maxlength: '80' });
+  const user = f('Username or email', e0.username, { maxlength: '200', autocapitalize: 'off' });
+  const pw = vaultPw('Password', 'new-password'); pw.inp.value = str(e0.password);
+  const len = h('input', { type: 'range', min: '10', max: '40', value: '18', 'aria-label': 'Length' }); const lenL = h('span', { class: 'w-sub', text: '18' });
+  const sym = h('input', { type: 'checkbox', checked: true, id: 'vaultSym' });
+  len.addEventListener('input', () => { lenL.textContent = len.value; });
+  const gen = h('button', { class: 'pill-btn', type: 'button', onclick: () => { pw.inp.value = vaultGen(+len.value, sym.checked); pw.inp.type = 'text'; pw.inp.dispatchEvent(new Event('input')); } }, '🎲 Generate');
+  const url = f('Website (optional)', e0.url, { maxlength: '500', inputmode: 'url' });
+  const notes = h('textarea', { class: 'field', rows: '3', placeholder: 'Notes (optional). Encrypted too.', 'aria-label': 'Notes', spellcheck: 'false' }); notes.value = str(e0.notes);
+  const note = h('div', { class: 'w-sub' });
+  const save = async () => {
+    if (!name.value.trim()) { note.textContent = 'Give it a name.'; note.classList.add('err'); return; }
+    const u = url.value.trim() ? flNormUrl(url.value) : null;
+    const rec = { id: e0.id || uid('v'), emoji: emoji.value.trim().slice(0, 8) || '🔑', name: name.value.trim().slice(0, 80), username: user.value.trim().slice(0, 200), password: pw.inp.value.slice(0, 500), url: u ? u.toString() : '', notes: notes.value.slice(0, 2000), updated: Date.now() };
+    if (isNew) m.entries.push(rec); else m.entries = m.entries.map(x => x.id === rec.id ? rec : x);
+    pw.inp.value = ''; closeModal(); await vaultSave(flFresh(b));
+  };
+  openModal(isNew ? 'New login' : 'Edit login', h('div', { class: 'vault-form' },
+    h('div', { class: 'fl-row' }, emoji, name), user, pw.el, vaultMeter(pw.inp),
+    h('div', { class: 'fl-row vault-gen' }, gen, h('span', { class: 'w-sub', text: 'Length' }), len, lenL, h('label', { class: 'switch small', for: 'vaultSym' }, sym, 'Symbols')),
+    url, notes, note,
+    h('div', { class: 'btns' }, !isNew ? h('button', { class: 'btn ghost', onclick: () => confirmModal('Delete this login?', 'It is removed from your vault.', 'Delete', async () => { m.entries = m.entries.filter(x => x.id !== e0.id); await vaultSave(flFresh(b)); }) }, 'Delete') : '', h('button', { class: 'btn', onclick: save }, isNew ? 'Save login' : 'Save'))));
+  setTimeout(() => name.focus(), 30);
+}
+function wVault(b) {
+  const d = b.data = obj(b.data);
+  const el = h('div', { class: 'w w-vault' });
+  const head = [];
+  if (!vaultPrivate()) {
+    el.append(wHead(b, { title: 'Password vault' }), h('div', { class: 'vault-note' }, h('b', { text: '🔒 Only on private pages' }), h('span', { text: 'For safety, the password vault only opens on your Private pages. Move this page to Private, or add a vault on a private page.' })));
+    return el;
+  }
+  const m = VAULT.get(b.id);
+  if (m && d.ct && m.ct !== d.ct) { // changed on another device: reload it
+    vaultOpen(m.key, d).then(body => { m.entries = arr(obj(body).entries); m.ct = d.ct; rerender(flFresh(b)); }, () => vaultLock(b.id));
+  }
+  if (m) head.push(h('button', { class: 'pill-btn', onclick: () => vaultLock(b.id) }, '🔒 Lock'), h('button', { class: 'nav-btn', title: 'Vault settings', 'aria-label': 'Vault settings', onclick: e => openPop(e.currentTarget, menuList([{ n: 'Change master password', i: '🔑', act: () => vaultChange(b) }, { n: 'Lock now', i: '🔒', act: () => vaultLock(b.id) }])) }, '⚙'));
+  if (!d.title) d.title = 'Password vault';
+  el.append(wHead(b, d, head));
+  if (!d.salt || !d.check) {
+    el.append(h('div', { class: 'vault-lock' }, h('div', { class: 'vault-big', text: '🔐' }), h('b', { text: 'Keep your passwords safe' }),
+      h('p', { class: 'w-sub', text: 'Encrypted with a master password only you know. Only you can open it.' }),
+      S.ro ? '' : h('button', { class: 'btn', onclick: () => vaultCreate(b) }, 'Create vault')));
+    return el;
+  }
+  if (!m) {
+    el.append(h('div', { class: 'vault-lock' }, h('div', { class: 'vault-big', text: '🔒' }), h('b', { text: 'Vault locked' }),
+      h('button', { class: 'btn', onclick: () => vaultUnlock(b) }, 'Unlock')));
+    return el;
+  }
+  const q = h('input', { class: 'field', placeholder: 'Search logins', 'aria-label': 'Search logins', autocomplete: 'off', spellcheck: 'false' });
+  const list = h('div', { class: 'vault-list' });
+  const draw = () => {
+    const t = q.value.trim().toLowerCase();
+    const rows = m.entries.filter(x => !t || (str(x.name) + ' ' + str(x.username) + ' ' + str(x.url)).toLowerCase().includes(t)).sort((a, c) => str(a.name).localeCompare(str(c.name)));
+    list.replaceChildren(...rows.map(x => {
+      const pwSpan = h('span', { class: 'vault-pwtxt', text: '••••••••' });
+      let shown = false;
+      const reveal = h('button', { class: 'mini-x', 'aria-label': 'Show password', title: 'Show password', onclick: () => { shown = !shown; pwSpan.textContent = shown ? str(x.password) : '••••••••'; reveal.textContent = shown ? '🙈' : '👁'; vaultTouch(b.id); if (shown) setTimeout(() => { if (shown) reveal.click(); }, 20000); } }, '👁');
+      const site = flNormUrl(x.url);
+      const go = site ? h('a', { class: 'mini-x', title: 'Open website', 'aria-label': 'Open website', target: '_blank', rel: 'noopener noreferrer' }, '↗') : '';
+      if (go) go.href = site.toString();
+      return h('div', { class: 'vault-row' },
+        h('span', { class: 'vault-emo', text: str(x.emoji) || '🔑' }),
+        h('button', { class: 'vault-main', onclick: () => { vaultTouch(b.id); vaultEdit(b, x); } }, h('b', { text: str(x.name) || 'Untitled' }), h('small', { text: str(x.username) || '—' })),
+        h('div', { class: 'vault-pwcell' }, pwSpan, reveal),
+        h('div', { class: 'vault-acts' },
+          x.username ? h('button', { class: 'pill-btn', title: 'Copy username', 'aria-label': 'Copy username for ' + (str(x.name) || 'login'), onclick: () => { vaultTouch(b.id); vaultCopy(x.username, 'Username'); } }, '👤 Copy') : '',
+          h('button', { class: 'pill-btn', title: 'Copy password', 'aria-label': 'Copy password for ' + (str(x.name) || 'login'), onclick: () => { vaultTouch(b.id); vaultCopy(x.password, 'Password'); } }, '🔑 Copy'), go));
+    }));
+    if (!rows.length) list.append(h('div', { class: 'ib-empty', text: m.entries.length ? 'No logins match.' : 'No logins yet. Add your first one.' }));
+  };
+  q.addEventListener('input', () => { vaultTouch(b.id); draw(); });
+  q.addEventListener('keydown', e => e.stopPropagation());
+  el.addEventListener('pointerdown', () => vaultTouch(b.id));
+  draw();
+  el.append(h('div', { class: 'fl-row' }, q, S.ro ? '' : h('button', { class: 'btn', onclick: () => vaultEdit(b, null) }, '+ Add login')), list,
+    h('div', { class: 'w-sub', style: 'font-size:12px', text: `${m.entries.length} login${m.entries.length === 1 ? '' : 's'} · Locks itself after 5 minutes without use.` }));
+  return el;
+}
+
 /* ================= Supabase: sign-in, workspaces, live pages ================= */
 let SB = null, W = null;
 const isAdminRole = () => ['owner', 'admin'].includes(S.role);
@@ -3626,6 +5558,9 @@ function applyWsRow(r) {
   if (!r) return;
   S.meta = { name: str(r.name) || 'Workspace', icon: str(r.icon) || '🐣' };
   if (r.ai_provider) AI.provider = r.ai_provider === 'gemini' ? 'gemini' : 'openai';
+  if ('ai_name' in r) AI.name = str(r.ai_name) || 'Pugad AI';
+  if ('ai_avatar' in r) AI.avatar = r.ai_avatar === 'dragon' ? 'dragon' : 'sparkle';
+  if ('ai_persona' in r) AI.persona = str(r.ai_persona);
   if (r.ai_trial_left != null) AI.trialLeft = num(r.ai_trial_left);
   if (r.ai_monthly_limit != null) AI.monthLimit = num(r.ai_monthly_limit);
   if ('ai_month_used' in r) AI.monthUsed = r.ai_month_key === new Date().toISOString().slice(0, 7) ? num(r.ai_month_used) : 0;
@@ -3634,7 +5569,7 @@ function applyWsRow(r) {
 }
 async function loadWorkspaceMeta() {
   const [{ data: ws }, { data: bill }] = await Promise.all([
-    SB.from('workspaces').select('name, icon, ai_provider, ai_trial_left, ai_monthly_limit, ai_month_used, ai_month_key').eq('id', W).maybeSingle(),
+    SB.from('workspaces').select('*').eq('id', W).maybeSingle(),
     SB.from('billing_accounts').select('paid_until, plan_interval').eq('product', 'workspace').eq('account_id', W).maybeSingle(),
   ]);
   AI.paidUntil = bill ? bill.paid_until : null; AI.interval = bill ? bill.plan_interval : null;
@@ -3700,6 +5635,7 @@ async function teamModal() {
       AI.provider = k; updateAiBadge(); teamModal();
     } }, l))),
     h('span', { class: 'w-sub', text: 'Everyone in this workspace chats with the assistant you pick.' })));
+  box.append(aiSettingsSection(admin));
   // Team
   const team = h('div', {});
   for (const m of mems) {
@@ -3840,24 +5776,70 @@ function renderSelBar() {
     h('button', { class: 'mini-x', style: 'opacity:1', 'aria-label': 'Clear selection', title: 'Clear selection (Esc)', onclick: clearSel }, '×'));
 }
 
-/* undo for big changes (deleting blocks, long pastes) */
-const UNDO = [];
-let lastTypeAt = 0;
-function pushUndo(kind, label) {
-  const p = cur(); if (!p || !S.current) return null;
-  const e = { kind, label, scope: S.current.scope, id: S.current.id, blocks: clone(p.blocks), at: Date.now() };
-  UNDO.push(e); if (UNDO.length > 30) UNDO.shift();
-  return e;
+/* undo / redo: every change to a page is remembered (typing is grouped into short bursts) */
+const HIST = new Map(); // 'scope:id' → { base, undo: [], redo: [], open, t }
+let lastTypeAt = 0, histMute = false, lastPaste = null;
+const pageSnap = p => { const o = clone(p); delete o.updatedAt; delete o.updatedBy; return JSON.stringify(o); };
+function histOf(scope, id) { const k = keyOf(scope, id); let H = HIST.get(k); if (!H) { H = { base: null, undo: [], redo: [], open: false, t: 0 }; HIST.set(k, H); } return H; }
+function histBaseline(scope, id) { const p = S.pages[scope] && S.pages[scope].get(id); if (!p) return; const H = histOf(scope, id); if (!H.open) H.base = pageSnap(p); }
+function histChange(scope, id) {
+  // Called by markDirty after a change. Opens an undo step holding the state from just before it.
+  if (histMute) return;
+  const p = S.pages[scope] && S.pages[scope].get(id); if (!p) return;
+  const H = histOf(scope, id);
+  if (!H.open) {
+    if (H.base != null && H.base !== pageSnap(p)) { H.undo.push(H.base); if (H.undo.length > 60) H.undo.shift(); H.redo = []; }
+    H.open = true;
+  }
+  clearTimeout(H.t);
+  H.t = setTimeout(() => { H.open = false; const pp = S.pages[scope] && S.pages[scope].get(id); if (pp) H.base = pageSnap(pp); updateUndoBtns(); }, 900);
+  updateUndoBtns();
+}
+function histClose(scope, id) { const H = histOf(scope, id); clearTimeout(H.t); if (H.open) { H.open = false; } const p = S.pages[scope] && S.pages[scope].get(id); if (p) H.base = pageSnap(p); }
+function pushUndo(kind) {
+  // Call right before a big change so it becomes its own undo step.
+  if (!S.current) return null;
+  histClose(S.current.scope, S.current.id);
+  return { kind, at: Date.now() };
+}
+function applySnap(scope, id, snapStr) {
+  const p = S.pages[scope] && S.pages[scope].get(id); if (!p) return false;
+  const next = JSON.parse(snapStr);
+  const keep = new Set(allBlocks(next).map(b => b.id));
+  for (const x of allBlocks(p)) if (!keep.has(x.id)) stopTimer(x.id);
+  for (const k of Object.keys(p)) if (k !== 'updatedAt' && k !== 'updatedBy') delete p[k];
+  Object.assign(p, next);
+  histMute = true; try { markDirty(scope, id, 150); } finally { histMute = false; }
+  histOf(scope, id).base = snapStr;
+  if (S.current && S.current.id === id) { clearSel(); const sc = $('#main').scrollTop; renderPage(); renderSidebar(); $('#main').scrollTop = sc; }
+  return true;
 }
 function undo() {
-  const e = UNDO.pop(); if (!e) { toast('Nothing to undo'); return false; }
-  const p = S.pages[e.scope] && S.pages[e.scope].get(e.id);
-  if (!p) { toast('That page no longer exists'); return false; }
-  for (const x of allBlocks(p)) if (!allBlocks({ blocks: e.blocks }).some(y => y.id === x.id)) stopTimer(x.id);
-  p.blocks = e.blocks; markDirty(e.scope, e.id, 100);
-  if (S.current && S.current.id === e.id) { clearSel(); renderBlocks(); }
-  else openPage(e.scope, e.id);
-  toast('Undone ↩'); return true;
+  if (!S.current) return false;
+  const { scope, id } = S.current; const p = cur(); if (!p) return false;
+  histClose(scope, id);
+  const H = histOf(scope, id);
+  if (!H.undo.length) { toast('Nothing to undo'); updateUndoBtns(); return false; }
+  H.redo.push(pageSnap(p));
+  applySnap(scope, id, H.undo.pop());
+  toast('Undone ↩'); updateUndoBtns(); return true;
+}
+function redo() {
+  if (!S.current) return false;
+  const { scope, id } = S.current; const p = cur(); if (!p) return false;
+  histClose(scope, id);
+  const H = histOf(scope, id);
+  if (!H.redo.length) { toast('Nothing to redo'); updateUndoBtns(); return false; }
+  H.undo.push(pageSnap(p));
+  applySnap(scope, id, H.redo.pop());
+  toast('Redone ↪'); updateUndoBtns(); return true;
+}
+function updateUndoBtns() {
+  if (!S.current) return;
+  const H = histOf(S.current.scope, S.current.id);
+  const u = $('#undoBtn'), r = $('#redoBtn');
+  if (u) u.disabled = !(H.undo.length || H.open);
+  if (r) r.disabled = !H.redo.length;
 }
 function toastUndo(msg) {
   $('.toast')?.remove();
@@ -3974,10 +5956,17 @@ function bindSelection() {
   document.addEventListener('pointerdown', e => { if (SELB.size && !e.target.closest('#main, .sel-bar, .pop, #modal, .toast')) clearSel(); });
   document.addEventListener('keydown', e => {
     const mod = e.metaKey || e.ctrlKey; const k = e.key.toLowerCase();
-    if (mod && k === 'z' && !e.shiftKey) {
-      const ae = document.activeElement; const top = UNDO[UNDO.length - 1];
-      const recentPaste = top && top.kind === 'paste' && top.at >= lastTypeAt && Date.now() - top.at < 120000;
-      if ((!isEditable(ae) && UNDO.length) || (recentPaste && ae && pageEl.contains(ae))) { e.preventDefault(); undo(); return; }
+    if (mod && (k === 'z' || k === 'y') && cur() && !$('#modal') && !$('#auth')) {
+      // Pugad's own undo covers typing and block changes alike. Plain input boxes keep the browser's own undo.
+      const ae = document.activeElement;
+      if (ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
+      if (ae && ae.isContentEditable && !pageEl.contains(ae)) return;
+      e.preventDefault(); e.stopPropagation();
+      const edc = ae && ae.isContentEditable ? edCtx(ae) : null;
+      const back = edc ? { id: edc.b.id, field: edc.field, off: caretOffset(edc.ed) } : ae && ae.classList && ae.classList.contains('title') ? { title: true } : null;
+      const ok = (k === 'y' || e.shiftKey) ? redo() : undo();
+      if (ok && back) requestAnimationFrame(() => { if (back.title) $('.title')?.focus(); else focusBlock(back.id, back.off, back.field); });
+      return;
     }
     if (!SELB.size || isEditable(document.activeElement) || $('#modal')) return;
     if (e.key === 'Backspace' || e.key === 'Delete') { e.preventDefault(); deleteSel(); }
@@ -3995,6 +5984,91 @@ function bindSelection() {
   }, true);
   document.addEventListener('copy', e => { if (!SELB.size || isEditable(document.activeElement)) return; e.preventDefault(); e.clipboardData.setData('text/plain', selText()); toast(`Copied ${topSel().length} block${topSel().length === 1 ? '' : 's'}`); });
   document.addEventListener('cut', e => { if (!SELB.size || isEditable(document.activeElement) || S.ro) return; e.preventDefault(); e.clipboardData.setData('text/plain', selText()); deleteSel(); });
+}
+
+/* ================= page history ================= */
+async function historyModal(scope, id) {
+  const p = S.pages[scope] && S.pages[scope].get(id); if (!p) return;
+  const list = h('div', { class: 'hist-list', role: 'listbox', 'aria-label': 'Saved versions' });
+  const view = h('div', { class: 'hist-view' }, h('div', { class: 'w-sub', text: 'Loading…' }));
+  openModal(`Page history · ${p.title || 'Untitled'}`, h('div', { class: 'hist' }, list, view), true);
+  const { data, error } = await SB.from('page_versions').select('id, saved_at, saved_by, body').eq('workspace_id', W).eq('page_id', id).order('saved_at', { ascending: false }).limit(60);
+  if (!$('#modal')) return;
+  if (error) { view.replaceChildren(h('p', { class: 'w-sub', text: /page_versions|schema|relation/i.test(error.message) ? 'Page history is not switched on yet. Run history.sql in Supabase first.' : "Couldn't load the history: " + error.message })); return; }
+  const rows = data || [];
+  const who = new Set(rows.map(r => r.saved_by).filter(x => x && !S.names.has(x)));
+  if (who.size && S.user && S.user.profiles) { try { const ps = await S.user.profiles([...who]); for (const x of who) S.names.set(x, (ps[x] && ps[x].name) || 'a teammate'); } catch (e) {} }
+  const when = t => new Date(t).toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+  const show = (r, btn) => {
+    $$('.hist-item', list).forEach(x => x.setAttribute('aria-selected', String(x === btn)));
+    const body = r ? normPage(clone(r.body)) : p;
+    const nBlocks = allBlocks(body).length;
+    view.replaceChildren(
+      h('div', { class: 'hist-head' },
+        h('div', {}, h('b', { text: r ? when(r.saved_at) : 'Current version' }), h('div', { class: 'w-sub', text: `${nBlocks} block${nBlocks === 1 ? '' : 's'}${r && r.saved_by ? ' · saved by ' + (r.saved_by === S.uid ? 'you' : S.names.get(r.saved_by) || 'a teammate') : ''}` })),
+        r && !S.ro ? h('button', { class: 'btn', onclick: () => restoreVersion(scope, id, r) }, 'Restore this version') : ''),
+      h('div', { class: 'hist-preview', text: pageText(body, 6000) || '(empty page)' }));
+  };
+  const cur0 = h('button', { class: 'hist-item', role: 'option', onclick: e => show(null, e.currentTarget) }, h('b', { text: 'Now' }), h('span', { class: 'w-sub', text: 'Current version' }));
+  list.append(cur0);
+  for (const r of rows) {
+    const b = h('button', { class: 'hist-item', role: 'option', onclick: e => show(r, e.currentTarget) }, h('b', { text: timeAgo(Date.parse(r.saved_at)) }), h('span', { class: 'w-sub', text: when(r.saved_at) }));
+    list.append(b);
+  }
+  if (!rows.length) list.append(h('p', { class: 'w-sub', style: 'padding:8px', text: 'No earlier versions yet. Pugad keeps a copy about every 10 minutes while a page is being edited, and always before a big deletion.' }));
+  show(rows[0] || null, rows[0] ? list.children[1] : cur0);
+}
+function restoreVersion(scope, id, r) {
+  const p = S.pages[scope] && S.pages[scope].get(id); if (!p) return;
+  const body = normPage(clone(r.body));
+  body.parent = p.parent || null; body.order = p.order; body.createdAt = p.createdAt; body.createdBy = p.createdBy;
+  delete body.updatedAt; delete body.updatedBy;
+  const H = histOf(scope, id); histClose(scope, id);
+  H.undo.push(pageSnap(p)); H.redo = [];
+  applySnap(scope, id, JSON.stringify(body));
+  closeModal(); updateUndoBtns();
+  toastUndo(`Restored the version from ${timeAgo(Date.parse(r.saved_at))}`);
+}
+
+/* ================= custom AI assistant ================= */
+const AI_PRESETS = [
+  ['😊 Friendly helper', 'Be warm, encouraging and practical. Keep answers short and clear.'],
+  ['🐉 Cute dragon', "You are the team's baby dragon. Be playful and sweet, add a little dragon or nest pun now and then, and use a few cute emojis. Still give clear, useful answers."],
+  ['⚡ Straight to the point', 'Be brief and direct. Use bullet points instead of paragraphs. No small talk.'],
+  ['🎯 Coach', 'Act like a supportive productivity coach. Help me prioritise, break big tasks into small steps, and ask one good question when something is unclear.'],
+  ['🇵🇭 Taglish', 'Reply in friendly Taglish, a natural mix of Filipino and English, like a helpful kaibigan at work.'],
+];
+function aiName() { return str(AI.name).trim() || 'Pugad AI'; }
+function aiAvatarEl() {
+  if (AI.avatar === 'dragon') { const v = dragonView({ stage: Math.max(1, typeof dStage === 'function' ? dStage(DG.pet) : 1), color: DG.pet ? DG.pet.color : 'theme', still: true }); v.classList.add('msg-av'); return v; }
+  return h('span', { class: 'msg-av sparkle', 'aria-hidden': 'true', text: '✦' });
+}
+function aiTitleText() { return (AI.avatar === 'dragon' ? '🐉 ' : '✦ ') + aiName(); }
+function aiSettingsSection(admin) {
+  const name = h('input', { class: 'field', value: aiName(), maxlength: '40', 'aria-label': 'Assistant name', id: 'aiNameIn', disabled: admin ? null : true });
+  let avatar = AI.avatar === 'dragon' ? 'dragon' : 'sparkle';
+  const look = h('div', { class: 'seg', role: 'group', 'aria-label': 'Assistant look' });
+  const drawLook = () => look.replaceChildren(...[['sparkle', '✦ Sparkle'], ['dragon', '🐉 Team dragon']].map(([k, l]) => h('button', { class: avatar === k ? 'on' : '', disabled: admin ? null : true, onclick: () => { avatar = k; drawLook(); } }, l)));
+  drawLook();
+  const persona = h('textarea', { class: 'field', rows: '4', maxlength: '2000', placeholder: 'How should your assistant talk and help? e.g. Keep it short, use Taglish, always end with a next step.', 'aria-label': 'Personality and instructions', id: 'aiPersonaIn', disabled: admin ? null : true });
+  persona.value = str(AI.persona);
+  const note = h('span', { class: 'w-sub' });
+  const save = h('button', { class: 'btn', onclick: async () => {
+    save.disabled = true;
+    const patch = { ai_name: name.value.trim().slice(0, 40) || 'Pugad AI', ai_avatar: avatar, ai_persona: persona.value.trim().slice(0, 2000) };
+    const { data, error } = await SB.from('workspaces').update(patch).eq('id', W).select('id');
+    save.disabled = false;
+    if (error || !data || !data.length) { note.textContent = error && /ai_name|ai_persona|ai_avatar|column/i.test(error.message) ? 'Run history.sql in Supabase first.' : "Couldn't save. Only owners and admins can change this."; note.classList.add('err'); return; }
+    AI.name = patch.ai_name; AI.avatar = patch.ai_avatar; AI.persona = patch.ai_persona; updateAiBadge();
+    note.classList.remove('err'); note.textContent = 'Saved ✓ Everyone in this workspace now chats with ' + AI.name + '.';
+  } }, 'Save assistant');
+  return h('div', { class: 'msec ai-persona' }, h('span', { class: 'lbl', text: 'Your assistant' }),
+    h('div', { class: 'frow' }, h('span', { class: 'w-sub', text: 'Name' }), name),
+    h('div', { class: 'frow' }, h('span', { class: 'w-sub', text: 'Look' }), look),
+    h('span', { class: 'w-sub', text: 'Personality. Pick a starting point, then make it yours:' }),
+    h('div', { class: 'chips' }, AI_PRESETS.map(([l, t]) => h('button', { class: 'tpl-chip', disabled: admin ? null : true, onclick: () => { persona.value = t; persona.focus(); } }, l))),
+    persona,
+    admin ? h('div', { class: 'btns', style: 'align-items:center' }, save, note) : h('span', { class: 'w-sub', text: 'Only the workspace owner or an admin can change the assistant.' }));
 }
 
 /* ================= stickers ================= */
@@ -4277,7 +6351,11 @@ function onRemote(scope, snap) {
     const data = normPage(clone(ch.doc.data() || {}));
     const old = S.pages[scope].get(id);
     if (old && JSON.stringify(old) === JSON.stringify(data)) continue;
+    // A late echo of one of our own older saves must never replace newer local changes.
+    if (old && S.uid && data.updatedBy === S.uid && num(data.updatedAt) < num(old.updatedAt)) continue;
+    if (old && num(old.updatedAt) > num(data.updatedAt) && Date.now() - num(old.updatedAt) < 15000 && old.updatedBy === S.uid) continue;
     S.pages[scope].set(id, data);
+    histBaseline(scope, id);
     if (S.current && S.current.scope === scope && S.current.id === id) curChanged = true;
   }
   S.loaded[scope] = true;
